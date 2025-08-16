@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-gvpn4u4b> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title><slot name="title" /></title><style>:root{--bg-color: #111010;--text-primary: #ffe9c6;--text-secondary: #2AA198;--accent-color: #f97d43;--font-body: "Roboto", sans-serif;--font-code: "JetBrains Mono", monospace}html{font-size:19px}body{font-size:1rem;line-height:1.66;background-color:var(--bg-color);color:var(--text-primary);font-family:var(--font-body);margin:0;padding:0}a{color:var(--text-secondary);text-decoration:none}a:hover{text-decoration:underline}pre{background-color:#1e1e1e;border-radius:8px;padding:1rem;overflow-x:auto;margin:1rem 0;font-size:15px;font-family:var(--font-code)}code{background-color:transparent}pre>code{display:block}.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:.5rem 0}.toc a{color:var(--text-secondary);text-decoration:none}.toc a:hover{text-decoration:underline}.toc a.active{font-weight:700;color:var(--accent-color)}nav[data-astro-cid-dmqpwcec]{padding:1rem 0;text-align:center}ul[data-astro-cid-dmqpwcec]{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:1.5rem}li[data-astro-cid-dmqpwcec]{display:inline}a[data-astro-cid-dmqpwcec]{color:var(--text-primary);font-size:1.2rem;padding:.5rem 1rem;border:1px solid transparent;transition:all .3s ease-in-out}a[data-astro-cid-dmqpwcec]:hover{border:1px solid var(--accent-color);border-radius:4px;color:var(--accent-color)}.active[data-astro-cid-dmqpwcec] a[data-astro-cid-dmqpwcec]{color:var(--accent-color);font-weight:700;border-bottom:2px solid var(--accent-color)}hr[data-astro-cid-dmqpwcec]{margin-top:1rem;border:none;height:2px;background:var(--text-secondary);width:90%;max-width:800px;margin-left:auto;margin-right:auto}
+.post-title[data-astro-cid-resui2ln]{margin-bottom:2rem}.post-title[data-astro-cid-resui2ln] h1[data-astro-cid-resui2ln]{font-size:1.75rem;color:var(--accent-color);margin:0}.post-date[data-astro-cid-resui2ln]{font-size:1rem;color:var(--text-secondary);margin-top:.5rem}.publish-label[data-astro-cid-resui2ln]{font-weight:700;color:var(--text-primary)}
+.chapter[data-astro-cid-5d3zeytc]{font-size:2rem;margin-top:2rem;color:var(--accent-color)}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]{color:var(--accent-color);text-decoration:none}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]:hover{text-decoration:underline}
+.post-layout{display:flex;flex-direction:row}@media (min-width: 1024px){.post-layout{flex-direction:row}.post-layout-sidebar{flex:0 0 180px;margin-right:2rem;position:fixed;top:10rem;font-size:.85rem;padding:1rem}.post-layout-content{flex:1}}.post-layout-sidebar{display:none}@media (min-width: 1024px){.post-layout-sidebar{display:block}}main[data-astro-cid-gvpn4u4b]{padding:0 1rem}article[data-astro-cid-gvpn4u4b]{max-width:800px;width:100%;margin:0 auto;color:var(--text-primary)}h1[data-astro-cid-gvpn4u4b],h2[data-astro-cid-gvpn4u4b],h3[data-astro-cid-gvpn4u4b]{color:var(--accent-color);margin-top:1.5rem}p[data-astro-cid-gvpn4u4b]{color:var(--text-secondary)}img[data-astro-cid-gvpn4u4b]{max-width:100%;border-radius:8px;margin:1rem 0}blockquote[data-astro-cid-gvpn4u4b]{border-left:4px solid var(--accent-color);padding-left:1rem;color:var(--text-primary);font-style:italic;margin:1rem 0}code[data-astro-cid-gvpn4u4b]{font-family:monospace;background:#ffffff1a;padding:.2rem .4rem;border-radius:4px;font-size:.95rem}
+</style></head> <body data-astro-cid-gvpn4u4b> <header data-astro-cid-gvpn4u4b> <nav data-astro-cid-dmqpwcec> <ul data-astro-cid-dmqpwcec> <li class data-astro-cid-dmqpwcec> <a href="/" data-astro-cid-dmqpwcec>Posts</a> </li><li class data-astro-cid-dmqpwcec> <a href="/about" data-astro-cid-dmqpwcec>About</a> </li><li class data-astro-cid-dmqpwcec> <a href="/resume" data-astro-cid-dmqpwcec>Resume</a> </li> </ul> </nav>  </header> <!-- 
+      1) Wrap sidebar + main in a single parent .post-layout
+         so flexbox can place them side by side on large screens 
+    --> <div class="post-layout" data-astro-cid-gvpn4u4b> <!-- SIDEBAR --> <aside class="post-layout-sidebar" data-astro-cid-gvpn4u4b> <!-- The nav container that will hold our generated TOC --><nav id="table-of-contents" class="toc"></nav> <script client:load>
+  window.addEventListener('DOMContentLoaded', () => {
+    buildTOC();
+    highlightActiveHeading();
+  });
+
+  // 1. Build the TOC once the page is loaded
+  function buildTOC() {
+    const chapterHeadings = Array.from(document.querySelectorAll('h2.chapter[id]'));
+    const tocContainer = document.getElementById('table-of-contents');
+    if (!tocContainer) return;
+
+    const ul = document.createElement('ul');
+
+    chapterHeadings.forEach((heading) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+
+      // The heading has an `id` like "intro" or "symptoms"
+      a.href = `#${heading.id}`;
+
+      a.textContent = heading.textContent.trim();
+
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    tocContainer.appendChild(ul);
+  }
+
+    function highlightActiveHeading() {
+      const links = Array.from(document.querySelectorAll('#table-of-contents a'));
+      const headingEls = links.map((link) => document.getElementById(link.hash.slice(1)));
+
+      // 3. Create the observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            console.log(
+              `Heading: ${entry.target.id}, isIntersecting: ${entry.isIntersecting}`
+            );
+            if (entry.isIntersecting) {
+              // Remove 'active' from all links
+              links.forEach((l) => l.classList.remove('active'));
+
+              // Highlight the link for the heading that just entered
+              const activeLink = links.find(
+                (l) => l.hash === `#${entry.target.id}`
+              );
+              if (activeLink) {
+                activeLink.classList.add('active');
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '-15% 0px -60% 0px',
+          threshold: 0,
+        }
+      );
+
+      // 4. Observe each heading
+      headingEls.forEach((el) => {
+        if (el) {
+          console.log(`Observing heading: ${el.id}`);
+          observer.observe(el);
+        }
+      });
+    }
+</script> </aside> <!-- MAIN CONTENT AREA --> <div class="post-layout-content" data-astro-cid-gvpn4u4b> <main data-astro-cid-gvpn4u4b> <article data-astro-cid-gvpn4u4b>  <div class="post-title" data-astro-cid-resui2ln> <h1 data-astro-cid-resui2ln>Implementing cron</h1> <p class="post-date" data-astro-cid-resui2ln> <span class="publish-label" data-astro-cid-resui2ln>Publish date:</span> 2024-04-29 </p> </div>  <h2 id="intro" class="chapter" data-astro-cid-5d3zeytc> <a href="#intro" data-astro-cid-5d3zeytc>Intro</a> </h2>  <p>
+Recently, I have been documenting <a href="https://ppacer.org/internals/schedules/">ppacer schedules</a>
+and in that moment I thought I should have probably implemented cron
+    schedule for ppacer. Before I explain why, let's take one step back to give
+    you a bit of context about ppacer schedules. Schedules in ppacer are
+    covered by generic and simple interface
+<pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#569CD6">type</span><span style="color:#4EC9B0"> Schedule</span><span style="color:#569CD6"> interface</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#DCDCAA">    Start</span><span style="color:#D4D4D4">() </span><span style="color:#4EC9B0">time</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Time</span></span>
+<span class="line"><span style="color:#DCDCAA">    Next</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">current</span><span style="color:#4EC9B0"> time</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Time</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">prevSched</span><span style="color:#D4D4D4"> *</span><span style="color:#4EC9B0">time</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Time</span><span style="color:#D4D4D4">) </span><span style="color:#4EC9B0">time</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Time</span></span>
+<span class="line"><span style="color:#DCDCAA">    String</span><span style="color:#D4D4D4">() </span><span style="color:#4EC9B0">string</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> </p> <p>
+Initially I've provided the simplest possible regular schedule which satisfies
+    that interface - <code>schedule.Fixed</code> which starts at given time and ticks each
+    given <code>time.Duration</code> (e.g. <code>10*time.Minute</code>). See documentation
+<a href="https://pkg.go.dev/github.com/ppacer/core/dag/schedule#Fixed">[here]</a>.
+    That was definitely good enough for the first ppacer backed versions and tests.
+</p> <p>
+I thought having a generic interface for schedules and providing simple
+    concrete implementation would be enough for the MVP ppacer version, but then
+    when I was writing docs on this topic I thought it would be great to also cover
+    cron. Why? There are few reasons. Cron is classic and influential scheduler
+    from *-UNIX world. Cron expressions became so common that they are popping out
+    not only in modern schedulers but also in business applications. I felt
+    obligated, to support cron expressions, since I'm implementing my own
+    scheduler. Also I thought it might be quick and interesting tangent to my
+    project. It wasn't really quick, but it was interesting.
+</p> <h2 id="cron101" class="chapter" data-astro-cid-5d3zeytc> <a href="#cron101" data-astro-cid-5d3zeytc>cron 101</a> </h2>  <p>
+Let me start by quickly introducing cron. Cron is a command-line program on
+    Unix-like systems for scheduling jobs. Cron job can be added, listed or deleted
+    using <code>crontab</code> program. Usually when we want to add new job, we need to
+    specify a schedule for that job and what action needs to be performed. This
+    definition looks like this (lines starting with <code>#</code> are comments):
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A9955"># Example of job definition:</span></span>
+<span class="line"><span style="color:#6A9955"># .---------------- minute (0 - 59)</span></span>
+<span class="line"><span style="color:#6A9955"># |  .------------- hour (0 - 23)</span></span>
+<span class="line"><span style="color:#6A9955"># |  |  .---------- day of month (1 - 31)</span></span>
+<span class="line"><span style="color:#6A9955"># |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...</span></span>
+<span class="line"><span style="color:#6A9955"># |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7)</span></span>
+<span class="line"><span style="color:#6A9955"># |  |  |  |  |</span></span>
+<span class="line"><span style="color:#6A9955"># *  *  *  *  * user-name command to be executed</span></span>
+<span class="line"><span style="color:#DCDCAA">17</span><span style="color:#569CD6"> *</span><span style="color:#569CD6"> *</span><span style="color:#569CD6"> *</span><span style="color:#569CD6"> *</span><span style="color:#CE9178">      root</span><span style="color:#CE9178">    cd</span><span style="color:#CE9178"> /</span><span style="color:#D4D4D4"> &#x26;&#x26; </span><span style="color:#DCDCAA">run-parts</span><span style="color:#569CD6"> --report</span><span style="color:#CE9178"> /etc/cron.hourly</span></span></code></pre> <p>
+In the example above we can see that there is only one cron job defined. It
+    runs on schedule <code>17 * * * *</code> (at 17th minute of every hour, every day),
+    should be performed as user `root` and should execute bash command
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">cd</span><span style="color:#CE9178"> /</span><span style="color:#D4D4D4"> &#x26;&#x26; </span><span style="color:#DCDCAA">run-parts</span><span style="color:#569CD6"> --report</span><span style="color:#CE9178"> /etc/cron.hourly</span></span></code></pre> <p>
+We can say that cron is a Linux (daemon) process which runs in the background,
+    wakes up once a minute, reads its database (`crontab` file), checks if given
+    jobs should be executed based on current time and job cron expression, if
+    that's the case it executes job's command or script.
+</p> <p>
+Cron is still used nowadays mainly because it's available on every *-UNIX OS
+    I've ever touched and it's very easy to setup. If you need to run rather simple
+    task on a schedule and you're on Linux, it might be good choice. There's also a
+    downside. It's so simple that it lacks monitoring and alerting for cases when
+    job fails.
+</p> <h2 id="history" class="chapter" data-astro-cid-5d3zeytc> <a href="#history" data-astro-cid-5d3zeytc>cron history</a> </h2>  <p>
+Cron has been introduced as command utility program in Version 7 UNIX in 1979.
+    That version was implemented by Ken Thompson. Initially it was just <code>cron</code>
+program without, mentioned earlier, <code>crontab</code>. Jobs by default were stored in
+<code>/usr/lib/crontab</code>.
+</p> 
+When it comes to Linux, most distribution uses cron implementation done by Paul
+    Vixie or their own version created based on "Vixie cron". That cron version was
+    implemented by Paul in 1988 with another releases in 1990, 1993 and 1994.
+ <p>
+Over the last two decades cron and cron expressions for schedules became a
+    standard for expressing regular intervals using just a few characters. Most (if
+    not every) mainstream programming languages has at least one library which
+    helps parsing cron expressions and use it in your application. Few examples of
+    such libraries:
+</p><ul> <li> <a href="https://github.com/kiorky/croniter">croniter</a> - Python library which
+        provides iterator for the datetime object with a cron like format. Apache
+        Airflow uses this library.
+</li> <li> <a href="https://www.npmjs.com/package/node-cron">node-cron</a> - JavaScript
+        module which implements tiny task scheduler supporting crontab syntax.
+</li> <li> <a href="https://github.com/atifaziz/NCrontab">NCrontab</a> - C# library
+        for parsing crontab expressions and calculating schedule based on those expressions.
+</li> <li> <a href="https://docs.rs/cron/latest/cron/">cron</a> Rust crate - "A cron expression
+        parser and schedule explorer".
+</li> </ul>  <p>
+There's even classic <a href="https://crontab.guru">crontab.guru</a> which can help
+    learning cron expressions syntax or just help to prepare syntax for desired
+    schedule, so you can forget about it few minutes later.
+</p> <p>
+What I meant presenting those examples is the fact that cron and crontab
+    expressions has gone mainstream for over 20-30 years regarding defining simple,
+    yet effective schedules, not only in cron itself.
+</p> <h2 id="impl-prep" class="chapter" data-astro-cid-5d3zeytc> <a href="#impl-prep" data-astro-cid-5d3zeytc>Preparing for the implementation</a> </h2>  <p>
+My cron schedule implementation for ppacer is something different, then
+    original cron's. In cron there is no need to know when the next schedule entry
+    should be. Cron basically at given time checks whenever there's a job with
+    crontab expression matching the current time. This is much simpler, then for
+    given time and crontab expression calculate when the next schedule entry should
+    be.
+</p> <p>
+Since original cron source code wasn't helpful I tried to look into few
+    libraries which implements similar thing, before I started working on my
+    implementation. Few of them used approach which roughly goes as "increment
+    time, check if new point in time matches schedule definition and if not, keep
+    doing it". I didn't like it. When I look at crontab expression and a timestamp
+    I can immediately tell when the next one should be. Based on my intuition, I
+    thought my algorithm for calculation next timestamp in a cron schedule should
+    run in constant time <code>O(1)</code>.
+</p> <p>
+Before I go into details and thoughts on my implementation, let me tell you
+    what I have found out about crontab expressions that I didn't know before
+    start working on it.
+</p> <p>
+Just out of curiosity I looked into the Vixie cron implementation and I found
+    the following comment:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span style="color:#6A9955">/* the dom/dow situation is odd.  '* * 1,15 * Sun' will run on the</span></span>
+<span class="line"><span style="color:#6A9955"> * first and fifteenth AND every Sunday;  '* * * * Sun' will run *only*</span></span>
+<span class="line"><span style="color:#6A9955"> * on Sundays;  '* * 1,15 * *' will run *only* the 1st and 15th.  this</span></span>
+<span class="line"><span style="color:#6A9955"> * is why we keep 'e->dow_star' and 'e->dom_star'.  yes, it's bizarre.</span></span>
+<span class="line"><span style="color:#6A9955"> * like many bizarre things, it's the standard.</span></span>
+<span class="line"><span style="color:#6A9955"> */</span></span></code></pre> <p>
+I didn't know about that! So when you have <code>0 10 13 * 1</code> crontab
+    expression for your schedule, it should run at 10:00AM on 13th day of a month
+    and on every Monday at 10:00AM. Naturally I thought it would mean that job
+    should run at 10:00AM on 13th day of a month but only when it's Monday.
+    Wrong! Though I've never used such schedule in my life, it's good to know
+    that this part is a bit inconsistent. There is logical <code>AND</code> between all
+    parts of crontab expression parts, except the case when day of month and
+    weekday is set, in this case we have logical <code>OR</code>. Exactly like Paul said,
+    "yes, it's bizarre".
+</p> <p>
+Another one comes from <code>crontab(5)</code> Linux man page, section <code>BUGS</code>:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plain"><code><span class="line"><span>If you are in one of the 70-odd countries that observe Daylight Savings Time,</span></span>
+<span class="line"><span>jobs scheduled during the rollback or advance will be affected. In general, it</span></span>
+<span class="line"><span>is not a good idea to schedule jobs during this period.</span></span></code></pre> <p>
+That's unfortunate. So when you use cron in timezone with DST and you specified
+<code>0 2 * * *</code> schedule for your job, depending in which way time is changed,
+    might not run at all or run twice at the same day, even though you expect it to
+    run once a day at 2:00AM. Another question in this case is when the next
+    schedule point should be "correctly" calculated? We'll talk a bit about it in
+    the next chapter.
+</p> <h2 id="implementation" class="chapter" data-astro-cid-5d3zeytc> <a href="#implementation" data-astro-cid-5d3zeytc>Implementation</a> </h2>  <p>
+I started my implementation by designing a structure for crontab expressions.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#569CD6">type</span><span style="color:#4EC9B0"> Cron</span><span style="color:#569CD6"> struct</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#9CDCFE">    start</span><span style="color:#4EC9B0">      time</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Time</span></span>
+<span class="line"><span style="color:#9CDCFE">    minute</span><span style="color:#D4D4D4">     []</span><span style="color:#4EC9B0">int</span></span>
+<span class="line"><span style="color:#9CDCFE">    hour</span><span style="color:#D4D4D4">       []</span><span style="color:#4EC9B0">int</span></span>
+<span class="line"><span style="color:#9CDCFE">    dayOfMonth</span><span style="color:#D4D4D4"> []</span><span style="color:#4EC9B0">int</span></span>
+<span class="line"><span style="color:#9CDCFE">    month</span><span style="color:#D4D4D4">      []</span><span style="color:#4EC9B0">int</span></span>
+<span class="line"><span style="color:#9CDCFE">    dayOfWeek</span><span style="color:#D4D4D4">  []</span><span style="color:#4EC9B0">int</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+No matter how we would get those number (either parsing a string or setting
+    those manually, or using another API), eventually, crontab expression can be
+    boiled down to a list of values for each part. Assuming that empty array means
+<code>*</code> (a start). Field <code>start</code> is just for <code>Schedule</code>
+interface <code>Start()</code> method.
+</p> <p>
+I started slow by trying to support only `minute` and `hour` cases. That was
+    rather easy. In default crontab expression when we have starts when we just set
+    the next minute. Easy. Next is the case when we have at least one value
+    `minute` field. Let's say we have `15,50 * * * *` schedule, that means
+    `minute` is a slice with two values `[]int50` (we can assume is sorted).
+    In this case, for given `time.Time` we need to check the next value in `minute`
+    which is greater then a minute from that time. If given time is `2024-04-25
+    12:19:00` then the next one should be at `12:50:00`. When we are already at
+    `12:51:10`, there is no "next" minute in `minute` field, so we know that the
+    next schedule point will be in the next hour and at `minute[0]` minute. Easy.
+</p> <p>
+As you can probably see, the same reasoning applies to hours. So far so good.
+    We can correctly determine the next schedule point using just few <code>if</code>s,
+    integer comparisons and great Go standard <a href="https://pkg.go.dev/time">time package</a>,
+    especially <a href="https://pkg.go.dev/time#Time.Add">Add method</a>.
+</p> <p>The above looks in code like this:</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#569CD6">func</span><span style="color:#D4D4D4"> (</span><span style="color:#9CDCFE">c </span><span style="color:#D4D4D4">*</span><span style="color:#4EC9B0">Cron</span><span style="color:#D4D4D4">) </span><span style="color:#DCDCAA">setMinutes</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">t</span><span style="color:#4EC9B0"> time</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Time</span><span style="color:#D4D4D4">) </span><span style="color:#4EC9B0">time</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Time</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#9CDCFE">    minutesSet</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">nextMinute</span><span style="color:#D4D4D4"> := </span><span style="color:#DCDCAA">findNextInt</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">c</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">minute</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">t</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Minute</span><span style="color:#D4D4D4">(), </span><span style="color:#569CD6">false</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#C586C0">    if</span><span style="color:#D4D4D4"> !</span><span style="color:#9CDCFE">minutesSet</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#6A9955">        // regular * case</span></span>
+<span class="line"><span style="color:#C586C0">        return</span><span style="color:#9CDCFE"> t</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Add</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">time</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">Minute</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"><span style="color:#C586C0">    if</span><span style="color:#9CDCFE"> nextMinute</span><span style="color:#D4D4D4"> > </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#6A9955">        // Another minute in the current hour</span></span>
+<span class="line"><span style="color:#C586C0">        return</span><span style="color:#DCDCAA"> setMinute</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">t</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">nextMinute</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"><span style="color:#6A9955">    // in this case we need to increase hour and set minutes</span></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#DCDCAA"> setMinute</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">t</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Add</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">time</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">Hour</span><span style="color:#D4D4D4">), </span><span style="color:#9CDCFE">c</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">minute</span><span style="color:#D4D4D4">[</span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">])</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+For hours part implementation looks almost the same. That's also true for
+    "months" part of crontab expression.
+</p> <p></p><li><code>next(2024-01-31 13:15) = 2024-03-31 12:00</code></li> <li><code>next(2024-02-01 20:15) = 2024-03-31 12:00</code></li> <p>
+As we can see, we cannot simply set a day from <code>Cron.dayOfMonth</code> field, because
+    it might be invalid date! In the above example <code>2024-02-31 12:00</code> would be
+    invalid date. Another example, even more extreme would be <code>0 12 29 2 *</code>
+schedule which should run at noon on February 29th, that's valid only on leap
+    years! So for <code>2024-02-29 12:01</code>, the next schedule point should be on
+<code>2028-02-29 12:00</code> – four years later! That already sounds more complex
+    than handling minute or hour parts and we don't even yet included weekdays! I
+    won't put implementation details in here, but as you might expect we cannot get
+    away without a loop in this case. Fortunately there are finite and small upper
+    limit of all possible iterations (&lt;100), so we still should have <code>O(1)</code>
+complexity, just with a bit larger constant for those cases.
+</p> <p>
+The last part we need to cover is weekday part. As we already mentioned earlier
+    this part is a bit tricky, because it behaves differently than other parts.
+    Because of the fact that we either need to set a day of month or a
+    weekday, depending on a schedule and which case is closer to the current date,
+    there is no other way but include that logic in a function responsible for
+    determining setting up next day date. If only day of month in crontab is set,
+    it's easy. If only weekday in crontab is set, that's also rather
+    straightforward. In case when both parts are set, we need to calculate which of
+    those two option would happen first. It's not difficult either, but there are a
+    couple of cases we need to get right.
+</p> <p>
+At the end, on high level, function <code>Next</code> for <code>Cron</code> looks like this:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#569CD6">func</span><span style="color:#D4D4D4"> (</span><span style="color:#9CDCFE">c </span><span style="color:#D4D4D4">*</span><span style="color:#4EC9B0">Cron</span><span style="color:#D4D4D4">) </span><span style="color:#DCDCAA">Next</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">currentTime</span><span style="color:#4EC9B0"> time</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Time</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">_</span><span style="color:#D4D4D4"> *</span><span style="color:#4EC9B0">time</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Time</span><span style="color:#D4D4D4">) </span><span style="color:#4EC9B0">time</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Time</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#9CDCFE">    next</span><span style="color:#D4D4D4"> := </span><span style="color:#DCDCAA">zeroSecondsAndSubs</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">currentTime</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#9CDCFE">    next</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">c</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">setMinutes</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">next</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#9CDCFE">    next</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">c</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">setHours</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">next</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#9CDCFE">    next</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">c</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">setDayOfMonth</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">next</span><span style="color:#D4D4D4">) </span><span style="color:#6A9955">// This also includes weekdays</span></span>
+<span class="line"><span style="color:#9CDCFE">    next</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">c</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">setMonth</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">next</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#9CDCFE"> next</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+At the end implementing <code>Next</code> for cron schedule was a bit annoying. It wasn't
+    hard, but I needed to got every case right and there were a lot of cases to
+    cover. Looking back, should I've chosen a simpler path and just iterate over
+    dates and check if it's right? Perhaps it would be simpler to implement and
+    easier to maintain, but it would be probably a bit slower. Maintenance isn't
+    really the issue. There is nothing to maintain in here. It's one of things that
+    need to be implemented correctly and won't be changed probably ever. It's
+    rather small and closed (regarding specs) feature. Given that I implemented it
+    correctly I still think I did the right thing and being a bit more annoying for
+    me to implement is rather small price to pay in the long term perspective.
+</p> <h2 id="parse" class="chapter" data-astro-cid-5d3zeytc> <a href="#parse" data-astro-cid-5d3zeytc>To parse or not to parse</a> </h2>  <p>
+As I mentioned in the intro, my cron schedule implementation is primarily, to
+    be used as ppacer schedule. That means it will be used within a Go project. How
+    users would like to define cron schedule in ppacer? Besides mentioned <code>Cron</code>
+structure I started with basic default constructor:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A9955">// NewCron initialize new default Cron which is "* * * * *"</span></span>
+<span class="line"><span style="color:#6A9955">// and starts at 1970-01-01.</span></span>
+<span class="line"><span style="color:#569CD6">func</span><span style="color:#DCDCAA"> NewCron</span><span style="color:#D4D4D4">() *</span><span style="color:#4EC9B0">Cron</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#D4D4D4"> &#x26;</span><span style="color:#4EC9B0">Cron</span><span style="color:#D4D4D4">{</span><span style="color:#9CDCFE">start</span><span style="color:#D4D4D4">: </span><span style="color:#9CDCFE">time</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Unix</span><span style="color:#D4D4D4">(</span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">)}</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+Usually user would like to define also other cron schedules. I thought perhaps
+    it would be convenient and readable if we would have fluent API to set
+    particular parts of crontab expression? Let see, for example if we would like
+    to set minute parts we could use the following methods:
+</p>  </article> </main> </div> </div>  <!-- Global styles for .post-layout and .post-layout-sidebar -->  </body></html>
