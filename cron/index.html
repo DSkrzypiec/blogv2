@@ -1,7 +1,7 @@
-<!DOCTYPE html><html lang="en" data-astro-cid-gvpn4u4b> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title><slot name="title" /></title><style>*,*:before,*:after{box-sizing:border-box}html,body{max-width:100%;overflow-x:hidden}html{-webkit-text-size-adjust:100%}:root{--bg-color: #111010;--text-primary: #ffe9c6;--text-secondary: #2AA198;--accent-color: #f97d43;--font-body: "Roboto", sans-serif;--font-code: "JetBrains Mono", monospace}html{font-size:19px}@media (max-width: 480px){html{font-size:16px}}@media (max-width: 360px){html{font-size:15px}}body{font-size:1rem;line-height:1.66;background-color:var(--bg-color);color:var(--text-primary);font-family:var(--font-body);margin:0;padding:0;word-wrap:break-word;overflow-wrap:break-word}h1{font-size:2.25rem;line-height:1.2}h2{font-size:1.75rem;line-height:1.3}h3{font-size:1.35rem;line-height:1.35}@media (max-width: 768px){h1{font-size:2rem}h2{font-size:1.5rem}h3{font-size:1.2rem}}@media (max-width: 480px){h1{font-size:1.75rem}h2{font-size:1.35rem}h3{font-size:1.1rem}}@media (max-width: 360px){h1{font-size:1.6rem}h2{font-size:1.25rem}h3{font-size:1.05rem}}a{color:var(--text-secondary);text-decoration:none}a:hover{text-decoration:underline}pre{background-color:#1e1e1e;border-radius:8px;padding:1rem;overflow-x:auto;margin:1rem 0;font-size:15px;font-family:var(--font-code)}code{background-color:transparent}pre>code{display:block}.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:.5rem 0}.toc a{color:var(--text-secondary);text-decoration:none}.toc a:hover{text-decoration:underline}.toc a.active{font-weight:700;color:var(--accent-color)}nav[data-astro-cid-dmqpwcec]{padding:1rem 0;text-align:center}ul[data-astro-cid-dmqpwcec]{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}@media (max-width: 480px){ul[data-astro-cid-dmqpwcec]{gap:1rem}a[data-astro-cid-dmqpwcec]{font-size:1rem;padding:.4rem .8rem}}@media (max-width: 360px){ul[data-astro-cid-dmqpwcec]{gap:.5rem}a[data-astro-cid-dmqpwcec]{font-size:.9rem;padding:.3rem .6rem}}li[data-astro-cid-dmqpwcec]{display:inline}a[data-astro-cid-dmqpwcec]{color:var(--text-primary);font-size:1.2rem;padding:.5rem 1rem;border:1px solid transparent;transition:all .3s ease-in-out}a[data-astro-cid-dmqpwcec]:hover{border:1px solid var(--accent-color);border-radius:4px;color:var(--accent-color)}.active[data-astro-cid-dmqpwcec] a[data-astro-cid-dmqpwcec]{color:var(--accent-color);font-weight:700;border-bottom:2px solid var(--accent-color)}hr[data-astro-cid-dmqpwcec]{margin-top:1rem;border:none;height:2px;background:var(--text-secondary);width:90%;max-width:800px;margin-left:auto;margin-right:auto}
+<!DOCTYPE html><html lang="en" data-astro-cid-gvpn4u4b> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Implementing cron</title><style>*,*:before,*:after{box-sizing:border-box}html,body{max-width:100%;overflow-x:hidden}html{-webkit-text-size-adjust:100%}:root{--bg-color: #111010;--text-primary: #ffe9c6;--text-secondary: #2AA198;--accent-color: #f97d43;--font-body: "Roboto", sans-serif;--font-code: "JetBrains Mono", monospace}html{font-size:19px}@media (max-width: 480px){html{font-size:16px}}@media (max-width: 360px){html{font-size:15px}}body{font-size:1rem;line-height:1.66;background-color:var(--bg-color);color:var(--text-primary);font-family:var(--font-body);margin:0;padding:0;word-wrap:break-word;overflow-wrap:break-word}h1{font-size:2.25rem;line-height:1.2}h2{font-size:1.75rem;line-height:1.3}h3{font-size:1.35rem;line-height:1.35}@media (max-width: 768px){h1{font-size:2rem}h2{font-size:1.5rem}h3{font-size:1.2rem}}@media (max-width: 480px){h1{font-size:1.75rem}h2{font-size:1.35rem}h3{font-size:1.1rem}}@media (max-width: 360px){h1{font-size:1.6rem}h2{font-size:1.25rem}h3{font-size:1.05rem}}a{color:var(--text-secondary);text-decoration:none}a:hover{text-decoration:underline}pre{background-color:#1e1e1e;border-radius:8px;padding:1rem;overflow-x:auto;margin:1rem 0;font-size:15px;font-family:var(--font-code)}code{background-color:transparent}pre>code{display:block}.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:.5rem 0}.toc a{color:var(--text-secondary);text-decoration:none}.toc a:hover{text-decoration:underline}.toc a.active{font-weight:700;color:var(--accent-color)}nav[data-astro-cid-dmqpwcec]{padding:1rem 0;text-align:center}ul[data-astro-cid-dmqpwcec]{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}@media (max-width: 480px){ul[data-astro-cid-dmqpwcec]{gap:1rem}a[data-astro-cid-dmqpwcec]{font-size:1rem;padding:.4rem .8rem}}@media (max-width: 360px){ul[data-astro-cid-dmqpwcec]{gap:.5rem}a[data-astro-cid-dmqpwcec]{font-size:.9rem;padding:.3rem .6rem}}li[data-astro-cid-dmqpwcec]{display:inline}a[data-astro-cid-dmqpwcec]{color:var(--text-primary);font-size:1.2rem;padding:.5rem 1rem;border:1px solid transparent;transition:all .3s ease-in-out}a[data-astro-cid-dmqpwcec]:hover{border:1px solid var(--accent-color);border-radius:4px;color:var(--accent-color)}.active[data-astro-cid-dmqpwcec] a[data-astro-cid-dmqpwcec]{color:var(--accent-color);font-weight:700;border-bottom:2px solid var(--accent-color)}hr[data-astro-cid-dmqpwcec]{margin-top:1rem;border:none;height:2px;background:var(--text-secondary);width:90%;max-width:800px;margin-left:auto;margin-right:auto}
 .post-title[data-astro-cid-resui2ln]{margin-bottom:2rem}.post-title[data-astro-cid-resui2ln] h1[data-astro-cid-resui2ln]{font-size:1.75rem;color:var(--accent-color);margin:0}.post-date[data-astro-cid-resui2ln]{font-size:1rem;color:var(--text-secondary);margin-top:.5rem}.publish-label[data-astro-cid-resui2ln]{font-weight:700;color:var(--text-primary)}
 .chapter[data-astro-cid-5d3zeytc]{font-size:2rem;margin-top:2rem;color:var(--accent-color)}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]{color:var(--accent-color);text-decoration:none}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]:hover{text-decoration:underline}
-.post-layout{display:flex;flex-direction:row}@media (min-width: 1024px){.post-layout{flex-direction:row}.post-layout-sidebar{position:fixed;left:2rem;top:10rem;width:200px;font-size:.85rem;padding:1rem;z-index:10}.post-layout-content{flex:1;max-width:1000px;margin:0 auto;padding-left:240px;padding-right:2rem}}@media (min-width: 1400px){.post-layout-content{max-width:1200px}}.post-layout-sidebar{display:none}@media (min-width: 1024px){.post-layout-sidebar{display:block}}@media (max-width: 1023px){.post-layout{flex-direction:column}.post-layout-content{width:100%;max-width:100%}}main[data-astro-cid-gvpn4u4b]{padding:2rem 1rem;max-width:900px;margin:0 auto;width:100%;box-sizing:border-box}@media (min-width: 1024px){main[data-astro-cid-gvpn4u4b]{padding:2rem 0;max-width:none}}@media (max-width: 768px){main[data-astro-cid-gvpn4u4b]{padding:1.5rem .75rem}}@media (max-width: 480px){main[data-astro-cid-gvpn4u4b]{padding:1rem .5rem}}article[data-astro-cid-gvpn4u4b]{max-width:800px;width:100%;margin:0 auto;color:var(--text-primary);box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word}h1[data-astro-cid-gvpn4u4b],h2[data-astro-cid-gvpn4u4b],h3[data-astro-cid-gvpn4u4b]{color:var(--accent-color);margin-top:1.5rem;word-wrap:break-word;overflow-wrap:break-word}p[data-astro-cid-gvpn4u4b]{color:var(--text-secondary);word-wrap:break-word;overflow-wrap:break-word;hyphens:auto}img[data-astro-cid-gvpn4u4b]{max-width:100%;border-radius:8px;margin:1rem 0}blockquote[data-astro-cid-gvpn4u4b]{border-left:4px solid var(--accent-color);padding-left:1rem;color:var(--text-primary);font-style:italic;margin:1rem 0}code[data-astro-cid-gvpn4u4b]{font-family:monospace;background:#ffffff1a;padding:.2rem .4rem;border-radius:4px;font-size:.95rem}
+.post-layout{display:flex;flex-direction:row}@media (min-width: 1024px){.post-layout{flex-direction:row}.post-layout-sidebar{position:fixed;left:2rem;top:10rem;width:200px;font-size:.85rem;padding:1rem;z-index:10}.post-layout-content{flex:1;max-width:1000px;margin:0 auto;padding-left:240px;padding-right:2rem}}@media (min-width: 1400px){.post-layout-content{max-width:1200px}}.post-layout-sidebar{display:none}@media (min-width: 1024px){.post-layout-sidebar{display:block}}@media (max-width: 1023px){.post-layout{flex-direction:column}.post-layout-content{width:100%;max-width:100%}}main[data-astro-cid-gvpn4u4b]{padding:2rem 1rem;max-width:900px;margin:0 auto;width:100%;box-sizing:border-box}@media (min-width: 1024px){main[data-astro-cid-gvpn4u4b]{padding:2rem 0;max-width:none}}@media (max-width: 768px){main[data-astro-cid-gvpn4u4b]{padding:1.5rem .75rem}}@media (max-width: 480px){main[data-astro-cid-gvpn4u4b]{padding:1rem .5rem}}article[data-astro-cid-gvpn4u4b]{max-width:800px;width:100%;margin:0 auto;color:var(--text-primary);box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word}h1[data-astro-cid-gvpn4u4b],h2[data-astro-cid-gvpn4u4b],h3[data-astro-cid-gvpn4u4b]{color:var(--accent-color);margin-top:1.5rem;word-wrap:break-word;overflow-wrap:break-word}p[data-astro-cid-gvpn4u4b]{color:var(--text-secondary);word-wrap:break-word;overflow-wrap:break-word;hyphens:auto}img[data-astro-cid-gvpn4u4b]{max-width:100%;max-height:400px;width:auto;height:auto;border-radius:8px;margin:1rem 0;object-fit:contain}@media (max-width: 768px){img[data-astro-cid-gvpn4u4b]{max-height:300px}}@media (max-width: 480px){img[data-astro-cid-gvpn4u4b]{max-height:250px}}blockquote[data-astro-cid-gvpn4u4b]{border-left:4px solid var(--accent-color);padding-left:1rem;color:var(--text-primary);font-style:italic;margin:1rem 0}code[data-astro-cid-gvpn4u4b]{font-family:monospace;background:#ffffff1a;padding:.2rem .4rem;border-radius:4px;font-size:.95rem}
 </style></head> <body data-astro-cid-gvpn4u4b> <header data-astro-cid-gvpn4u4b> <nav data-astro-cid-dmqpwcec> <ul data-astro-cid-dmqpwcec> <li class data-astro-cid-dmqpwcec> <a href="/" data-astro-cid-dmqpwcec>Posts</a> </li><li class data-astro-cid-dmqpwcec> <a href="/about" data-astro-cid-dmqpwcec>About</a> </li><li class data-astro-cid-dmqpwcec> <a href="/resume" data-astro-cid-dmqpwcec>Resume</a> </li> </ul> </nav>  </header> <!-- 
       1) Wrap sidebar + main in a single parent .post-layout
          so flexbox can place them side by side on large screens 
@@ -118,10 +118,10 @@ Let me start by quickly introducing cron. Cron is a command-line program on
 <span class="line"><span style="color:#DCDCAA">17</span><span style="color:#569CD6"> *</span><span style="color:#569CD6"> *</span><span style="color:#569CD6"> *</span><span style="color:#569CD6"> *</span><span style="color:#CE9178">      root</span><span style="color:#CE9178">    cd</span><span style="color:#CE9178"> /</span><span style="color:#D4D4D4"> &#x26;&#x26; </span><span style="color:#DCDCAA">run-parts</span><span style="color:#569CD6"> --report</span><span style="color:#CE9178"> /etc/cron.hourly</span></span></code></pre> <p>
 In the example above we can see that there is only one cron job defined. It
     runs on schedule <code>17 * * * *</code> (at 17th minute of every hour, every day),
-    should be performed as user `root` and should execute bash command
+    should be performed as user <code>root</code> and should execute bash command
 </p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">cd</span><span style="color:#CE9178"> /</span><span style="color:#D4D4D4"> &#x26;&#x26; </span><span style="color:#DCDCAA">run-parts</span><span style="color:#569CD6"> --report</span><span style="color:#CE9178"> /etc/cron.hourly</span></span></code></pre> <p>
 We can say that cron is a Linux (daemon) process which runs in the background,
-    wakes up once a minute, reads its database (`crontab` file), checks if given
+    wakes up once a minute, reads its database (<code>crontab</code> file), checks if given
     jobs should be executed based on current time and job cron expression, if
     that's the case it executes job's command or script.
 </p> <p>
@@ -135,11 +135,11 @@ Cron has been introduced as command utility program in Version 7 UNIX in 1979.
     That version was implemented by Ken Thompson. Initially it was just <code>cron</code>
 program without, mentioned earlier, <code>crontab</code>. Jobs by default were stored in
 <code>/usr/lib/crontab</code>.
-</p> 
+</p>  <p>
 When it comes to Linux, most distribution uses cron implementation done by Paul
     Vixie or their own version created based on "Vixie cron". That cron version was
     implemented by Paul in 1988 with another releases in 1990, 1993 and 1994.
- <p>
+</p> <p>
 Over the last two decades cron and cron expressions for schedules became a
     standard for expressing regular intervals using just a few characters. Most (if
     not every) mainstream programming languages has at least one library which
@@ -163,10 +163,10 @@ What I meant presenting those examples is the fact that cron and crontab
     expressions has gone mainstream for over 20-30 years regarding defining simple,
     yet effective schedules, not only in cron itself.
 </p> <h2 id="impl-prep" class="chapter" data-astro-cid-5d3zeytc> <a href="#impl-prep" data-astro-cid-5d3zeytc>Preparing for the implementation</a> </h2>  <p>
-My cron schedule implementation for ppacer is something different, then
+My cron schedule implementation for ppacer is something different, than
     original cron's. In cron there is no need to know when the next schedule entry
     should be. Cron basically at given time checks whenever there's a job with
-    crontab expression matching the current time. This is much simpler, then for
+    crontab expression matching the current time. This is much simpler, than for
     given time and crontab expression calculate when the next schedule entry should
     be.
 </p> <p>
@@ -227,16 +227,16 @@ No matter how we would get those number (either parsing a string or setting
 <code>*</code> (a start). Field <code>start</code> is just for <code>Schedule</code>
 interface <code>Start()</code> method.
 </p> <p>
-I started slow by trying to support only `minute` and `hour` cases. That was
+I started slow by trying to support only <code>minute</code> and <code>hour</code> cases. That was
     rather easy. In default crontab expression when we have starts when we just set
     the next minute. Easy. Next is the case when we have at least one value
-    `minute` field. Let's say we have `15,50 * * * *` schedule, that means
-    `minute` is a slice with two values `[]int50` (we can assume is sorted).
-    In this case, for given `time.Time` we need to check the next value in `minute`
-    which is greater then a minute from that time. If given time is `2024-04-25
-    12:19:00` then the next one should be at `12:50:00`. When we are already at
-    `12:51:10`, there is no "next" minute in `minute` field, so we know that the
-    next schedule point will be in the next hour and at `minute[0]` minute. Easy.
+<code>minute</code> field. Let's say we have <code>15,50 * * * *</code> schedule, that means
+<code>minute</code> is a slice with two values <code>[]int50</code> (we can assume is sorted).
+    In this case, for given <code>time.Time</code> we need to check the next value in <code>minute</code>
+which is greater than a minute from that time. If given time is <code>2024-04-25
+    12:19:00</code> then the next one should be at <code>12:50:00</code>. When we are already at
+<code>12:51:10</code>, there is no "next" minute in <code>minute</code> field, so we know that the
+    next schedule point will be in the next hour and at <code>minute[0]</code> minute. Easy.
 </p> <p>
 As you can probably see, the same reasoning applies to hours. So far so good.
     We can correctly determine the next schedule point using just few <code>if</code>s,
@@ -257,13 +257,19 @@ As you can probably see, the same reasoning applies to hours. So far so good.
 <span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
 For hours part implementation looks almost the same. That's also true for
     "months" part of crontab expression.
-</p> <p></p><li><code>next(2024-01-31 13:15) = 2024-03-31 12:00</code></li> <li><code>next(2024-02-01 20:15) = 2024-03-31 12:00</code></li> <p>
+</p> <p>
+A bit different approach is needed in case of day of month part. We cannot
+    apply the same logic in here. Let me, once again, start by providing an
+    example. Let's say we have cron schedule <code>0 12 31 * *</code> - expected runs should
+    be at noon on 31st day of a month. For this schedule let's consider several
+    pairs of timestamps and correspondent next schedule points:
+</p> <ul> <li><code>next(2024-01-15 13:15) = 2024-01-31 12:00</code></li> <li><code>next(2024-01-31 13:15) = 2024-03-31 12:00</code></li> <li><code>next(2024-02-01 20:15) = 2024-03-31 12:00</code></li> </ul> <p>
 As we can see, we cannot simply set a day from <code>Cron.dayOfMonth</code> field, because
     it might be invalid date! In the above example <code>2024-02-31 12:00</code> would be
     invalid date. Another example, even more extreme would be <code>0 12 29 2 *</code>
 schedule which should run at noon on February 29th, that's valid only on leap
     years! So for <code>2024-02-29 12:01</code>, the next schedule point should be on
-<code>2028-02-29 12:00</code> – four years later! That already sounds more complex
+<code>2028-02-29 12:00</code> - four years later! That already sounds more complex
     than handling minute or hour parts and we don't even yet included weekdays! I
     won't put implementation details in here, but as you might expect we cannot get
     away without a loop in this case. Fortunately there are finite and small upper
@@ -278,7 +284,7 @@ The last part we need to cover is weekday part. As we already mentioned earlier
     determining setting up next day date. If only day of month in crontab is set,
     it's easy. If only weekday in crontab is set, that's also rather
     straightforward. In case when both parts are set, we need to calculate which of
-    those two option would happen first. It's not difficult either, but there are a
+    those two options would happen first. It's not difficult either, but there are a
     couple of cases we need to get right.
 </p> <p>
 At the end, on high level, function <code>Next</code> for <code>Cron</code> looks like this:
@@ -291,7 +297,7 @@ At the end, on high level, function <code>Next</code> for <code>Cron</code> look
 <span class="line"><span style="color:#C586C0">    return</span><span style="color:#9CDCFE"> next</span></span>
 <span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
 At the end implementing <code>Next</code> for cron schedule was a bit annoying. It wasn't
-    hard, but I needed to got every case right and there were a lot of cases to
+    hard, but I needed to get every case right and there were a lot of cases to
     cover. Looking back, should I've chosen a simpler path and just iterate over
     dates and check if it's right? Perhaps it would be simpler to implement and
     easier to maintain, but it would be probably a bit slower. Maintenance isn't
@@ -314,4 +320,58 @@ Usually user would like to define also other cron schedules. I thought perhaps
     it would be convenient and readable if we would have fluent API to set
     particular parts of crontab expression? Let see, for example if we would like
     to set minute parts we could use the following methods:
-</p>  </article> </main> </div> </div>  <!-- Global styles for .post-layout and .post-layout-sidebar -->  </body></html>
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#569CD6">func</span><span style="color:#D4D4D4"> (</span><span style="color:#9CDCFE">c </span><span style="color:#D4D4D4">*</span><span style="color:#4EC9B0">Cron</span><span style="color:#D4D4D4">) </span><span style="color:#DCDCAA">AtMinute</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">m</span><span style="color:#4EC9B0"> int</span><span style="color:#D4D4D4">) *</span><span style="color:#4EC9B0">Cron</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#9CDCFE">    c</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">minute</span><span style="color:#D4D4D4"> = []</span><span style="color:#4EC9B0">int</span><span style="color:#D4D4D4">{</span><span style="color:#9CDCFE">m</span><span style="color:#D4D4D4"> % </span><span style="color:#B5CEA8">60</span><span style="color:#D4D4D4">}</span></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#9CDCFE"> c</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">func</span><span style="color:#D4D4D4"> (</span><span style="color:#9CDCFE">c </span><span style="color:#D4D4D4">*</span><span style="color:#4EC9B0">Cron</span><span style="color:#D4D4D4">) </span><span style="color:#DCDCAA">AtMinutes</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">minutes</span><span style="color:#D4D4D4"> ...</span><span style="color:#4EC9B0">int</span><span style="color:#D4D4D4">) *</span><span style="color:#4EC9B0">Cron</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#9CDCFE">    m</span><span style="color:#D4D4D4"> := </span><span style="color:#DCDCAA">make</span><span style="color:#D4D4D4">([]</span><span style="color:#4EC9B0">int</span><span style="color:#D4D4D4">, </span><span style="color:#DCDCAA">len</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">minutes</span><span style="color:#D4D4D4">))</span></span>
+<span class="line"><span style="color:#C586C0">    for</span><span style="color:#9CDCFE"> idx</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">minute</span><span style="color:#D4D4D4"> := </span><span style="color:#C586C0">range</span><span style="color:#9CDCFE"> minutes</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#9CDCFE">        m</span><span style="color:#D4D4D4">[</span><span style="color:#9CDCFE">idx</span><span style="color:#D4D4D4">] = </span><span style="color:#9CDCFE">minute</span><span style="color:#D4D4D4"> % </span><span style="color:#B5CEA8">60</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"><span style="color:#9CDCFE">    sort</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Ints</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">m</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#9CDCFE">    c</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">minute</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">m</span></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#9CDCFE"> c</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+Similarly we could provide methods for hour, day of month, month and weekday
+    crontab expression parts. Then we could conveniently define our cron schedule
+    like this:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#9CDCFE">sched</span><span style="color:#D4D4D4"> := </span><span style="color:#DCDCAA">NewCron</span><span style="color:#D4D4D4">().</span><span style="color:#DCDCAA">AtMinute</span><span style="color:#D4D4D4">(</span><span style="color:#B5CEA8">5</span><span style="color:#D4D4D4">).</span><span style="color:#DCDCAA">AtHours</span><span style="color:#D4D4D4">(</span><span style="color:#B5CEA8">8</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">16</span><span style="color:#D4D4D4">).</span><span style="color:#DCDCAA">OnWeekday</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">time</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">Monday</span><span style="color:#D4D4D4">)</span></span></code></pre> <p>
+Which would be equivalent to <code>5 8,16 * * 1</code> crontab expression. All is good,
+    life is sweet, but in this setup we lose notion of classic crontab expression
+    strings.
+</p> <p>
+On the other hand if we would like to use crontab expression format strings we
+    should introduce a function with the following signature
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#569CD6">func</span><span style="color:#DCDCAA"> ParseCron</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">string</span><span style="color:#D4D4D4">) (*</span><span style="color:#4EC9B0">Cron</span><span style="color:#D4D4D4">, </span><span style="color:#4EC9B0">error</span><span style="color:#D4D4D4">) {</span></span>
+<span class="line"><span style="color:#D4D4D4">    ...</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+In other words there is a chance that parsing given string might fail. Maybe
+    there is a typo in our schedule cron string or we put one character too many.
+    Who knows. Even when we have perfectly good crontab expression string, we still
+    shall check if <code>err != nil</code>. Whereas using fluent API we don't need to do it.
+    At least not in this case.
+</p> <p>
+Currently I decided to support only fluent API to define cron schedules in
+    ppacer. Though we can implement <code>ParseCron(string) (*Cron, error)</code> function
+    anytime without breaking package backward compatibility. That might be a good
+    exercise for non-lazy reader of this post (PRs are welcome!).
+</p> <h2 id="benchmarks" class="chapter" data-astro-cid-5d3zeytc> <a href="#benchmarks" data-astro-cid-5d3zeytc>Performance benchmarks</a> </h2>  <p>
+I've prepared basic benchmarks in Go using <code>*testing.B</code>, to have rough idea how
+    fast <code>Next</code> method for my implementation of cron schedule is.
+</p> <ul> <li>Default <code>* * * * *</code> schedule case - 93.43 ns/op (0 B/op, 0 allocs/op)</li> <li>Schedule with minute and hour set - 218.5 ns/op (0 B/op, 0 allocs/op)</li> <li>All parts set except minute and hour - 580.1 ns/op (24 B/op, 2 allocs/op)</li> <li>All parts set - 695.4 ns/op (24 B/op, 2 allocs/op)</li> <li>February 29th case - 1860 ns/op (432 B/op, 18 allocs/op)</li> </ul> <p>
+It sounds fast enough for me, at least for alpha version. Though I didn't
+    compare it to other mentioned earlier libraries from other programming
+    languages. That sounds like fun exercise for long winter evening.
+</p> <h2 id="links" class="chapter" data-astro-cid-5d3zeytc> <a href="#links" data-astro-cid-5d3zeytc>Links</a> </h2>  <p>
+I haven't still mentioned <strong>where</strong> you can find my implementation of cron
+    schedules for ppacer. Here it is:
+</p> <ul> <li><a href="https://github.com/ppacer/core/blob/main/dag/schedule/cron.go">Source code</a></li> <li><a href="https://pkg.go.dev/github.com/ppacer/core/dag/schedule#Cron">API reference</a></li> <li><a href="https://ppacer.org/internals/schedules">Docs</a></li> </ul> <p>You can install this Go package using <code>go get</code>:</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">go</span><span style="color:#CE9178"> get</span><span style="color:#569CD6"> -u</span><span style="color:#CE9178"> github.com/ppacer/core/dag/schedule@latest</span></span></code></pre> <h2 id="summary" class="chapter" data-astro-cid-5d3zeytc> <a href="#summary" data-astro-cid-5d3zeytc>Summary</a> </h2>  <p>
+Overall implementing cron was very interesting tangent to my main project. I'm
+    glad that I read Vixie cron source code and get to know cron history better. As
+    it turned out I also didn't know all details about crontab expression before I
+    started working on it. Even though it was annoyingly hard to get right and
+    cover all corner cases I'm glad I did it.     It took much longer than I initially
+    thought (2-3 evenings tops) it was definitely worth it.
+</p> <h2 id="references" class="chapter" data-astro-cid-5d3zeytc> <a href="#references" data-astro-cid-5d3zeytc>References</a> </h2>  <ol> <li><a href="https://en.wikipedia.org/wiki/Cron">Cron Wikipedia</a></li> <li><a href="https://github.com/v7unix/v7unix/blob/a19130f05356581fe12d635a4cce4d8556a33171/v7/usr/src/cmd/cron.c">Version 7 UNIX (mirror) cron</a></li> <li><a href="https://salsa.debian.org/debian/cron/-/blob/master/cron.c?ref_type=heads">Paul Vixie cron in Debian</a></li> <li><a href="https://www.quora.com/What-is-the-etymology-of-cron/answer/Kah-Seng-Tay">Quora post with screenshot of email from Brian Kernighan</a></li> <li><a href="https://manpages.ubuntu.com/manpages/focal/en/man5/crontab.5.html">crontab(5) man pages</a></li> <li><a href="https://pkg.go.dev/github.com/ppacer/core/dag/schedule#Cron">ppacer/dag/schedule docs</a></li> <li><a href="https://ppacer.org/internals/schedules/">ppacer schedules</a></li> </ol>  </article> </main> </div> </div>  <!-- Global styles for .post-layout and .post-layout-sidebar -->  </body></html>

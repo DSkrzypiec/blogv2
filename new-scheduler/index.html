@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-gvpn4u4b> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>New Scheduler</title><style>*,*:before,*:after{box-sizing:border-box}html,body{max-width:100%;overflow-x:hidden}html{-webkit-text-size-adjust:100%}:root{--bg-color: #111010;--text-primary: #ffe9c6;--text-secondary: #2AA198;--accent-color: #f97d43;--font-body: "Roboto", sans-serif;--font-code: "JetBrains Mono", monospace}html{font-size:19px}@media (max-width: 480px){html{font-size:16px}}@media (max-width: 360px){html{font-size:15px}}body{font-size:1rem;line-height:1.66;background-color:var(--bg-color);color:var(--text-primary);font-family:var(--font-body);margin:0;padding:0;word-wrap:break-word;overflow-wrap:break-word}h1{font-size:2.25rem;line-height:1.2}h2{font-size:1.75rem;line-height:1.3}h3{font-size:1.35rem;line-height:1.35}@media (max-width: 768px){h1{font-size:2rem}h2{font-size:1.5rem}h3{font-size:1.2rem}}@media (max-width: 480px){h1{font-size:1.75rem}h2{font-size:1.35rem}h3{font-size:1.1rem}}@media (max-width: 360px){h1{font-size:1.6rem}h2{font-size:1.25rem}h3{font-size:1.05rem}}a{color:var(--text-secondary);text-decoration:none}a:hover{text-decoration:underline}pre{background-color:#1e1e1e;border-radius:8px;padding:1rem;overflow-x:auto;margin:1rem 0;font-size:15px;font-family:var(--font-code)}code{background-color:transparent}pre>code{display:block}.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:.5rem 0}.toc a{color:var(--text-secondary);text-decoration:none}.toc a:hover{text-decoration:underline}.toc a.active{font-weight:700;color:var(--accent-color)}nav[data-astro-cid-dmqpwcec]{padding:1rem 0;text-align:center}ul[data-astro-cid-dmqpwcec]{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}@media (max-width: 480px){ul[data-astro-cid-dmqpwcec]{gap:1rem}a[data-astro-cid-dmqpwcec]{font-size:1rem;padding:.4rem .8rem}}@media (max-width: 360px){ul[data-astro-cid-dmqpwcec]{gap:.5rem}a[data-astro-cid-dmqpwcec]{font-size:.9rem;padding:.3rem .6rem}}li[data-astro-cid-dmqpwcec]{display:inline}a[data-astro-cid-dmqpwcec]{color:var(--text-primary);font-size:1.2rem;padding:.5rem 1rem;border:1px solid transparent;transition:all .3s ease-in-out}a[data-astro-cid-dmqpwcec]:hover{border:1px solid var(--accent-color);border-radius:4px;color:var(--accent-color)}.active[data-astro-cid-dmqpwcec] a[data-astro-cid-dmqpwcec]{color:var(--accent-color);font-weight:700;border-bottom:2px solid var(--accent-color)}hr[data-astro-cid-dmqpwcec]{margin-top:1rem;border:none;height:2px;background:var(--text-secondary);width:90%;max-width:800px;margin-left:auto;margin-right:auto}
+.post-title[data-astro-cid-resui2ln]{margin-bottom:2rem}.post-title[data-astro-cid-resui2ln] h1[data-astro-cid-resui2ln]{font-size:1.75rem;color:var(--accent-color);margin:0}.post-date[data-astro-cid-resui2ln]{font-size:1rem;color:var(--text-secondary);margin-top:.5rem}.publish-label[data-astro-cid-resui2ln]{font-weight:700;color:var(--text-primary)}
+.chapter[data-astro-cid-5d3zeytc]{font-size:2rem;margin-top:2rem;color:var(--accent-color)}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]{color:var(--accent-color);text-decoration:none}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]:hover{text-decoration:underline}
+.post-layout{display:flex;flex-direction:row}@media (min-width: 1024px){.post-layout{flex-direction:row}.post-layout-sidebar{position:fixed;left:2rem;top:10rem;width:200px;font-size:.85rem;padding:1rem;z-index:10}.post-layout-content{flex:1;max-width:1000px;margin:0 auto;padding-left:240px;padding-right:2rem}}@media (min-width: 1400px){.post-layout-content{max-width:1200px}}.post-layout-sidebar{display:none}@media (min-width: 1024px){.post-layout-sidebar{display:block}}@media (max-width: 1023px){.post-layout{flex-direction:column}.post-layout-content{width:100%;max-width:100%}}main[data-astro-cid-gvpn4u4b]{padding:2rem 1rem;max-width:900px;margin:0 auto;width:100%;box-sizing:border-box}@media (min-width: 1024px){main[data-astro-cid-gvpn4u4b]{padding:2rem 0;max-width:none}}@media (max-width: 768px){main[data-astro-cid-gvpn4u4b]{padding:1.5rem .75rem}}@media (max-width: 480px){main[data-astro-cid-gvpn4u4b]{padding:1rem .5rem}}article[data-astro-cid-gvpn4u4b]{max-width:800px;width:100%;margin:0 auto;color:var(--text-primary);box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word}h1[data-astro-cid-gvpn4u4b],h2[data-astro-cid-gvpn4u4b],h3[data-astro-cid-gvpn4u4b]{color:var(--accent-color);margin-top:1.5rem;word-wrap:break-word;overflow-wrap:break-word}p[data-astro-cid-gvpn4u4b]{color:var(--text-secondary);word-wrap:break-word;overflow-wrap:break-word;hyphens:auto}img[data-astro-cid-gvpn4u4b]{max-width:100%;max-height:400px;width:auto;height:auto;border-radius:8px;margin:1rem 0;object-fit:contain}@media (max-width: 768px){img[data-astro-cid-gvpn4u4b]{max-height:300px}}@media (max-width: 480px){img[data-astro-cid-gvpn4u4b]{max-height:250px}}blockquote[data-astro-cid-gvpn4u4b]{border-left:4px solid var(--accent-color);padding-left:1rem;color:var(--text-primary);font-style:italic;margin:1rem 0}code[data-astro-cid-gvpn4u4b]{font-family:monospace;background:#ffffff1a;padding:.2rem .4rem;border-radius:4px;font-size:.95rem}
+.image-container[data-astro-cid-6kov3kig]{display:flex;flex-direction:column;align-items:center;margin:1.5rem 0}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{width:auto;height:auto;border-radius:8px;object-fit:contain;box-shadow:0 4px 8px #0000001a}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig].inverted{filter:invert(1)}.image-caption[data-astro-cid-6kov3kig]{margin-top:.5rem;font-size:.9rem;color:var(--text-secondary, #666);font-style:italic;text-align:center;max-width:600px}@media (max-width: 768px){.image-container[data-astro-cid-6kov3kig]{margin:1rem 0}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{max-height:300px!important}}@media (max-width: 480px){.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{max-height:250px!important}.image-caption[data-astro-cid-6kov3kig]{font-size:.8rem;padding:0 1rem}}
+</style></head> <body data-astro-cid-gvpn4u4b> <header data-astro-cid-gvpn4u4b> <nav data-astro-cid-dmqpwcec> <ul data-astro-cid-dmqpwcec> <li class data-astro-cid-dmqpwcec> <a href="/" data-astro-cid-dmqpwcec>Posts</a> </li><li class data-astro-cid-dmqpwcec> <a href="/about" data-astro-cid-dmqpwcec>About</a> </li><li class data-astro-cid-dmqpwcec> <a href="/resume" data-astro-cid-dmqpwcec>Resume</a> </li> </ul> </nav>  </header> <!-- 
+      1) Wrap sidebar + main in a single parent .post-layout
+         so flexbox can place them side by side on large screens 
+    --> <div class="post-layout" data-astro-cid-gvpn4u4b> <!-- SIDEBAR --> <aside class="post-layout-sidebar" data-astro-cid-gvpn4u4b> <!-- The nav container that will hold our generated TOC --><nav id="table-of-contents" class="toc"></nav> <script client:load>
+  window.addEventListener('DOMContentLoaded', () => {
+    buildTOC();
+    highlightActiveHeading();
+  });
+
+  // 1. Build the TOC once the page is loaded
+  function buildTOC() {
+    const chapterHeadings = Array.from(document.querySelectorAll('h2.chapter[id]'));
+    const tocContainer = document.getElementById('table-of-contents');
+    if (!tocContainer) return;
+
+    const ul = document.createElement('ul');
+
+    chapterHeadings.forEach((heading) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+
+      // The heading has an `id` like "intro" or "symptoms"
+      a.href = `#${heading.id}`;
+
+      a.textContent = heading.textContent.trim();
+
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    tocContainer.appendChild(ul);
+  }
+
+    function highlightActiveHeading() {
+      const links = Array.from(document.querySelectorAll('#table-of-contents a'));
+      const headingEls = links.map((link) => document.getElementById(link.hash.slice(1)));
+
+      // 3. Create the observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            console.log(
+              `Heading: ${entry.target.id}, isIntersecting: ${entry.isIntersecting}`
+            );
+            if (entry.isIntersecting) {
+              // Remove 'active' from all links
+              links.forEach((l) => l.classList.remove('active'));
+
+              // Highlight the link for the heading that just entered
+              const activeLink = links.find(
+                (l) => l.hash === `#${entry.target.id}`
+              );
+              if (activeLink) {
+                activeLink.classList.add('active');
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '-15% 0px -60% 0px',
+          threshold: 0,
+        }
+      );
+
+      // 4. Observe each heading
+      headingEls.forEach((el) => {
+        if (el) {
+          console.log(`Observing heading: ${el.id}`);
+          observer.observe(el);
+        }
+      });
+    }
+</script> </aside> <!-- MAIN CONTENT AREA --> <div class="post-layout-content" data-astro-cid-gvpn4u4b> <main data-astro-cid-gvpn4u4b> <article data-astro-cid-gvpn4u4b>  <div class="post-title" data-astro-cid-resui2ln> <h1 data-astro-cid-resui2ln>New Scheduler</h1> <p class="post-date" data-astro-cid-resui2ln> <span class="publish-label" data-astro-cid-resui2ln>Publish date:</span> 2023-12-23 </p> </div>  <h2 id="intro" class="chapter" data-astro-cid-5d3zeytc> <a href="#intro" data-astro-cid-5d3zeytc>Intro</a> </h2>  <p>
+I've started implementing yet another DAG scheduler, something like <a href="https://airflow.apache.org">Airflow</a> or
+<a href="https://github.com/spotify/luigi">Luigi</a>. This post is going to be on why I'm doing this and what I'm trying to
+    achieve.
+</p> <p>
+Before we start, let me do a short introduction to schedulers, in case you've never heard about it or use it yourself.
+    What in here I'm calling <em>scheduler</em> is a program or software system which is responsible for scheduling execution of
+    tasks or another programs in particular order. That software can be also responsible for executing tasks, but the
+    emphasis is placed on scheduling and keeping track of all dependencies, its statuses and so on.
+</p> <p>
+One of the first such programs was <a href="https://man7.org/linux/man-pages/man8/cron.8.html">cron</a> which is Linux standard
+    daemon for executing scheduled commands. It basically runs in the background and executes a command or a script at
+    particular time expressed by <a href="https://man7.org/linux/man-pages/man5/crontab.5.html">crontab</a> - classic now <code>0 12 * * *</code>
+format. It is still used nowadays in some cases, because it's already installed on UNIX systems and requires almost no
+    setup.
+</p> <p>
+Cron is rather simple regarding process definition - it's limited to single command or single script. In most of
+    modern schedulers a process is expressed using directed acyclic graph (DAG) of tasks. This way we can express patterns
+    in a process like task <code>B</code> can run in parallel to task <code>A</code> and task <code>C</code> cannot start before <code>A</code> and <code>B</code> are done. Those
+    processes usually run on a certain schedule. For example once a day at 8:00AM or each 15 minutes, but no on
+    weekends. Some of them might have no schedule but are triggered externally.
+</p> <div class="image-container" data-astro-cid-6kov3kig> <img src="/new-scheduler/dagexample.png" alt="DAG example diagram" style="max-width: 100%; max-height: 400px;" class data-astro-cid-6kov3kig> <p class="image-caption" data-astro-cid-6kov3kig>Example of a Directed Acyclic Graph (DAG) showing task dependencies</p> </div>  <p>
+Where this kind of software is used? From my perspective and best to my knowledge it's mostly used to orchestrate data
+    processing. Let's consider an example where we need to prepare data for reporting layer. This process requires talking
+    to many data sources, perhaps migrating data between clouds, then doing transformation and then aggregations on
+    transformed data. This might be very complex process and it needs to run everyday. In this example our DAG could have
+    separate tasks for migrating data, another for doing transformation in the database and yet another doing aggregations
+    and exporting reporting data to external data source. Having scheduler in this example gives us many positive points
+    such as:
+</p> <ul> <li>Process is defined in single place (hopefully via code)</li> <li>If anything break, you know exactly what to fix and what can be affected by the failure</li> <li>You can resume processing after fixing the bug, because you know where the process stopped and all dependencies are
+      contained in the DAG</li> <li>Usually you have history of runs for processes with task durations and other statistics, so you can tell if there is
+      a slowdown</li> </ul> <p>
+A DAG of tasks provides the versatility to accurately represent any desired process. It doesn't need to be data
+    processing. It might be for example setting up an infrastructure or an end-to-end tests environment.
+</p> <h2 id="how-it-started" class="chapter" data-astro-cid-5d3zeytc> <a href="#how-it-started" data-astro-cid-5d3zeytc>How it started</a> </h2>  <p>
+In February 2023 I joined Point72 Risk Technology team, to help building new platform for computation and analytics. In
+    addition to distributed computation functionalities we also needed a scheduler for processes around this new platform.
+    We didn't want to use our legacy scheduler, because it was embedded in the "old" on-prem infrastructure. We decided to
+    go with <a href="https://docs.aws.amazon.com/mwaa/latest/userguide/what-is-mwaa.html">AWS MWAA</a> which is managed version of
+    Airflow on AWS. At the time I was the only person on the team with actual hands-on experience with Airflow, so it was
+    my responsibility, to setup infrastructure for MWAA (Terraform), the local development environment, CI/CD processes and
+    integration with other systems used in our Risk department.
+</p> <p>
+It was my second adventure with Airflow and this time I've had similar reflections. Airflow is very easy to use from
+    developer view point and has rather good UI, but on the other hand Airflow has poor performance, uses a lot of
+    resources and is not reliable. I'll probably talk more about downsides of Airflow another time.
+</p> <p>
+At this point I thought that I really like high-level idea of a scheduler and I'd like to have improved version of
+    Airflow. Something that is flexible enough (cannot be more flexible then Python though), has very good performance and
+    is reliable and scalable. Also something that's easy to use locally or in simplified setup and at the same time can be
+    deployed in the cloud or/and using Kubernetes. Around the second half of August 2023 I started my vacation and also I
+    started thinking about high level architecture for a new scheduler written in Go and sketching implementation starting
+    from small problems like <a href="https://dskrzypiec.dev/go-ast/">Getting method's source code in Go</a>.
+</p> <h2 id="why-new-scheduler" class="chapter" data-astro-cid-5d3zeytc> <a href="#why-new-scheduler" data-astro-cid-5d3zeytc>Why new scheduler?</a> </h2>  <p>
+All schedulers I've seen or used can be categorized to at least one of the following groups. Is written in Python, is
+    low-code or no-code where processes aren't defined as code or is proprietary with limited control. We have already
+    mentioned Python examples - Airflow and Luigi. With this group, my main problems are safety, maintainability and
+    performance. Example for low-code or no-code can be <a href="https://azure.microsoft.com/en-us/products/data-factory">Azure Data
+    Factory</a>. It might be a good choice for some teams but in my
+    opinion it's much better investment to have processes defined as a code in almost every case. It makes testing,
+    refactoring and migrations possible with much less effort.
+</p> <p>
+Is it a good idea to pick language other than Python to write a scheduler when most of data engineering and data
+    science stacks are based on Python? Yes, I think so. At least that's my opinion. I think in many cases Python doesn't
+    pull its weight. Maintaining Python dependencies, over provisioning infrastructure to make it barely run and living
+    without almost any assurance from type system or compilation usually doesn't justify advantage that Python is simple
+    and we can swiftly write a lot of code.
+</p> <p>
+Another very important point for me is the fact that in this case I have sort of clear vision how my scheduler will
+    look like. It's my first side project that I'm working on for longer then a month (it's already four months). I feel
+    it's good to have long term personal project to think about and work on. Even if everything I said in the previous
+    paragraphs is nonsense I'd still do it because of this single reason. I want to implement something that I'd love to
+    use daily and something I can trust. It doesn't need to be implemented by myself, so I can trust it, but at least it
+    should behave as expected in most cases. Even if I'll be the only user, I think it's still worth it!
+</p> <h2 id="what-is-my-plan" class="chapter" data-astro-cid-5d3zeytc> <a href="#what-is-my-plan" data-astro-cid-5d3zeytc>What is my plan?</a> </h2>  <p>
+I started with regular Go project which had few packages and could built two binaries - scheduler and executor. Then I
+    realized that those binaries are very thin wrappers for functionalities from those packages, so I asked myself is it
+    possible to expose scheduler and executor just as regular Go packages? I think it's possible and that's what I'm
+    working on currently.
+</p> <p>
+However, those packages shouldn't be the end product. Even though packages won't be the only outcome of this
+    project, making it public pushes me to write better documentation, prepare examples and think extra carefully about the
+    API. All of the above are great things. In case when those packages would be private it's still desired to put effort
+    in those aspects. To give a little bit of help to my strong will, deciding to make those packages public and
+    treating them as intermediate artifacts should have a positive impact on the project overall.
+</p> <p>
+I don't really have very detailed plan. There's a lot of work to be done, but I'm trying to do something along those
+    lines
+</p> <ol> <li>Finish implementation and testing of scheduler and executor packages.</li> <li>Make it trivial to develop and run locally in simplified form (scheduler and executor in single binary + SQLite)</li> <li>Design UX for core functionalities.</li> <li>Implement first draft of the UI.</li> <li>Prepare Kubernetes deployment or something similar, to make it possible to deploy scheduler + N executors on
+      separate nodes.</li> <li>Setup separate and proper website for documentation, examples, tutorials and other related stuff.</li> <li>???</li> <li>Profit.</li> </ol> <h2 id="details" class="chapter" data-astro-cid-5d3zeytc> <a href="#details" data-astro-cid-5d3zeytc>Details?</a> </h2>  <p>
+Even though I have figured out high level architecture and few other details, I don't really want to say it publicly
+    just yet. I think it might be too soon. I don't even have a name for this project yet. I'll definitely post more
+    details on this project in the future!
+</p> <h2 id="summary" class="chapter" data-astro-cid-5d3zeytc> <a href="#summary" data-astro-cid-5d3zeytc>Summary</a> </h2>  <p>
+Yep, so because of this I haven't posted anything in last couple of months. Most of my spare time, besides family time
+    and running I was spending working on this project. It's roughly 9k lines of Go including 4.5k lines of tests at the
+    moment. I hope to keep working on this, to create something you would be excited to use in production environments.
+</p>  </article> </main> </div> </div>  <!-- Global styles for .post-layout and .post-layout-sidebar -->  </body></html>
