@@ -105,7 +105,7 @@ On metaprogramming in Go there are several kinds available. Code generation via 
     metaprogramming, so in case of this problem I thought it's a good occasion to explore those a bit deeper.
 </p> <h2 id="high-level-approach" class="chapter" data-astro-cid-5d3zeytc> <a href="#high-level-approach" data-astro-cid-5d3zeytc>High level approach</a> </h2>  <p>
 High level plan for implementing this function is really simple.
-</p> <ol> <li>Get AST or set of ASTs for the project source code</li> <li>Implement AST traversal for finding the right method (`*ast.FuncDecl`)</li> <li>Return `*ast.FuncDecl.Body` (`*ast.BlockStmt`) and its serialization to a string</li> </ol> <h2 id="parsing-ast" class="chapter" data-astro-cid-5d3zeytc> <a href="#parsing-ast" data-astro-cid-5d3zeytc>Parsing AST of the project</a> </h2>  <p>
+</p> <ol> <li>Get AST or set of ASTs for the project source code</li> <li>Implement AST traversal for finding the right method (<code>*ast.FuncDecl</code>)</li> <li>Return <code>*ast.FuncDecl.Body</code> (<code>*ast.BlockStmt</code>) and its serialization to a string</li> </ol> <h2 id="parsing-ast" class="chapter" data-astro-cid-5d3zeytc> <a href="#parsing-ast" data-astro-cid-5d3zeytc>Parsing AST of the project</a> </h2>  <p>
 Initially I thought I could simply use <code>go/parser</code> package to easily parse the whole Go project and I would get a
     single big AST to work on. It turned out this package only supports <a href="https://pkg.go.dev/go/parser#ParseFile">parser.ParseFile</a>
 and <a href="https://pkg.go.dev/go/parser#ParseDir">parser.ParseDir</a> functionalities for parsing single file or single
@@ -113,10 +113,10 @@ and <a href="https://pkg.go.dev/go/parser#ParseDir">parser.ParseDir</a> function
 </p> <p>
 As I learned ASTs are parsed for every Go file separately and basic unit is a Go package. That makes sense, because for
     example methods for a single type might be scattered across many files within the package. But still on the package
-    level Go keeps a list of `*ast.File` ASTs rather then combining them into a single tree. Then type checking is also done
+    level Go keeps a list of <code>*ast.File</code> ASTs rather then combining them into a single tree. Then type checking is also done
     upon slice of ASTs.
 </p> <p>
-Instead of manually parsing all `*.go` files I thought, perhaps, I could use already existing functionality which is
+Instead of manually parsing all <code>*.go</code> files I thought, perhaps, I could use already existing functionality which is
     used by the compiler itself. I found <a href="https://pkg.go.dev/golang.org/x/tools@v0.12.0/go/packages">golang.org/x/tools/go/packages</a>
 package. As documentation states <em>Package packages loads Go packages for inspection and analysis</em>. In particular it
     contains <a href="https://pkg.go.dev/golang.org/x/tools@v0.12.0/go/packages#Load">packages.Load</a> function which loads packages
@@ -133,7 +133,7 @@ package. As documentation states <em>Package packages loads Go packages for insp
 <span class="line"><span style="color:#9CDCFE">    Syntax</span><span style="color:#D4D4D4"> []*</span><span style="color:#4EC9B0">ast</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">File</span></span>
 <span class="line"><span style="color:#6A9955">    // other fields...</span></span>
 <span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
-As we can see it contains `Syntax` field which is a slice of ASTs of all `*.go` files in the package. To load all
+As we can see it contains <code>Syntax</code> field which is a slice of ASTs of all <code>*.go</code> files in the package. To load all
     packages in the current Go module (project) we can use a function similar to the following:
 </p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#569CD6">func</span><span style="color:#DCDCAA"> projectPackages</span><span style="color:#D4D4D4">() []*</span><span style="color:#4EC9B0">packages</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Package</span><span style="color:#D4D4D4"> {</span></span>
 <span class="line"><span style="color:#9CDCFE">    cfg</span><span style="color:#D4D4D4"> := &#x26;</span><span style="color:#4EC9B0">packages</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Config</span><span style="color:#D4D4D4">{</span></span>
@@ -189,7 +189,7 @@ Once we have AST, finding the right sub-tree for given method and type name is r
 <span class="line"><span style="color:#C586C0">    return</span><span style="color:#569CD6"> nil</span></span>
 <span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
 A bit of explanations
-</p> <ol> <li>Iterate over all declarations in AST (`*ast.File`)</li> <li>Check whenever this declaration is a function declaration, if not continue to the next one</li> <li>Check whenever this function has appropriate name and declaration has a receiver, to make sure it's a method and not free function</li> <li>At this point we have two cases. Method can be defined on type `T` or pointer `*T`</li> <li>In the first case we check if receiver type is an identifier (`*ast.Ident`) and then check it's name</li> <li>In the other case we check for `*ast.StarExpr` and then take identifier from `*ast.StarExpr.X`</li> <li>If any of those two cases type name matches given type name, we know we found the right sub-tree and can return `*ast.FuncDecl`</li> </ol> <p>
+</p> <ol> <li>Iterate over all declarations in AST (<code>*ast.File</code>)</li> <li>Check whenever this declaration is a function declaration, if not continue to the next one</li> <li>Check whenever this function has appropriate name and declaration has a receiver, to make sure it's a method and not free function</li> <li>At this point we have two cases. Method can be defined on type <code>T</code> or pointer <code>*T</code></li> <li>In the first case we check if receiver type is an identifier (<code>*ast.Ident</code>) and then check it's name</li> <li>In the other case we check for <code>*ast.StarExpr</code> and then take identifier from <code>*ast.StarExpr.X</code></li> <li>If any of those two cases type name matches given type name, we know we found the right sub-tree and can return <code>*ast.FuncDecl</code></li> </ol> <p>
 Overall, in my problem, we can assume that whole Go project was successfully compiled. In particular we can assume that
     within single package pairs of types and methods and unique, thus we can return the first matching method in the AST is
     the only one.
@@ -197,14 +197,14 @@ Overall, in my problem, we can assume that whole Go project was successfully com
 As we would expect for AST serialization there is already implemented function in the standard library -
 <a href="https://pkg.go.dev/go/printer#Fprint">printer.Fprint</a> from <code>go/printer</code> standard package:
 </p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#569CD6">func</span><span style="color:#DCDCAA"> Fprint</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">output</span><span style="color:#4EC9B0"> io</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Writer</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">fset</span><span style="color:#D4D4D4"> *</span><span style="color:#4EC9B0">token</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">FileSet</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">node</span><span style="color:#4EC9B0"> any</span><span style="color:#D4D4D4">) </span><span style="color:#4EC9B0">error</span></span></code></pre> <p>
-Argument `node` is any node of the AST. As we can see this function requires `*token.FileSet` which is an object that
-    keeps a slice of source files (`*token.File`). That's basically because `printer.Fprint` does not serialize AST just
-    based on its content but rather uses token positions from AST to read it from `*token.FileSet`. I'm guessing it's
+Argument <code>node</code> is any node of the AST. As we can see this function requires <code>*token.FileSet</code> which is an object that
+    keeps a slice of source files (<code>*token.File</code>). That's basically because <code>printer.Fprint</code> does not serialize AST just
+    based on its content but rather uses token positions from AST to read it from <code>*token.FileSet</code>. I'm guessing it's
     mainly because to have mapping of AST nodes to concert file in the file system and lines in that file. Those are in
     particular included in stack traces.
 </p> <p>
-In case of parsing ASTs using mentioned `packages.Load` function there is single `*token.FileSet` per package which is
-    stored in `packages.Package.Fset` field. Knowing that we can go ahead and serialize AST of body of our target method
+In case of parsing ASTs using mentioned <code>packages.Load</code> function there is single <code>*token.FileSet</code> per package which is
+    stored in <code>packages.Package.Fset</code> field. Knowing that we can go ahead and serialize AST of body of our target method
     back into a string.
 </p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#9CDCFE">pkgs</span><span style="color:#D4D4D4"> := </span><span style="color:#DCDCAA">projectPackages</span><span style="color:#D4D4D4">()</span></span>
 <span class="line"><span style="color:#C586C0">for</span><span style="color:#9CDCFE"> _</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">pkg</span><span style="color:#D4D4D4"> := </span><span style="color:#C586C0">range</span><span style="color:#9CDCFE"> pkgs</span><span style="color:#D4D4D4"> {</span></span>
@@ -217,7 +217,7 @@ In case of parsing ASTs using mentioned `packages.Load` function there is single
 <span class="line"><span style="color:#D4D4D4">        }</span></span>
 <span class="line"><span style="color:#D4D4D4">    }</span></span>
 <span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
-By default `printer.Fprint` prints tabs with width of 8 spaces. If you want to change it, you can do it like this
+By default <code>printer.Fprint</code> prints tabs with width of 8 spaces. If you want to change it, you can do it like this
 </p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#9CDCFE">printerCfg</span><span style="color:#D4D4D4"> := </span><span style="color:#4EC9B0">printer</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Config</span><span style="color:#D4D4D4">{</span><span style="color:#9CDCFE">Tabwidth</span><span style="color:#D4D4D4">: </span><span style="color:#B5CEA8">4</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">Mode</span><span style="color:#D4D4D4">: </span><span style="color:#9CDCFE">printer</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">UseSpaces</span><span style="color:#D4D4D4">}</span></span>
 <span class="line"><span style="color:#9CDCFE">printerCfg</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Fprint</span><span style="color:#D4D4D4">(&#x26;</span><span style="color:#9CDCFE">buf</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">pkg</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">Fset</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">helloMethod</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">Body</span><span style="color:#D4D4D4">)</span></span></code></pre> <h2 id="is-it-done" class="chapter" data-astro-cid-5d3zeytc> <a href="#is-it-done" data-astro-cid-5d3zeytc>Is it done?</a> </h2>  <p>
 It sounds like we implemented our sketched high level plan and in fact parsed all Go files in the project, found the
