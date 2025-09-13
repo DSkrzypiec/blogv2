@@ -1,0 +1,421 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-gvpn4u4b> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>What&#39;s inside parquet file?</title><style>*,*:before,*:after{box-sizing:border-box}html,body{max-width:100%;overflow-x:hidden}html{-webkit-text-size-adjust:100%}:root{--bg-color: #111010;--text-primary: #ffe9c6;--text-secondary: #2AA198;--accent-color: #f97d43;--font-body: "Roboto", sans-serif;--font-code: "JetBrains Mono", monospace}html{font-size:19px}@media (max-width: 480px){html{font-size:16px}}@media (max-width: 360px){html{font-size:15px}}body{font-size:1rem;line-height:1.66;background-color:var(--bg-color);color:var(--text-primary);font-family:var(--font-body);margin:0;padding:0;word-wrap:break-word;overflow-wrap:break-word}h1{font-size:2.25rem;line-height:1.2}h2{font-size:1.75rem;line-height:1.3}h3{font-size:1.35rem;line-height:1.35}@media (max-width: 768px){h1{font-size:2rem}h2{font-size:1.5rem}h3{font-size:1.2rem}}@media (max-width: 480px){h1{font-size:1.75rem}h2{font-size:1.35rem}h3{font-size:1.1rem}}@media (max-width: 360px){h1{font-size:1.6rem}h2{font-size:1.25rem}h3{font-size:1.05rem}}a{color:var(--text-secondary);text-decoration:none}a:hover{text-decoration:underline}pre{background-color:#1e1e1e;border-radius:8px;padding:1rem;overflow-x:auto;margin:1rem 0;font-size:15px;font-family:var(--font-code)}code{background-color:transparent}pre>code{display:block}.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:.5rem 0}.toc a{color:var(--text-secondary);text-decoration:none}.toc a:hover{text-decoration:underline}.toc a.active{font-weight:700;color:var(--accent-color)}nav[data-astro-cid-dmqpwcec]{padding:1rem 0;text-align:center}ul[data-astro-cid-dmqpwcec]{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}@media (max-width: 480px){ul[data-astro-cid-dmqpwcec]{gap:1rem}a[data-astro-cid-dmqpwcec]{font-size:1rem;padding:.4rem .8rem}}@media (max-width: 360px){ul[data-astro-cid-dmqpwcec]{gap:.5rem}a[data-astro-cid-dmqpwcec]{font-size:.9rem;padding:.3rem .6rem}}li[data-astro-cid-dmqpwcec]{display:inline}a[data-astro-cid-dmqpwcec]{color:var(--text-primary);font-size:1.2rem;padding:.5rem 1rem;border:1px solid transparent;transition:all .3s ease-in-out}a[data-astro-cid-dmqpwcec]:hover{border:1px solid var(--accent-color);border-radius:4px;color:var(--accent-color)}.active[data-astro-cid-dmqpwcec] a[data-astro-cid-dmqpwcec]{color:var(--accent-color);font-weight:700;border-bottom:2px solid var(--accent-color)}hr[data-astro-cid-dmqpwcec]{margin-top:1rem;border:none;height:2px;background:var(--text-secondary);width:90%;max-width:800px;margin-left:auto;margin-right:auto}
+.post-title[data-astro-cid-resui2ln]{margin-bottom:2rem}.post-title[data-astro-cid-resui2ln] h1[data-astro-cid-resui2ln]{font-size:1.75rem;color:var(--accent-color);margin:0}.post-date[data-astro-cid-resui2ln]{font-size:1rem;color:var(--text-secondary);margin-top:.5rem}.publish-label[data-astro-cid-resui2ln]{font-weight:700;color:var(--text-primary)}
+.chapter[data-astro-cid-5d3zeytc]{font-size:2rem;margin-top:2rem;color:var(--accent-color)}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]{color:var(--accent-color);text-decoration:none}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]:hover{text-decoration:underline}
+.post-layout{display:flex;flex-direction:row}@media (min-width: 1024px){.post-layout{flex-direction:row}.post-layout-sidebar{position:fixed;left:2rem;top:10rem;width:200px;font-size:.85rem;padding:1rem;z-index:10}.post-layout-content{flex:1;max-width:1000px;margin:0 auto;padding-left:240px;padding-right:2rem}}@media (min-width: 1400px){.post-layout-content{max-width:1200px}}.post-layout-sidebar{display:none}@media (min-width: 1024px){.post-layout-sidebar{display:block}}@media (max-width: 1023px){.post-layout{flex-direction:column}.post-layout-content{width:100%;max-width:100%}}:global(pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.astro-code){width:100%!important;max-width:100%!important;box-sizing:border-box}:global(.astro-code pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.post-layout-content pre){max-width:100%!important;overflow-x:auto;word-wrap:break-word;white-space:pre-wrap}main[data-astro-cid-gvpn4u4b]{padding:2rem 1rem;max-width:900px;margin:0 auto;width:100%;box-sizing:border-box}@media (min-width: 1024px){main[data-astro-cid-gvpn4u4b]{padding:2rem 0;max-width:none}}@media (max-width: 768px){main[data-astro-cid-gvpn4u4b]{padding:1.5rem .75rem}}@media (max-width: 480px){main[data-astro-cid-gvpn4u4b]{padding:1rem .5rem}}article[data-astro-cid-gvpn4u4b]{max-width:800px;width:100%;margin:0 auto;color:var(--text-primary);box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word}h1[data-astro-cid-gvpn4u4b],h2[data-astro-cid-gvpn4u4b],h3[data-astro-cid-gvpn4u4b]{color:var(--accent-color);margin-top:1.5rem;word-wrap:break-word;overflow-wrap:break-word}p[data-astro-cid-gvpn4u4b]{color:var(--text-secondary);word-wrap:break-word;overflow-wrap:break-word;hyphens:auto}img[data-astro-cid-gvpn4u4b]{max-width:100%;max-height:400px;width:auto;height:auto;border-radius:8px;margin:1rem 0;object-fit:contain}@media (max-width: 768px){img[data-astro-cid-gvpn4u4b]{max-height:300px}}@media (max-width: 480px){img[data-astro-cid-gvpn4u4b]{max-height:250px}}blockquote[data-astro-cid-gvpn4u4b]{border-left:4px solid var(--accent-color);padding-left:1rem;color:var(--text-primary);font-style:italic;margin:1rem 0}code[data-astro-cid-gvpn4u4b]{font-family:monospace;background:#ffffff1a;padding:.2rem .4rem;border-radius:4px;font-size:.95rem}
+.image-container[data-astro-cid-6kov3kig]{display:flex;flex-direction:column;align-items:center;margin:1.5rem 0}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{width:auto;height:auto;border-radius:8px;object-fit:contain;box-shadow:0 4px 8px #0000001a}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig].inverted{filter:invert(1)}.image-caption[data-astro-cid-6kov3kig]{margin-top:.5rem;font-size:.9rem;color:var(--text-secondary, #666);font-style:italic;text-align:center;max-width:600px}@media (max-width: 768px){.image-container[data-astro-cid-6kov3kig]{margin:1rem 0}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{max-height:300px!important}}@media (max-width: 480px){.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{max-height:250px!important}.image-caption[data-astro-cid-6kov3kig]{font-size:.8rem;padding:0 1rem}}
+.table-container[data-astro-cid-akey4rtz]{display:flex;flex-direction:column;align-items:center;margin:1.5rem 0;overflow-x:auto}.table[data-astro-cid-akey4rtz]{width:100%;border-collapse:collapse;font-size:.9rem;background-color:var(--bg-secondary, #1a1a1a);border-radius:8px;overflow:hidden;box-shadow:0 2px 8px #0000001a}.table-caption[data-astro-cid-akey4rtz]{margin-top:.5rem;font-size:.9rem;color:var(--text-secondary, #666);font-style:italic;text-align:center;max-width:600px}.table[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz],.table[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{padding:.75rem;text-align:left;border-bottom:1px solid var(--border-color, #333)}.table[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz]{background-color:var(--bg-primary, #2a2a2a);color:var(--text-primary, #ffffff);font-weight:600;font-size:.9rem}.table[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{color:var(--text-secondary, #cccccc)}.table-bordered[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz],.table-bordered[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{border:1px solid var(--border-color, #333)}.table-bordered[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz]{border-bottom:2px solid var(--border-color, #333)}.table-striped[data-astro-cid-akey4rtz] tbody[data-astro-cid-akey4rtz] tr[data-astro-cid-akey4rtz]:nth-child(odd){background-color:var(--bg-tertiary, #222)}.table-hover[data-astro-cid-akey4rtz] tbody[data-astro-cid-akey4rtz] tr[data-astro-cid-akey4rtz]:hover{background-color:var(--bg-hover, #333);transition:background-color .2s ease}@media (max-width: 768px){.table[data-astro-cid-akey4rtz]{font-size:.8rem}.table[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz],.table[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{padding:.5rem}.table-caption[data-astro-cid-akey4rtz]{font-size:.8rem;padding:0 1rem}}
+</style></head> <body data-astro-cid-gvpn4u4b> <header data-astro-cid-gvpn4u4b> <nav data-astro-cid-dmqpwcec> <ul data-astro-cid-dmqpwcec> <li class data-astro-cid-dmqpwcec> <a href="/" data-astro-cid-dmqpwcec>Posts</a> </li><li class data-astro-cid-dmqpwcec> <a href="/about" data-astro-cid-dmqpwcec>About</a> </li><li class data-astro-cid-dmqpwcec> <a href="/resume" data-astro-cid-dmqpwcec>Resume</a> </li> </ul> </nav>  </header> <!-- 
+      1) Wrap sidebar + main in a single parent .post-layout
+         so flexbox can place them side by side on large screens 
+    --> <div class="post-layout" data-astro-cid-gvpn4u4b> <!-- SIDEBAR --> <aside class="post-layout-sidebar" data-astro-cid-gvpn4u4b> <!-- The nav container that will hold our generated TOC --><nav id="table-of-contents" class="toc"></nav> <script client:load>
+  window.addEventListener('DOMContentLoaded', () => {
+    buildTOC();
+    highlightActiveHeading();
+  });
+
+  // 1. Build the TOC once the page is loaded
+  function buildTOC() {
+    const chapterHeadings = Array.from(document.querySelectorAll('h2.chapter[id]'));
+    const tocContainer = document.getElementById('table-of-contents');
+    if (!tocContainer) return;
+
+    const ul = document.createElement('ul');
+
+    chapterHeadings.forEach((heading) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+
+      // The heading has an `id` like "intro" or "symptoms"
+      a.href = `#${heading.id}`;
+
+      a.textContent = heading.textContent.trim();
+
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    tocContainer.appendChild(ul);
+  }
+
+    function highlightActiveHeading() {
+      const links = Array.from(document.querySelectorAll('#table-of-contents a'));
+      const headingEls = links.map((link) => document.getElementById(link.hash.slice(1)));
+
+      // 3. Create the observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            console.log(
+              `Heading: ${entry.target.id}, isIntersecting: ${entry.isIntersecting}`
+            );
+            if (entry.isIntersecting) {
+              // Remove 'active' from all links
+              links.forEach((l) => l.classList.remove('active'));
+
+              // Highlight the link for the heading that just entered
+              const activeLink = links.find(
+                (l) => l.hash === `#${entry.target.id}`
+              );
+              if (activeLink) {
+                activeLink.classList.add('active');
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '-15% 0px -60% 0px',
+          threshold: 0,
+        }
+      );
+
+      // 4. Observe each heading
+      headingEls.forEach((el) => {
+        if (el) {
+          console.log(`Observing heading: ${el.id}`);
+          observer.observe(el);
+        }
+      });
+    }
+</script> </aside> <!-- MAIN CONTENT AREA --> <div class="post-layout-content" data-astro-cid-gvpn4u4b> <main data-astro-cid-gvpn4u4b> <article data-astro-cid-gvpn4u4b>  <div class="post-title" data-astro-cid-resui2ln> <h1 data-astro-cid-resui2ln>What&#39;s inside parquet file?</h1> <p class="post-date" data-astro-cid-resui2ln> <span class="publish-label" data-astro-cid-resui2ln>Publish date:</span> 2023-06-11 </p> </div>  <div class="image-container" data-astro-cid-6kov3kig> <img src="/parquet/parquet.png" alt="Parquet file format" style="max-width: 100%; max-height: 400px;" class data-astro-cid-6kov3kig> <p class="image-caption" data-astro-cid-6kov3kig>Apache Parquet file format structure</p> </div>  <h2 id="intro" class="chapter" data-astro-cid-5d3zeytc> <a href="#intro" data-astro-cid-5d3zeytc>Intro</a> </h2>  <p>
+Recently I've visited <a href="https://subtls.pages.dev">very interesting website</a> which presents byte by byte what happens
+    when website (data) is sent using TLS. One thing is to know roughly how TLS works and another one is to actually see
+    with explanations what is really happening. Under its influence I thought that I've been working with parquet files for
+    some time but I don't really know their structure. I know its properties, how and when one should use it but I have
+    never really experienced what parquet format really is.
+</p> <p>
+In this blog post I'll present my findings on the way to understand and <strong>see</strong> parquet files structure.
+</p> <h2 id="typical-overview" class="chapter" data-astro-cid-5d3zeytc> <a href="#typical-overview" data-astro-cid-5d3zeytc>Typical overview of parquet format</a> </h2>  <p>
+The <a href="https://parquet.apache.org">Apache Parquet</a> file format is a binary and columnar storage file format mostly used
+    for tabular data in big data processing. It was initially designed as file format for the <a href="https://hadoop.apache.org">Apache
+    Hadoop</a> which was one of the first open-source "big data" technologies for distributed
+    computation.
+</p> <p>
+Parquet file format has the following characteristics:
+</p> <ol> <li>It's binary format. Not really human readable. That's a contrast for example to JSON which is always in human
+      readable format.</li> <li>It's column-oriented (or columnar) format. That means data is stored column-by-column rather than row-by-row.</li> <li>Supports schema evolution. That means we can add or change columns in the table without rewriting existing data.</li> <li>Supports data compression and encoding on various levels.</li> <li>It's "write-once read-many" type of format. That in particular means one cannot really update data in existing
+      parquet file. In this case the file needs to be regenerated.</li> <li>It stores metadata. Including table schema, row groups and columns metadata.</li> </ol> <p>
+This file format was meant to be used for data processing and analytical purposes. It's optimized for that. It's
+    usually used as input, output or intermediate step in data pipelines or as the source for analytical layer tools.
+</p> <p>
+That was more or less what I've known about parquets before starting working on this blog post. Let's dive deeper.
+</p> <h2 id="simple-example" class="chapter" data-astro-cid-5d3zeytc> <a href="#simple-example" data-astro-cid-5d3zeytc>Simple example</a> </h2>  <p>
+I figured the simplest way to analyze parquet structure is to start from generating very simple and concrete parquet
+    file and then somehow analyze it. Let's start from generating parquet file representing the following table
+</p> <div class="table-container" data-astro-cid-akey4rtz> <table class="table table-striped table-bordered table-hover" data-astro-cid-akey4rtz> <thead data-astro-cid-akey4rtz> <tr data-astro-cid-akey4rtz> <th data-astro-cid-akey4rtz>colnum</th><th data-astro-cid-akey4rtz>colstr</th> </tr> </thead> <tbody data-astro-cid-akey4rtz> <tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>42</td><td data-astro-cid-akey4rtz>ds</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>66</td><td data-astro-cid-akey4rtz>sd</td> </tr> </tbody> </table> <p class="table-caption" data-astro-cid-akey4rtz>Sample data table for parquet analysis</p> </div>  <p>
+It can be done using <code>pyarrow.parquet</code> module in Python:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#C586C0">import</span><span style="color:#D4D4D4"> pandas </span><span style="color:#C586C0">as</span><span style="color:#D4D4D4"> pd</span></span>
+<span class="line"><span style="color:#C586C0">import</span><span style="color:#D4D4D4"> pyarrow </span><span style="color:#C586C0">as</span><span style="color:#D4D4D4"> pa</span></span>
+<span class="line"><span style="color:#C586C0">import</span><span style="color:#D4D4D4"> pyarrow.parquet </span><span style="color:#C586C0">as</span><span style="color:#D4D4D4"> pq</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D4D4D4">df = pd.DataFrame({</span></span>
+<span class="line"><span style="color:#CE9178">    "colnum"</span><span style="color:#D4D4D4">: [</span><span style="color:#B5CEA8">42</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">66</span><span style="color:#D4D4D4">],</span></span>
+<span class="line"><span style="color:#CE9178">    "colstr"</span><span style="color:#D4D4D4">: [</span><span style="color:#CE9178">"ds"</span><span style="color:#D4D4D4">, </span><span style="color:#CE9178">"sd"</span><span style="color:#D4D4D4">]</span></span>
+<span class="line"><span style="color:#D4D4D4">})</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D4D4D4">table = pa.Table.from_pandas(df)</span></span>
+<span class="line"><span style="color:#D4D4D4">pq.write_table(table, </span><span style="color:#CE9178">"two_rows.parquet"</span><span style="color:#D4D4D4">)</span></span></code></pre> <p>
+To my surprise the output parquet file <code>two_rows.parquet</code> weighted <strong>2243</strong> bytes. What? Two integers, two very
+    small strings and possibly metadata about two columns needed over 2kb of data in parquet file? Then I thought that
+    parquet format is probably more complicated then I expected. We will get there.
+</p> <p>
+To make this example simpler I went through
+<a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.write_table.html">pyarrow.parquet.write_table</a> function
+    documentation and was able to tweak parameters a bit, like this:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#D4D4D4">pq.write_table(</span></span>
+<span class="line"><span style="color:#D4D4D4">    table,</span></span>
+<span class="line"><span style="color:#D4D4D4">    file_name,</span></span>
+<span class="line"><span style="color:#9CDCFE">    row_group_size</span><span style="color:#D4D4D4">=</span><span style="color:#B5CEA8">1000</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#9CDCFE">    use_dictionary</span><span style="color:#D4D4D4">=</span><span style="color:#569CD6">False</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#9CDCFE">    compression</span><span style="color:#D4D4D4">=</span><span style="color:#CE9178">"NONE"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#9CDCFE">    write_statistics</span><span style="color:#D4D4D4">=</span><span style="color:#569CD6">False</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#9CDCFE">    column_encoding</span><span style="color:#D4D4D4">=</span><span style="color:#CE9178">"PLAIN"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#9CDCFE">    store_schema</span><span style="color:#D4D4D4">=</span><span style="color:#569CD6">False</span></span>
+<span class="line"><span style="color:#D4D4D4">)</span></span></code></pre> <p>
+So, as you can see, we don't use compression, we use plain text encoding, don't store schema and statistics. All that
+    simplified output parquet files from 2243 bytes to <strong>361</strong> bytes. That sounds much better. One could argue that we are
+    going to analyze only the simplest version of parquet format and that's true but I need to start somewhere. I got a
+    feeling that I can try to analyze it and understand it, even if I need to go through every byte. Let's see those
+    bytes without knowing much about its structure yet. Using <code>xxd file_name.parquet</code> we got hexadecimal dump:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>5041 5231 1500 152c 152c 2c15 0415 0015  PAR1...,.,,.....</span></span>
+<span class="line"><span>0615 061c 0000 0002 0000 0004 012a 0000  .............*..</span></span>
+<span class="line"><span>0000 0000 0042 0000 0000 0000 0026 5a1c  .....B.......&#x26;Z.</span></span>
+<span class="line"><span>1504 1925 0006 1918 0663 6f6c 6e75 6d15  ...%.....colnum.</span></span>
+<span class="line"><span>0016 0416 5216 5226 0849 1c15 0015 0015  ....R.R&#x26;.I......</span></span>
+<span class="line"><span>0200 0000 1500 1524 1524 2c15 0415 0015  .......$.$,.....</span></span>
+<span class="line"><span>0615 061c 0000 0002 0000 0004 0102 0000  ................</span></span>
+<span class="line"><span>0064 7302 0000 0073 6426 f201 1c15 0c19  .ds....sd&#x26;......</span></span>
+<span class="line"><span>2500 0619 1806 636f 6c73 7472 1500 1604  %.....colstr....</span></span>
+<span class="line"><span>164a 164a 26a8 0149 1c15 0015 0015 0200  .J.J&#x26;..I........</span></span>
+<span class="line"><span>0000 1504 193c 3500 1806 7363 6865 6d61  .....&#x3C;5...schema</span></span>
+<span class="line"><span>1504 0015 0425 0218 0663 6f6c 6e75 6d00  .....%...colnum.</span></span>
+<span class="line"><span>150c 2502 1806 636f 6c73 7472 2500 4c1c  ..%...colstr%.L.</span></span>
+<span class="line"><span>0000 0016 0419 1c19 2c26 5a1c 1504 1925  ........,&#x26;Z....%</span></span>
+<span class="line"><span>0006 1918 0663 6f6c 6e75 6d15 0016 0416  .....colnum.....</span></span>
+<span class="line"><span>5216 5226 0849 1c15 0015 0015 0200 0000  R.R&#x26;.I..........</span></span>
+<span class="line"><span>26f2 011c 150c 1925 0006 1918 0663 6f6c  &#x26;......%.....col</span></span>
+<span class="line"><span>7374 7215 0016 0416 4a16 4a26 a801 491c  str.....J.J&#x26;..I.</span></span>
+<span class="line"><span>1500 1500 1502 0000 0016 9c01 1604 2608  ..............&#x26;.</span></span>
+<span class="line"><span>169c 0114 0000 2820 7061 7271 7565 742d  ......( parquet-</span></span>
+<span class="line"><span>6370 702d 6172 726f 7720 7665 7273 696f  cpp-arrow versio</span></span>
+<span class="line"><span>6e20 3132 2e30 2e30 192c 1c00 001c 0000  n 12.0.0.,......</span></span>
+<span class="line"><span>00bf 0000 0050 4152 31                   .....PAR1</span></span></code></pre> <p>
+We already can see <code>colnum</code>, <code>colstr</code> column names and <code>ds</code> and <code>sd</code> string values. That's good. Now I think we are
+    ready to explore the hex dump further with a help from <a href="https://github.com/apache/parquet-format">parquet file format
+    documentation</a>.
+</p> <h2 id="file-format" class="chapter" data-astro-cid-5d3zeytc> <a href="#file-format" data-astro-cid-5d3zeytc>File format</a> </h2>  <p>
+As we can read in <a href="https://github.com/apache/parquet-format#file-format">high level parquet file format</a> parquet file
+    is composed of pairs column data and its metadata grouped into group rows. At the end there is file metadata and its
+    size expressed in 4-byte length. The first and last bytes in the file are magic bytes "PAR1" (in hex <code>5231</code>).
+</p> <p>
+In our simplified example where we have only 2 rows (single row group) the high level format structure is of the form:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>4-byte magic number "PAR1"</span></span>
+<span class="line"><span>&#x3C;Column 1 + Column Metadata></span></span>
+<span class="line"><span>&#x3C;Column 2 + Column Metadata></span></span>
+<span class="line"><span>File Metadata</span></span>
+<span class="line"><span>4-byte length in bytes of file metadata (little endian)</span></span>
+<span class="line"><span>4-byte magic number "PAR1"</span></span></code></pre> <p>
+In more general case parquet file is composed of possibly many row groups. Within each row groups there are columns
+    which are split into pages. Metadata is included on each level, but most importantly in the file footer there is
+<code>FileMetaData</code> which keeps information about all row groups, column chunks and data pages. All metadata is encoded
+    using Thrift format and definition for parquet might be found
+<a href="https://github.com/apache/parquet-format/blob/master/src/main/thrift/parquet.thrift">here</a>.
+</p> <p>
+Before we jump into reading and analyzing hex dump let's me briefly mention a very helpful tool in context of parquet
+    files - <a href="https://pypi.org/project/parquet-tools/">parquet-tools</a>.
+</p> <h2 id="parquet-tools" class="chapter" data-astro-cid-5d3zeytc> <a href="#parquet-tools" data-astro-cid-5d3zeytc>parquet-tools</a> </h2>  <p>
+It's a tool for reading data from parquet files and inspecting its schema using command line interface. The simplest
+    use is calling "show" command
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>parquet-tools show two_rows2.parquet</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>+----------+----------+</span></span>
+<span class="line"><span>|   colnum | colstr   |</span></span>
+<span class="line"><span>|----------|----------|</span></span>
+<span class="line"><span>|       42 | ds       |</span></span>
+<span class="line"><span>|       66 | sd       |</span></span>
+<span class="line"><span>+----------+----------+</span></span></code></pre> <p>
+To check the schema and metadata of given parquet file we can use "inspect" command. In our simple example those looks
+    as follows:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>parquet-tools inspect two_rows2.parquet</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>############ file meta data ############</span></span>
+<span class="line"><span>created_by: parquet-cpp-arrow version 12.0.0</span></span>
+<span class="line"><span>num_columns: 2</span></span>
+<span class="line"><span>num_rows: 2</span></span>
+<span class="line"><span>num_row_groups: 1</span></span>
+<span class="line"><span>format_version: 2.6</span></span>
+<span class="line"><span>serialized_size: 191</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>############ Columns ############</span></span>
+<span class="line"><span>colnum</span></span>
+<span class="line"><span>colstr</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>############ Column(colnum) ############</span></span>
+<span class="line"><span>name: colnum</span></span>
+<span class="line"><span>path: colnum</span></span>
+<span class="line"><span>max_definition_level: 1</span></span>
+<span class="line"><span>max_repetition_level: 0</span></span>
+<span class="line"><span>physical_type: INT64</span></span>
+<span class="line"><span>logical_type: None</span></span>
+<span class="line"><span>converted_type (legacy): NONE</span></span>
+<span class="line"><span>compression: UNCOMPRESSED (space_saved: 0%)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>############ Column(colstr) ############</span></span>
+<span class="line"><span>name: colstr</span></span>
+<span class="line"><span>path: colstr</span></span>
+<span class="line"><span>max_definition_level: 1</span></span>
+<span class="line"><span>max_repetition_level: 0</span></span>
+<span class="line"><span>physical_type: BYTE_ARRAY</span></span>
+<span class="line"><span>logical_type: String</span></span>
+<span class="line"><span>converted_type (legacy): UTF8</span></span>
+<span class="line"><span>compression: UNCOMPRESSED (space_saved: 0%)</span></span></code></pre> <p>
+That's very useful! In particular we can see that our very small number are stored as <code>INT64</code>. That will be handy when
+    we start analyzing bytes.
+</p> <p>
+We can even got more detailed information about metadata when we use <code>--detail</code> flag for "inspect" command. Result is
+    presented in very visual-appealing way:
+</p> <div class="image-container" data-astro-cid-6kov3kig> <img src="/parquet/parquet-tools-inspect-detail.png" alt="parquet-tools inspect detail output" style="max-width: 100%; max-height: 400px;" class data-astro-cid-6kov3kig> <p class="image-caption" data-astro-cid-6kov3kig>Detailed parquet-tools inspect output showing metadata structure</p> </div>  <h2 id="so-far-so-good" class="chapter" data-astro-cid-5d3zeytc> <a href="#so-far-so-good" data-astro-cid-5d3zeytc>So far, so good</a> </h2>  <p>
+At this point we learned about parquet file format on the high level. We saw raw hex dump of very simple parquet file.
+    We saw details of schema and metadata of our simple example. I almost want to say that this is enough to understand
+    the parquet format. For most programmers and data engineers that for sure would be sufficient. I want to go deeper but
+    at the same time I hesitated for a moment thinking "we are not meant to read binary". That's probably true. But we are
+    very close to do so. We probably won't be any closer in the future. Let's do it, as an exercise and as an rare
+    experience. It's like writing sorting algorithm. You need to do it at least once (for learning), but then never do it
+    in actual commercial work (except very few cases).
+</p> <p>
+Buckle up, we are going to stare into raw bytes in hexadecimal form. We are going to try make sens out of it with the
+    help of what we already have learned so far.
+</p> <h2 id="binary" class="chapter" data-astro-cid-5d3zeytc> <a href="#binary" data-astro-cid-5d3zeytc>Binary</a> </h2>  <h3>Columns data</h3> <p>
+The easiest part to start with is column values. We know what values to expect and of what type. Let's start from
+<code>colnum</code> column values. In our input table this columns have two values <code>42</code> and <code>66</code> which in hexadecimal
+    representation are <code>hex(42) = 2a</code> and <code>hex(66) = 42</code>. We also have seen that according to the parquet-tools this column
+    is of type <code>INT64</code> which is 64 bit (8 byte) integer. Given this we can easily spot where in the binary dump this column
+    is placed
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>(second and third rows of original hex dump)</span></span>
+<span class="line"><span>0615 061c 0000 0002 0000 0004 012a 0000  .............*..</span></span>
+<span class="line"><span>0000 0000 0042 0000 0000 0000 0026 5a1c  .....B.......&#x26;Z.</span></span>
+<span class="line"><span>...</span></span></code></pre> <p>
+As you can see we have <code>2a 00 00 00 00 00 00 00</code> which is 42 in decimal stored as 64 bit integer. Seven out of eight
+    bytes are zero and it's enough for one byte to store value 42. Similarly we can see sequence <code>42 00 00 00 00 00 00 00</code>
+which is decimal value 66 stored as 64 bit integer.
+</p> <p>
+We can also easily spot <code>colstr</code> column values. As we already known <code>colstr</code> is of type string encoded using
+<code>UTF-8</code>.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>(from row 7 to 9 of original hex dump)</span></span>
+<span class="line"><span>0615 061c 0000 0002 0000 0004 0102 0000  ................</span></span>
+<span class="line"><span>0064 7302 0000 0073 6426 f201 1c15 0c19  .ds....sd&#x26;......</span></span>
+<span class="line"><span>2500 0619 1806 636f 6c73 7472 1500 1604  %.....colstr....</span></span></code></pre> <p>
+Here we can see sequence <code>02 00 00 00</code> and after it we have <code>64 73</code> which means <code>d</code> and <code>s</code> in UTF-8. Next we once
+    again have <code>02 00 00 00</code> and <code>73 64</code> so <code>s</code> and <code>d</code> letters in this case. What's <code>02 00 00 00</code>? In UTF-8 <code>0x02</code> is
+<a href="https://www.compart.com/en/unicode/U+0002">Start of Text</a> character. Why it uses 4 bytes for this sign? That's
+    probably because some characters in UTF-8 needs 4 bytes and we want to represent this "special" character in uniquely.
+</p> <p>
+What's important we can clearly see that values from one column are kept in sequence (within one rows group), close together.
+    As Apache Parquet file format specified.
+</p> <h3>File metadata</h3> <div class="image-container" data-astro-cid-6kov3kig> <img src="/parquet/file-metadata.png" alt="File metadata hex dump" style="max-width: 100%; max-height: 400px;" class data-astro-cid-6kov3kig> <p class="image-caption" data-astro-cid-6kov3kig>Hex dump showing file metadata section</p> </div>  <p>
+We already stated that before last 4 magic bytes there are 4 bytes which presents length of file metadata in bytes. In
+    our case it is <code>hex(BF) = 191</code> bytes. In this very simple example 191 out of 361 bytes are just file metadata. Which
+    makes sense, because we only store actually two rows and two columns of data.
+</p> <p>
+At first I even tried to analyze this raw bytes of file metadata but I very quickly noticed it would be very hard task
+    to do, due to complex behaviour of the file format. Precise definition of parquet metadata format is specified by
+<a href="https://github.com/apache/parquet-format/blob/master/src/main/thrift/parquet.thrift">parquet.thrift</a> which is Apache
+    way to define and operate on binary protocols. As we can see this file is over 1000 lines long. There are many optional
+    parameters and hierarchy of metadata. I still wanted to grasp what those bytes presents, so I tried using Thrift and
+    mention specification to decode file metadata for our example.
+</p> <h4>Decoding file metadata</h4> <p>
+Almost surely file metadata will be the same as those obtained from <code>parquet-tools</code> presented earlier. But I want to
+    make sure that decoding those 191 bytes according to Parquet Thrift specification would actually gave the same result.
+</p> <p>
+I started by installing Apache Thrift and Python package <code>thrift</code>. Then I downloaded mentioned <code>parquet.thrift</code> file
+    and generated Python module with Python classes and definitions regarding this specification using
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">thrift</span><span style="color:#569CD6"> --gen</span><span style="color:#CE9178"> py</span><span style="color:#CE9178"> parquet.thrift</span></span></code></pre> <p>
+It generated the following Python package
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>/Users/ds/PythonProjects/parquets/genpy</span></span>
+<span class="line"><span>├── __init__.py</span></span>
+<span class="line"><span>└── parquet</span></span>
+<span class="line"><span>    ├── __init__.py</span></span>
+<span class="line"><span>    ├── constants.py</span></span>
+<span class="line"><span>    └── ttypes.py</span></span></code></pre> <p>
+Now we can use it to decode file metadata bytes into actual <code>FileMetadata</code> object using the following Python script
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#C586C0">import</span><span style="color:#D4D4D4"> struct</span></span>
+<span class="line"><span style="color:#C586C0">from</span><span style="color:#D4D4D4"> thrift.protocol </span><span style="color:#C586C0">import</span><span style="color:#D4D4D4"> TCompactProtocol</span></span>
+<span class="line"><span style="color:#C586C0">from</span><span style="color:#D4D4D4"> thrift.transport </span><span style="color:#C586C0">import</span><span style="color:#D4D4D4"> TTransport</span></span>
+<span class="line"><span style="color:#C586C0">from</span><span style="color:#D4D4D4"> genpy.parquet.ttypes </span><span style="color:#C586C0">import</span><span style="color:#D4D4D4"> FileMetaData</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">def</span><span style="color:#DCDCAA"> read_parquet_footer</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">file</span><span style="color:#D4D4D4">):</span></span>
+<span class="line"><span style="color:#6A9955">    # Read the footer length based on last 8 bytes</span></span>
+<span class="line"><span style="color:#D4D4D4">    file.seek(-</span><span style="color:#B5CEA8">8</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">2</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    footer_length = struct.unpack(</span><span style="color:#CE9178">"&#x3C;i"</span><span style="color:#D4D4D4">, file.read(</span><span style="color:#B5CEA8">4</span><span style="color:#D4D4D4">))[</span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A9955">    # Read the footer content</span></span>
+<span class="line"><span style="color:#D4D4D4">    file.seek(-(</span><span style="color:#B5CEA8">8</span><span style="color:#D4D4D4"> + footer_length), </span><span style="color:#B5CEA8">2</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    footer_bytes = file.read(footer_length)</span></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#D4D4D4"> footer_bytes</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">def</span><span style="color:#DCDCAA"> decode_parquet_metadata</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">file_path</span><span style="color:#D4D4D4">: </span><span style="color:#4EC9B0">str</span><span style="color:#D4D4D4">) -> FileMetaData:</span></span>
+<span class="line"><span style="color:#C586C0">    with</span><span style="color:#DCDCAA"> open</span><span style="color:#D4D4D4">(file_path, </span><span style="color:#CE9178">"rb"</span><span style="color:#D4D4D4">) </span><span style="color:#C586C0">as</span><span style="color:#D4D4D4"> file:</span></span>
+<span class="line"><span style="color:#D4D4D4">        footer_bytes = read_parquet_footer(file)</span></span>
+<span class="line"><span style="color:#D4D4D4">        transport = TTransport.TMemoryBuffer(footer_bytes)</span></span>
+<span class="line"><span style="color:#D4D4D4">        protocol = TCompactProtocol.TCompactProtocol(transport)</span></span>
+<span class="line"><span style="color:#D4D4D4">        metadata = FileMetaData()</span></span>
+<span class="line"><span style="color:#D4D4D4">        metadata.read(protocol)</span></span>
+<span class="line"><span style="color:#C586C0">        return</span><span style="color:#D4D4D4"> metadata</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">def</span><span style="color:#DCDCAA"> main</span><span style="color:#D4D4D4">() -> </span><span style="color:#569CD6">None</span><span style="color:#D4D4D4">:</span></span>
+<span class="line"><span style="color:#D4D4D4">    metadata = decode_parquet_metadata(</span><span style="color:#CE9178">"two_rows2.parquet"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#DCDCAA">    print</span><span style="color:#D4D4D4">(metadata)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">if</span><span style="color:#9CDCFE"> __name__</span><span style="color:#D4D4D4"> == </span><span style="color:#CE9178">'__main__'</span><span style="color:#D4D4D4">:</span></span>
+<span class="line"><span style="color:#D4D4D4">    main()</span></span></code></pre> <p>
+Running this script will read bytes from the footer (selected on the image above) of <code>two_rows2.parquet</code> file, decode
+    it to <code>FileMetaData</code> object and print it.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>FileMetaData(</span></span>
+<span class="line"><span>    version=2,</span></span>
+<span class="line"><span>    schema=[</span></span>
+<span class="line"><span>        SchemaElement(</span></span>
+<span class="line"><span>            type=None, type_length=None, repetition_type=0, name='schema', num_children=2,</span></span>
+<span class="line"><span>            converted_type=None, scale=None, precision=None, field_id=None,</span></span>
+<span class="line"><span>            logicalType=None</span></span>
+<span class="line"><span>        ),</span></span>
+<span class="line"><span>        SchemaElement(</span></span>
+<span class="line"><span>            type=2, type_length=None, repetition_type=1, name='colnum', num_children=None,</span></span>
+<span class="line"><span>            converted_type=None, scale=None, precision=None, field_id=None, logicalType=None</span></span>
+<span class="line"><span>        ),</span></span>
+<span class="line"><span>        SchemaElement(</span></span>
+<span class="line"><span>            type=6, type_length=None, repetition_type=1, name='colstr', num_children=None,</span></span>
+<span class="line"><span>            converted_type=0, scale=None, precision=None, field_id=None,</span></span>
+<span class="line"><span>            logicalType=LogicalType(</span></span>
+<span class="line"><span>                STRING=StringType(), MAP=None, LIST=None, ENUM=None, DECIMAL=None, DATE=None, TIME=None,</span></span>
+<span class="line"><span>                TIMESTAMP=None, INTEGER=None, UNKNOWN=None, JSON=None, BSON=None, UUID=None</span></span>
+<span class="line"><span>            )</span></span>
+<span class="line"><span>        )</span></span>
+<span class="line"><span>    ],</span></span>
+<span class="line"><span>    num_rows=2,</span></span>
+<span class="line"><span>    row_groups=[</span></span>
+<span class="line"><span>        RowGroup(</span></span>
+<span class="line"><span>            columns=[</span></span>
+<span class="line"><span>                ColumnChunk(</span></span>
+<span class="line"><span>                    file_path=None,</span></span>
+<span class="line"><span>                    file_offset=45,</span></span>
+<span class="line"><span>                    meta_data=ColumnMetaData(</span></span>
+<span class="line"><span>                        type=2, encodings=[0, 3],</span></span>
+<span class="line"><span>                        path_in_schema=['colnum'], codec=0, num_values=2, total_uncompressed_size=41,</span></span>
+<span class="line"><span>                        total_compressed_size=41, key_value_metadata=None, data_page_offset=4,</span></span>
+<span class="line"><span>                        index_page_offset=None, dictionary_page_offset=None, statistics=None,</span></span>
+<span class="line"><span>                        encoding_stats=[PageEncodingStats(page_type=0, encoding=0, count=1)],</span></span>
+<span class="line"><span>                        bloom_filter_offset=None, bloom_filter_length=None</span></span>
+<span class="line"><span>                    ),</span></span>
+<span class="line"><span>                    offset_index_offset=None, offset_index_length=None, column_index_offset=None,</span></span>
+<span class="line"><span>                    column_index_length=None, crypto_metadata=None, encrypted_column_metadata=None</span></span>
+<span class="line"><span>                ),</span></span>
+<span class="line"><span>                ColumnChunk(</span></span>
+<span class="line"><span>                    file_path=None,</span></span>
+<span class="line"><span>                    file_offset=121,</span></span>
+<span class="line"><span>                    meta_data=ColumnMetaData(</span></span>
+<span class="line"><span>                        type=6, encodings=[0, 3],</span></span>
+<span class="line"><span>                        path_in_schema=['colstr'], codec=0, num_values=2, total_uncompressed_size=37,</span></span>
+<span class="line"><span>                        total_compressed_size=37, key_value_metadata=None, data_page_offset=84,</span></span>
+<span class="line"><span>                        index_page_offset=None, dictionary_page_offset=None, statistics=None,</span></span>
+<span class="line"><span>                        encoding_stats=[PageEncodingStats(page_type=0, encoding=0, count=1)],</span></span>
+<span class="line"><span>                        bloom_filter_offset=None, offset_index_length=None, column_index_offset=None,</span></span>
+<span class="line"><span>                        column_index_length=None, crypto_metadata=None, encrypted_column_metadata=None</span></span>
+<span class="line"><span>                    ),</span></span>
+<span class="line"><span>                    offset_index_offset=None, offset_index_length=None, column_index_offset=None,</span></span>
+<span class="line"><span>                    column_index_length=None, crypto_metadata=None, encrypted_column_metadata=None</span></span>
+<span class="line"><span>                )</span></span>
+<span class="line"><span>            ],</span></span>
+<span class="line"><span>            total_byte_size=78, num_rows=2, sorting_columns=None, file_offset=4, total_compressed_size=78, ordinal=0</span></span>
+<span class="line"><span>        )</span></span>
+<span class="line"><span>    ],</span></span>
+<span class="line"><span>    key_value_metadata=None, created_by='parquet-cpp-arrow version 12.0.0',</span></span>
+<span class="line"><span>    column_orders=[</span></span>
+<span class="line"><span>        ColumnOrder(TYPE_ORDER=TypeDefinedOrder()), ColumnOrder(TYPE_ORDER=TypeDefinedOrder())</span></span>
+<span class="line"><span>    ],</span></span>
+<span class="line"><span>    encryption_algorithm=None, footer_signing_key_metadata=None</span></span>
+<span class="line"><span>)</span></span></code></pre> <p>
+That's almost insane how complicated is the structure of parquet <code>FileMetaData</code>. Let's keep in mind that our
+<code>two_rows2.parquet</code> has simplified format and that's why most on metadata is <code>None</code>. After reading Thrift specification
+    file and seeing this output for the first time I thought it would be silly to try decoding those bytes manually.
+</p> <p>
+There are lot of interesting information in <code>FileMetaData</code>. In general it's recommended to read this metadata first and
+    then based on this reach for the data - particular column (<code>ColumnChunk</code>). For instance we have
+</p> <ul> <li><code>file_offset</code> in <code>ColumnChunk</code> which represents byte offset from the beginning of the file to this column metadata</li> <li><code>data_page_offset</code> in <code>ColumnMetaData</code> which represents byte offset from the beginning of the file to first data page</li> <li>numer of rows for given column</li> <li>size (compressed and uncompressed) of column metadata</li> <li>information about encoding</li> </ul> <h3>Columns metadata and other parts</h3> <p>
+There are few chunks of bytes we haven't yet described. Two of those chunks are placed just after column values data. According to
+    Parquet high level structure it suppose to be corresponding column metadata.
+</p> <ul> <li>Metadata for column <code>colnum</code>:
+<div class="image-container" data-astro-cid-6kov3kig> <img src="/parquet/colnum-metadata.png" alt="colnum column metadata hex dump" style="max-width: 100%; max-height: 400px;" class data-astro-cid-6kov3kig> <p class="image-caption" data-astro-cid-6kov3kig>Hex dump showing colnum column metadata</p> </div>  </li> <li>Metadata for column <code>colstr</code>:
+<div class="image-container" data-astro-cid-6kov3kig> <img src="/parquet/colstr-metadata.png" alt="colstr column metadata hex dump" style="max-width: 100%; max-height: 400px;" class data-astro-cid-6kov3kig> <p class="image-caption" data-astro-cid-6kov3kig>Hex dump showing colstr column metadata</p> </div>  </li> </ul> <p>
+I won't go into details here. Column metadata in <code>ColumnChunk</code> contain information we already saw in <code>FileMetaData</code>.
+    It's additionally store there, because we might want to read or analyze columns in isolation. There are few bytes which
+    express <code>RowGroup</code>, <code>PageHeader</code> and <code>DataPageHeader</code> which are parts of high level parquet format. This is important
+    when we have much bigger files and data is split across many row groups and pages. In our example there is just single
+    row group and single page of data.
+</p> <h2 id="summary" class="chapter" data-astro-cid-5d3zeytc> <a href="#summary" data-astro-cid-5d3zeytc>Summary</a> </h2>  <p>
+I definitely deepened my knowledge about Apache Parquet file format while working on this post. I didn't expect this to
+    be such complex file format. I haven't analyzed every single byte in our basic example but nevertheless I learned and
+<strong>saw</strong> how data is structured and what is the format of metadata. I feel I overcome, even if not fully, the
+    boundary of binary file format and actually read it. I hope readers of this blog post will have at least glimpse of
+    internals of Apache Parquet file format.
+</p> <h2 id="references" class="chapter" data-astro-cid-5d3zeytc> <a href="#references" data-astro-cid-5d3zeytc>References</a> </h2>  <ol> <li><a href="https://parquet.apache.org">Apache Parquet</a></li> <li><a href="https://github.com/apache/parquet-format/blob/master/src/main/thrift/parquet.thrift">parquet.thrift</a></li> <li><a href="https://github.com/DSkrzypiec/blogSourceCodes/tree/master/20230609_Parquet">Scripts for this post</a></li> <li>Images with hex dumps were took from hex editor <a href="https://github.com/WerWolv/ImHex">ImHex</a></li> </ol>  </article> </main> </div> </div>  <!-- Global styles for .post-layout and .post-layout-sidebar -->  </body></html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-gvpn4u4b> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Implicit is great util it isn&#39;t - AWS CDK example</title><style>*,*:before,*:after{box-sizing:border-box}html,body{max-width:100%;overflow-x:hidden}html{-webkit-text-size-adjust:100%}:root{--bg-color: #111010;--text-primary: #ffe9c6;--text-secondary: #2AA198;--accent-color: #f97d43;--font-body: "Roboto", sans-serif;--font-code: "JetBrains Mono", monospace}html{font-size:19px}@media (max-width: 480px){html{font-size:16px}}@media (max-width: 360px){html{font-size:15px}}body{font-size:1rem;line-height:1.66;background-color:var(--bg-color);color:var(--text-primary);font-family:var(--font-body);margin:0;padding:0;word-wrap:break-word;overflow-wrap:break-word}h1{font-size:2.25rem;line-height:1.2}h2{font-size:1.75rem;line-height:1.3}h3{font-size:1.35rem;line-height:1.35}@media (max-width: 768px){h1{font-size:2rem}h2{font-size:1.5rem}h3{font-size:1.2rem}}@media (max-width: 480px){h1{font-size:1.75rem}h2{font-size:1.35rem}h3{font-size:1.1rem}}@media (max-width: 360px){h1{font-size:1.6rem}h2{font-size:1.25rem}h3{font-size:1.05rem}}a{color:var(--text-secondary);text-decoration:none}a:hover{text-decoration:underline}pre{background-color:#1e1e1e;border-radius:8px;padding:1rem;overflow-x:auto;margin:1rem 0;font-size:15px;font-family:var(--font-code)}code{background-color:transparent}pre>code{display:block}.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:.5rem 0}.toc a{color:var(--text-secondary);text-decoration:none}.toc a:hover{text-decoration:underline}.toc a.active{font-weight:700;color:var(--accent-color)}nav[data-astro-cid-dmqpwcec]{padding:1rem 0;text-align:center}ul[data-astro-cid-dmqpwcec]{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}@media (max-width: 480px){ul[data-astro-cid-dmqpwcec]{gap:1rem}a[data-astro-cid-dmqpwcec]{font-size:1rem;padding:.4rem .8rem}}@media (max-width: 360px){ul[data-astro-cid-dmqpwcec]{gap:.5rem}a[data-astro-cid-dmqpwcec]{font-size:.9rem;padding:.3rem .6rem}}li[data-astro-cid-dmqpwcec]{display:inline}a[data-astro-cid-dmqpwcec]{color:var(--text-primary);font-size:1.2rem;padding:.5rem 1rem;border:1px solid transparent;transition:all .3s ease-in-out}a[data-astro-cid-dmqpwcec]:hover{border:1px solid var(--accent-color);border-radius:4px;color:var(--accent-color)}.active[data-astro-cid-dmqpwcec] a[data-astro-cid-dmqpwcec]{color:var(--accent-color);font-weight:700;border-bottom:2px solid var(--accent-color)}hr[data-astro-cid-dmqpwcec]{margin-top:1rem;border:none;height:2px;background:var(--text-secondary);width:90%;max-width:800px;margin-left:auto;margin-right:auto}
+.post-title[data-astro-cid-resui2ln]{margin-bottom:2rem}.post-title[data-astro-cid-resui2ln] h1[data-astro-cid-resui2ln]{font-size:1.75rem;color:var(--accent-color);margin:0}.post-date[data-astro-cid-resui2ln]{font-size:1rem;color:var(--text-secondary);margin-top:.5rem}.publish-label[data-astro-cid-resui2ln]{font-weight:700;color:var(--text-primary)}
+.chapter[data-astro-cid-5d3zeytc]{font-size:2rem;margin-top:2rem;color:var(--accent-color)}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]{color:var(--accent-color);text-decoration:none}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]:hover{text-decoration:underline}
+.post-layout{display:flex;flex-direction:row}@media (min-width: 1024px){.post-layout{flex-direction:row}.post-layout-sidebar{position:fixed;left:2rem;top:10rem;width:200px;font-size:.85rem;padding:1rem;z-index:10}.post-layout-content{flex:1;max-width:1000px;margin:0 auto;padding-left:240px;padding-right:2rem}}@media (min-width: 1400px){.post-layout-content{max-width:1200px}}.post-layout-sidebar{display:none}@media (min-width: 1024px){.post-layout-sidebar{display:block}}@media (max-width: 1023px){.post-layout{flex-direction:column}.post-layout-content{width:100%;max-width:100%}}:global(pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.astro-code){width:100%!important;max-width:100%!important;box-sizing:border-box}:global(.astro-code pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.post-layout-content pre){max-width:100%!important;overflow-x:auto;word-wrap:break-word;white-space:pre-wrap}main[data-astro-cid-gvpn4u4b]{padding:2rem 1rem;max-width:900px;margin:0 auto;width:100%;box-sizing:border-box}@media (min-width: 1024px){main[data-astro-cid-gvpn4u4b]{padding:2rem 0;max-width:none}}@media (max-width: 768px){main[data-astro-cid-gvpn4u4b]{padding:1.5rem .75rem}}@media (max-width: 480px){main[data-astro-cid-gvpn4u4b]{padding:1rem .5rem}}article[data-astro-cid-gvpn4u4b]{max-width:800px;width:100%;margin:0 auto;color:var(--text-primary);box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word}h1[data-astro-cid-gvpn4u4b],h2[data-astro-cid-gvpn4u4b],h3[data-astro-cid-gvpn4u4b]{color:var(--accent-color);margin-top:1.5rem;word-wrap:break-word;overflow-wrap:break-word}p[data-astro-cid-gvpn4u4b]{color:var(--text-secondary);word-wrap:break-word;overflow-wrap:break-word;hyphens:auto}img[data-astro-cid-gvpn4u4b]{max-width:100%;max-height:400px;width:auto;height:auto;border-radius:8px;margin:1rem 0;object-fit:contain}@media (max-width: 768px){img[data-astro-cid-gvpn4u4b]{max-height:300px}}@media (max-width: 480px){img[data-astro-cid-gvpn4u4b]{max-height:250px}}blockquote[data-astro-cid-gvpn4u4b]{border-left:4px solid var(--accent-color);padding-left:1rem;color:var(--text-primary);font-style:italic;margin:1rem 0}code[data-astro-cid-gvpn4u4b]{font-family:monospace;background:#ffffff1a;padding:.2rem .4rem;border-radius:4px;font-size:.95rem}
+.image-container[data-astro-cid-6kov3kig]{display:flex;flex-direction:column;align-items:center;margin:1.5rem 0}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{width:auto;height:auto;border-radius:8px;object-fit:contain;box-shadow:0 4px 8px #0000001a}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig].inverted{filter:invert(1)}.image-caption[data-astro-cid-6kov3kig]{margin-top:.5rem;font-size:.9rem;color:var(--text-secondary, #666);font-style:italic;text-align:center;max-width:600px}@media (max-width: 768px){.image-container[data-astro-cid-6kov3kig]{margin:1rem 0}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{max-height:300px!important}}@media (max-width: 480px){.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{max-height:250px!important}.image-caption[data-astro-cid-6kov3kig]{font-size:.8rem;padding:0 1rem}}
+</style></head> <body data-astro-cid-gvpn4u4b> <header data-astro-cid-gvpn4u4b> <nav data-astro-cid-dmqpwcec> <ul data-astro-cid-dmqpwcec> <li class data-astro-cid-dmqpwcec> <a href="/" data-astro-cid-dmqpwcec>Posts</a> </li><li class data-astro-cid-dmqpwcec> <a href="/about" data-astro-cid-dmqpwcec>About</a> </li><li class data-astro-cid-dmqpwcec> <a href="/resume" data-astro-cid-dmqpwcec>Resume</a> </li> </ul> </nav>  </header> <!-- 
+      1) Wrap sidebar + main in a single parent .post-layout
+         so flexbox can place them side by side on large screens 
+    --> <div class="post-layout" data-astro-cid-gvpn4u4b> <!-- SIDEBAR --> <aside class="post-layout-sidebar" data-astro-cid-gvpn4u4b> <!-- The nav container that will hold our generated TOC --><nav id="table-of-contents" class="toc"></nav> <script client:load>
+  window.addEventListener('DOMContentLoaded', () => {
+    buildTOC();
+    highlightActiveHeading();
+  });
+
+  // 1. Build the TOC once the page is loaded
+  function buildTOC() {
+    const chapterHeadings = Array.from(document.querySelectorAll('h2.chapter[id]'));
+    const tocContainer = document.getElementById('table-of-contents');
+    if (!tocContainer) return;
+
+    const ul = document.createElement('ul');
+
+    chapterHeadings.forEach((heading) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+
+      // The heading has an `id` like "intro" or "symptoms"
+      a.href = `#${heading.id}`;
+
+      a.textContent = heading.textContent.trim();
+
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    tocContainer.appendChild(ul);
+  }
+
+    function highlightActiveHeading() {
+      const links = Array.from(document.querySelectorAll('#table-of-contents a'));
+      const headingEls = links.map((link) => document.getElementById(link.hash.slice(1)));
+
+      // 3. Create the observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            console.log(
+              `Heading: ${entry.target.id}, isIntersecting: ${entry.isIntersecting}`
+            );
+            if (entry.isIntersecting) {
+              // Remove 'active' from all links
+              links.forEach((l) => l.classList.remove('active'));
+
+              // Highlight the link for the heading that just entered
+              const activeLink = links.find(
+                (l) => l.hash === `#${entry.target.id}`
+              );
+              if (activeLink) {
+                activeLink.classList.add('active');
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '-15% 0px -60% 0px',
+          threshold: 0,
+        }
+      );
+
+      // 4. Observe each heading
+      headingEls.forEach((el) => {
+        if (el) {
+          console.log(`Observing heading: ${el.id}`);
+          observer.observe(el);
+        }
+      });
+    }
+</script> </aside> <!-- MAIN CONTENT AREA --> <div class="post-layout-content" data-astro-cid-gvpn4u4b> <main data-astro-cid-gvpn4u4b> <article data-astro-cid-gvpn4u4b>  <div class="post-title" data-astro-cid-resui2ln> <h1 data-astro-cid-resui2ln>Implicit is great util it isn&#39;t - AWS CDK example</h1> <p class="post-date" data-astro-cid-resui2ln> <span class="publish-label" data-astro-cid-resui2ln>Publish date:</span> 2023-01-25 </p> </div>  <div class="image-container" data-astro-cid-6kov3kig> <img src="/aws-cdk-implicit/example-state-machine.png" alt="AWS Step Functions state machine example" style="max-width: 100%; max-height: 400px;" class data-astro-cid-6kov3kig> <p class="image-caption" data-astro-cid-6kov3kig>Example of AWS Step Functions state machine with parallel Glue Jobs</p> </div>  <h2 id="intro" class="chapter" data-astro-cid-5d3zeytc> <a href="#intro" data-astro-cid-5d3zeytc>Intro</a> </h2>  <p>
+I'd like to start this post from praising <a href="https://aws.amazon.com/cdk/">AWS Cloud Development Kit</a> (AWS CDK). In my
+    opinion it's great! It's available in number of languages including Typescript, Go and Python. It has very good
+    documentation including examples and most common use cases.
+</p> <p>
+If you're not familiar with AWS CDK, I'd say it's a library (or set of libraries) defining every service and its objects
+    (constructs) on AWS. It's obviously used to define infrastructure-as-a-code but it has strong advantages on other
+    template-based formats. This implementation is done using actual programming languages. What that means is you can
+    easily parametrize your infrastructure, write higher level abstractions, pack some functionalities into a common internal
+    library and even write unit tests for your infrastructure.
+</p> <p>
+Almost all the time I've been using this piece of technology it was great but recently I've bumped into an interesting
+    case with <a href="https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html">AWS Step Functions</a>. I've spend some time
+    debugging and fixing it, so I thought that could be also interesting for someone else.
+</p> <h2 id="the-problem" class="chapter" data-astro-cid-5d3zeytc> <a href="#the-problem" data-astro-cid-5d3zeytc>The problem</a> </h2>  <p>
+One of our data pipelines looks as follows: it is defined as AWS Step Functions graph which primarily contains many
+    parallel AWS Glue Jobs (using Spark in Scala). Each of this Glue Jobs are instantiated by the same definition of
+    transformation but with specific configuration. When we are extending this pipeline, we are extending
+    configuration in the AWS CDK project and new Glue Job would be created within CI/CD. Looking at the graph at the top
+    extending pipeline would mean adding another <code>job-i</code> to the graph.
+</p> <p>
+So far so good but recently when I was, once again, extending this pipeline there was an error while deploying extended
+    version onto AWS. Error stated that <a href="https://aws.amazon.com/iam/">IAM</a> role policy definition of this Step Functions
+    state machine exceeded its limit - <code>10240</code> characters. What? I didn't do anything regarding permissions or adding new
+    constructs to the graph. Why role policy definition would be changed? I have examined this CDK stack implementation at
+    angle of permissions. We've explicitly defined static role policy definition for Glue Jobs, the same for each glue job
+    in the DAG, and static permissions for S3 buckets. Yet somehow role policy definition kept extending alongside with the
+    pipeline.
+</p> <h2 id="first-observations" class="chapter" data-astro-cid-5d3zeytc> <a href="#first-observations" data-astro-cid-5d3zeytc>First observations</a> </h2>  <p>
+I started looking at the pipeline state machine role policies. It's turned out there were two. The first one was our
+    explicit definition which came from AWS CDK stack implementation. Another one had very long name with
+<code>...RoleDefaultPolicyB345DSFGH96F</code> suffix. Looking at the definition of this policy I saw something similar to the
+    following
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#D4D4D4">{</span></span>
+<span class="line"><span style="color:#9CDCFE">"Statement"</span><span style="color:#D4D4D4">: [</span></span>
+<span class="line"><span style="color:#D4D4D4">    {</span></span>
+<span class="line"><span style="color:#9CDCFE">        "Action"</span><span style="color:#D4D4D4">: [</span></span>
+<span class="line"><span style="color:#CE9178">            "glue:StartJobRun"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#CE9178">            "glue:GetJobRun"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#CE9178">            "glue:GetJobRuns"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#CE9178">            "glue:BatchStopJobRun"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D4D4D4">        ],</span></span>
+<span class="line"><span style="color:#9CDCFE">        "Resource"</span><span style="color:#D4D4D4">: </span><span style="color:#CE9178">"arn:aws-glue:&#x3C;region>:&#x3C;acc>:job/&#x3C;env>-pipeline--table1"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#9CDCFE">        "Effect"</span><span style="color:#D4D4D4">: </span><span style="color:#CE9178">"Allow"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#D4D4D4">    },</span></span>
+<span class="line"><span style="color:#F44747">    ...</span></span>
+<span class="line"><span style="color:#D4D4D4">    {</span></span>
+<span class="line"><span style="color:#9CDCFE">        "Action"</span><span style="color:#D4D4D4">: [</span></span>
+<span class="line"><span style="color:#CE9178">            "glue:StartJobRun"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#CE9178">            "glue:GetJobRun"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#CE9178">            "glue:GetJobRuns"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#CE9178">            "glue:BatchStopJobRun"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D4D4D4">        ],</span></span>
+<span class="line"><span style="color:#9CDCFE">        "Resource"</span><span style="color:#D4D4D4">: </span><span style="color:#CE9178">"arn:aws-glue:&#x3C;region>:&#x3C;acc>:job/&#x3C;env>-pipeline--tableN"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#9CDCFE">        "Effect"</span><span style="color:#D4D4D4">: </span><span style="color:#CE9178">"Allow"</span><span style="color:#D4D4D4">,</span></span>
+<span class="line"><span style="color:#D4D4D4">    },</span></span>
+<span class="line"><span style="color:#D4D4D4">]</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+What I was almost sure immediately was the fact that this policy is automatically generated by AWS CDK based on Step
+    Functions state machine implementation. I was not sure if we messed something out in the implementation to cause
+    separate statement per table instead of getting resource path <code>.../<env>-pipeline-table*</env></code>.
+</p> <p>
+So for over a year this never turned out. I was the (un)fortune one who's changed exceeded policy definition limit but
+    this behaviour was happening from the beginning.
+</p> <h2 id="trying-to-fix" class="chapter" data-astro-cid-5d3zeytc> <a href="#trying-to-fix" data-astro-cid-5d3zeytc>Trying to fix the problem</a> </h2>  <p>
+At the beginning I tried to check if there is something wrong with the way how permissions (role policy definitions)
+    were passed around in AWS CDK Stack implementation in Typescript. There wasn't any change on the output. Then, instead
+    of sharing single role policy definition among each Glue Job, I tried to dynamically define separate role policy
+    definition for each Glue Job. With the same definition but at separate object. It also didn't have any impact on the
+    problem.
+</p> <p>
+I also tried to make some changes to role policy definition of the state machine but also without any results.
+    After that I've proceed to read all documentation regarding AWS Step Functions in general documentation and also
+    specific in AWS CDK documentation.
+</p> <h2 id="no-solution" class="chapter" data-astro-cid-5d3zeytc> <a href="#no-solution" data-astro-cid-5d3zeytc>Is there no solution?</a> </h2>  <p>
+After those initial tests and mini experiments I've seen that this auto-generated role policy definition for a state
+    machine includes necessary permissions for its children. Browsing through the documentation I was looking for if there a
+    switch to override this behaviour. One possible solution is to <strong>manually</strong> override policy definition after <code>cdk
+    deploy</code> but that is more of a workaround rather than actual solution.
+</p> <p>
+I believe I've read all of AWS CDK documentation in this regard and sadly I think, for now, there is no solution for
+    this behaviour. Due to time constraints I couldn't spend another day on investigation. If I'm wrong, please write to me
+    with a hint of solution.
+</p> <p>
+Overall it's very convenient that most of the time you don't have to think about "standard" permissions regarding
+    setting up a Step Functions state machine and everything just works implicitly. But if your are in one of those corners
+    it's a bit sad.
+</p> <p>
+Finally I've solve this problem by splitting those Glue Jobs into separate state machines (three of them) by some
+    dimension. The main state machine have initial logic and then included those three sub state machines. If in the future
+    one of those sub state machine will grow significantly we will be back to the square one. I'm not really happy about
+    this solution but it was definitely better option then manually override role policy definition after each deploy.
+</p> <h2 id="references" class="chapter" data-astro-cid-5d3zeytc> <a href="#references" data-astro-cid-5d3zeytc>References</a> </h2>  <ol> <li><a href="https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html">AWS CDK</a></li> <li><a href="https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html">AWS Step Functions</a></li> <li><a href="https://docs.aws.amazon.com/glue/latest/dg/add-job.html">AWS Glue Job</a></li> </ol>  </article> </main> </div> </div>  <!-- Global styles for .post-layout and .post-layout-sidebar -->  </body></html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-gvpn4u4b> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Polars - modern data frame library</title><style>*,*:before,*:after{box-sizing:border-box}html,body{max-width:100%;overflow-x:hidden}html{-webkit-text-size-adjust:100%}:root{--bg-color: #111010;--text-primary: #ffe9c6;--text-secondary: #2AA198;--accent-color: #f97d43;--font-body: "Roboto", sans-serif;--font-code: "JetBrains Mono", monospace}html{font-size:19px}@media (max-width: 480px){html{font-size:16px}}@media (max-width: 360px){html{font-size:15px}}body{font-size:1rem;line-height:1.66;background-color:var(--bg-color);color:var(--text-primary);font-family:var(--font-body);margin:0;padding:0;word-wrap:break-word;overflow-wrap:break-word}h1{font-size:2.25rem;line-height:1.2}h2{font-size:1.75rem;line-height:1.3}h3{font-size:1.35rem;line-height:1.35}@media (max-width: 768px){h1{font-size:2rem}h2{font-size:1.5rem}h3{font-size:1.2rem}}@media (max-width: 480px){h1{font-size:1.75rem}h2{font-size:1.35rem}h3{font-size:1.1rem}}@media (max-width: 360px){h1{font-size:1.6rem}h2{font-size:1.25rem}h3{font-size:1.05rem}}a{color:var(--text-secondary);text-decoration:none}a:hover{text-decoration:underline}pre{background-color:#1e1e1e;border-radius:8px;padding:1rem;overflow-x:auto;margin:1rem 0;font-size:15px;font-family:var(--font-code)}code{background-color:transparent}pre>code{display:block}.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:.5rem 0}.toc a{color:var(--text-secondary);text-decoration:none}.toc a:hover{text-decoration:underline}.toc a.active{font-weight:700;color:var(--accent-color)}nav[data-astro-cid-dmqpwcec]{padding:1rem 0;text-align:center}ul[data-astro-cid-dmqpwcec]{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}@media (max-width: 480px){ul[data-astro-cid-dmqpwcec]{gap:1rem}a[data-astro-cid-dmqpwcec]{font-size:1rem;padding:.4rem .8rem}}@media (max-width: 360px){ul[data-astro-cid-dmqpwcec]{gap:.5rem}a[data-astro-cid-dmqpwcec]{font-size:.9rem;padding:.3rem .6rem}}li[data-astro-cid-dmqpwcec]{display:inline}a[data-astro-cid-dmqpwcec]{color:var(--text-primary);font-size:1.2rem;padding:.5rem 1rem;border:1px solid transparent;transition:all .3s ease-in-out}a[data-astro-cid-dmqpwcec]:hover{border:1px solid var(--accent-color);border-radius:4px;color:var(--accent-color)}.active[data-astro-cid-dmqpwcec] a[data-astro-cid-dmqpwcec]{color:var(--accent-color);font-weight:700;border-bottom:2px solid var(--accent-color)}hr[data-astro-cid-dmqpwcec]{margin-top:1rem;border:none;height:2px;background:var(--text-secondary);width:90%;max-width:800px;margin-left:auto;margin-right:auto}
+.post-title[data-astro-cid-resui2ln]{margin-bottom:2rem}.post-title[data-astro-cid-resui2ln] h1[data-astro-cid-resui2ln]{font-size:1.75rem;color:var(--accent-color);margin:0}.post-date[data-astro-cid-resui2ln]{font-size:1rem;color:var(--text-secondary);margin-top:.5rem}.publish-label[data-astro-cid-resui2ln]{font-weight:700;color:var(--text-primary)}
+.chapter[data-astro-cid-5d3zeytc]{font-size:2rem;margin-top:2rem;color:var(--accent-color)}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]{color:var(--accent-color);text-decoration:none}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]:hover{text-decoration:underline}
+.post-layout{display:flex;flex-direction:row}@media (min-width: 1024px){.post-layout{flex-direction:row}.post-layout-sidebar{position:fixed;left:2rem;top:10rem;width:200px;font-size:.85rem;padding:1rem;z-index:10}.post-layout-content{flex:1;max-width:1000px;margin:0 auto;padding-left:240px;padding-right:2rem}}@media (min-width: 1400px){.post-layout-content{max-width:1200px}}.post-layout-sidebar{display:none}@media (min-width: 1024px){.post-layout-sidebar{display:block}}@media (max-width: 1023px){.post-layout{flex-direction:column}.post-layout-content{width:100%;max-width:100%}}:global(pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.astro-code){width:100%!important;max-width:100%!important;box-sizing:border-box}:global(.astro-code pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.post-layout-content pre){max-width:100%!important;overflow-x:auto;word-wrap:break-word;white-space:pre-wrap}main[data-astro-cid-gvpn4u4b]{padding:2rem 1rem;max-width:900px;margin:0 auto;width:100%;box-sizing:border-box}@media (min-width: 1024px){main[data-astro-cid-gvpn4u4b]{padding:2rem 0;max-width:none}}@media (max-width: 768px){main[data-astro-cid-gvpn4u4b]{padding:1.5rem .75rem}}@media (max-width: 480px){main[data-astro-cid-gvpn4u4b]{padding:1rem .5rem}}article[data-astro-cid-gvpn4u4b]{max-width:800px;width:100%;margin:0 auto;color:var(--text-primary);box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word}h1[data-astro-cid-gvpn4u4b],h2[data-astro-cid-gvpn4u4b],h3[data-astro-cid-gvpn4u4b]{color:var(--accent-color);margin-top:1.5rem;word-wrap:break-word;overflow-wrap:break-word}p[data-astro-cid-gvpn4u4b]{color:var(--text-secondary);word-wrap:break-word;overflow-wrap:break-word;hyphens:auto}img[data-astro-cid-gvpn4u4b]{max-width:100%;max-height:400px;width:auto;height:auto;border-radius:8px;margin:1rem 0;object-fit:contain}@media (max-width: 768px){img[data-astro-cid-gvpn4u4b]{max-height:300px}}@media (max-width: 480px){img[data-astro-cid-gvpn4u4b]{max-height:250px}}blockquote[data-astro-cid-gvpn4u4b]{border-left:4px solid var(--accent-color);padding-left:1rem;color:var(--text-primary);font-style:italic;margin:1rem 0}code[data-astro-cid-gvpn4u4b]{font-family:monospace;background:#ffffff1a;padding:.2rem .4rem;border-radius:4px;font-size:.95rem}
+.table-container[data-astro-cid-akey4rtz]{display:flex;flex-direction:column;align-items:center;margin:1.5rem 0;overflow-x:auto}.table[data-astro-cid-akey4rtz]{width:100%;border-collapse:collapse;font-size:.9rem;background-color:var(--bg-secondary, #1a1a1a);border-radius:8px;overflow:hidden;box-shadow:0 2px 8px #0000001a}.table-caption[data-astro-cid-akey4rtz]{margin-top:.5rem;font-size:.9rem;color:var(--text-secondary, #666);font-style:italic;text-align:center;max-width:600px}.table[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz],.table[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{padding:.75rem;text-align:left;border-bottom:1px solid var(--border-color, #333)}.table[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz]{background-color:var(--bg-primary, #2a2a2a);color:var(--text-primary, #ffffff);font-weight:600;font-size:.9rem}.table[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{color:var(--text-secondary, #cccccc)}.table-bordered[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz],.table-bordered[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{border:1px solid var(--border-color, #333)}.table-bordered[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz]{border-bottom:2px solid var(--border-color, #333)}.table-striped[data-astro-cid-akey4rtz] tbody[data-astro-cid-akey4rtz] tr[data-astro-cid-akey4rtz]:nth-child(odd){background-color:var(--bg-tertiary, #222)}.table-hover[data-astro-cid-akey4rtz] tbody[data-astro-cid-akey4rtz] tr[data-astro-cid-akey4rtz]:hover{background-color:var(--bg-hover, #333);transition:background-color .2s ease}@media (max-width: 768px){.table[data-astro-cid-akey4rtz]{font-size:.8rem}.table[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz],.table[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{padding:.5rem}.table-caption[data-astro-cid-akey4rtz]{font-size:.8rem;padding:0 1rem}}
+</style></head> <body data-astro-cid-gvpn4u4b> <header data-astro-cid-gvpn4u4b> <nav data-astro-cid-dmqpwcec> <ul data-astro-cid-dmqpwcec> <li class data-astro-cid-dmqpwcec> <a href="/" data-astro-cid-dmqpwcec>Posts</a> </li><li class data-astro-cid-dmqpwcec> <a href="/about" data-astro-cid-dmqpwcec>About</a> </li><li class data-astro-cid-dmqpwcec> <a href="/resume" data-astro-cid-dmqpwcec>Resume</a> </li> </ul> </nav>  </header> <!-- 
+      1) Wrap sidebar + main in a single parent .post-layout
+         so flexbox can place them side by side on large screens 
+    --> <div class="post-layout" data-astro-cid-gvpn4u4b> <!-- SIDEBAR --> <aside class="post-layout-sidebar" data-astro-cid-gvpn4u4b> <!-- The nav container that will hold our generated TOC --><nav id="table-of-contents" class="toc"></nav> <script client:load>
+  window.addEventListener('DOMContentLoaded', () => {
+    buildTOC();
+    highlightActiveHeading();
+  });
+
+  // 1. Build the TOC once the page is loaded
+  function buildTOC() {
+    const chapterHeadings = Array.from(document.querySelectorAll('h2.chapter[id]'));
+    const tocContainer = document.getElementById('table-of-contents');
+    if (!tocContainer) return;
+
+    const ul = document.createElement('ul');
+
+    chapterHeadings.forEach((heading) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+
+      // The heading has an `id` like "intro" or "symptoms"
+      a.href = `#${heading.id}`;
+
+      a.textContent = heading.textContent.trim();
+
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    tocContainer.appendChild(ul);
+  }
+
+    function highlightActiveHeading() {
+      const links = Array.from(document.querySelectorAll('#table-of-contents a'));
+      const headingEls = links.map((link) => document.getElementById(link.hash.slice(1)));
+
+      // 3. Create the observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            console.log(
+              `Heading: ${entry.target.id}, isIntersecting: ${entry.isIntersecting}`
+            );
+            if (entry.isIntersecting) {
+              // Remove 'active' from all links
+              links.forEach((l) => l.classList.remove('active'));
+
+              // Highlight the link for the heading that just entered
+              const activeLink = links.find(
+                (l) => l.hash === `#${entry.target.id}`
+              );
+              if (activeLink) {
+                activeLink.classList.add('active');
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '-15% 0px -60% 0px',
+          threshold: 0,
+        }
+      );
+
+      // 4. Observe each heading
+      headingEls.forEach((el) => {
+        if (el) {
+          console.log(`Observing heading: ${el.id}`);
+          observer.observe(el);
+        }
+      });
+    }
+</script> </aside> <!-- MAIN CONTENT AREA --> <div class="post-layout-content" data-astro-cid-gvpn4u4b> <main data-astro-cid-gvpn4u4b> <article data-astro-cid-gvpn4u4b>  <div class="post-title" data-astro-cid-resui2ln> <h1 data-astro-cid-resui2ln>Polars - modern data frame library</h1> <p class="post-date" data-astro-cid-resui2ln> <span class="publish-label" data-astro-cid-resui2ln>Publish date:</span> 2023-04-15 </p> </div>  <h2 id="intro" class="chapter" data-astro-cid-5d3zeytc> <a href="#intro" data-astro-cid-5d3zeytc>Intro</a> </h2>  <p>
+Almost five years passed since last time I've extensively used data frame library to calculate things. I sort of
+    switched from analyzing data and building application around that to more "regular" programming and data engineering. I
+    sometimes still use <code>data.table</code> in R or <code>pandas</code> in Python for ad-hoc analysis but nowadays I rarely need to do it.
+    For completeness I should add that data frame library is a software library that support operations on data frames
+    which are some kind of tables, usually kept in memory used for data analysis.
+</p> <p>
+Recently I was exposed to <a href="https://www.pola.rs">polars</a>. As they describe *Lightning-fast DataFrame library for Rust
+    and Python*. Initially I was neutral, thinking "ok just another data frame library just written in rust", but it turned
+    out to be better in several aspects than other libraries of this kind. I got excited about data frame library again, I
+    didn't expect this to happen.
+</p> <p>
+In this post I'm gonna describe why I thinks it's better alternative to pandas, <code>dplyr</code> or <code>data.table</code> and why I'm
+    excited.
+</p> <h2 id="my-history" class="chapter" data-astro-cid-5d3zeytc> <a href="#my-history" data-astro-cid-5d3zeytc>My history with data frame libraries</a> </h2>  <p>
+At the beginning of my career, when I was basically a data analyst, I used data frame libraries daily. Mostly I used
+<code>dplyr</code> and <code>data.table</code> in R and when I was working in Python I've used <code>pandas</code>. After around 2-3 years using mainly
+<code>dplyr</code> I switched to <code>data.table</code> due to better performance, more stable API and much fewer dependencies.
+</p> <h2 id="sample-syntax" class="chapter" data-astro-cid-5d3zeytc> <a href="#sample-syntax" data-astro-cid-5d3zeytc>Sample of syntax</a> </h2>  <p>
+I think it's a good idea to expose sample of Polars syntax before we move on. Here is a sample of basic usage of Polars
+    library in Python
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#C586C0">import</span><span style="color:#D4D4D4"> polars </span><span style="color:#C586C0">as</span><span style="color:#D4D4D4"> pl</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D4D4D4">df = pl.DataFrame(</span></span>
+<span class="line"><span style="color:#D4D4D4">    {</span></span>
+<span class="line"><span style="color:#CE9178">        "A"</span><span style="color:#D4D4D4">: [</span><span style="color:#B5CEA8">1</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">2</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">3</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">4</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">5</span><span style="color:#D4D4D4">],</span></span>
+<span class="line"><span style="color:#CE9178">        "fruits"</span><span style="color:#D4D4D4">: [</span><span style="color:#CE9178">"banana"</span><span style="color:#D4D4D4">, </span><span style="color:#CE9178">"banana"</span><span style="color:#D4D4D4">, </span><span style="color:#CE9178">"apple"</span><span style="color:#D4D4D4">, </span><span style="color:#CE9178">"apple"</span><span style="color:#D4D4D4">, </span><span style="color:#CE9178">"banana"</span><span style="color:#D4D4D4">],</span></span>
+<span class="line"><span style="color:#CE9178">        "B"</span><span style="color:#D4D4D4">: [</span><span style="color:#B5CEA8">5</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">4</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">3</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">2</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">1</span><span style="color:#D4D4D4">],</span></span>
+<span class="line"><span style="color:#CE9178">        "cars"</span><span style="color:#D4D4D4">: [</span><span style="color:#CE9178">"beetle"</span><span style="color:#D4D4D4">, </span><span style="color:#CE9178">"audi"</span><span style="color:#D4D4D4">, </span><span style="color:#CE9178">"beetle"</span><span style="color:#D4D4D4">, </span><span style="color:#CE9178">"beetle"</span><span style="color:#D4D4D4">, </span><span style="color:#CE9178">"beetle"</span><span style="color:#D4D4D4">],</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"><span style="color:#D4D4D4">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D4D4D4">df2 = (</span></span>
+<span class="line"><span style="color:#D4D4D4">    df.select(</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"A"</span><span style="color:#D4D4D4">),</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"fruits"</span><span style="color:#D4D4D4">),</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"B"</span><span style="color:#D4D4D4">).max().alias(</span><span style="color:#CE9178">"B_max"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    )</span></span>
+<span class="line"><span style="color:#D4D4D4">    .filter(pl.col(</span><span style="color:#CE9178">"fruits"</span><span style="color:#D4D4D4">) != </span><span style="color:#CE9178">"banana"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    .groupby(</span><span style="color:#CE9178">"fruits"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    .agg(</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"A"</span><span style="color:#D4D4D4">).sum().alias(</span><span style="color:#CE9178">"A_sum"</span><span style="color:#D4D4D4">),</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"B_max"</span><span style="color:#D4D4D4">).max()</span></span>
+<span class="line"><span style="color:#D4D4D4">    )</span></span>
+<span class="line"><span style="color:#D4D4D4">)</span></span></code></pre> <p>
+We can see there a simple manipulation on columns, filtration and aggregation.
+</p> <h2 id="why-excited" class="chapter" data-astro-cid-5d3zeytc> <a href="#why-excited" data-astro-cid-5d3zeytc>Why am I excited about Polars?</a> </h2>  <h3>Lazy evaluation</h3> <p>
+Polars provide very solid implementation of lazy evaluation comparing to other data frame libraries. To perform
+    transformations in lazy fashion you just need to call <code>.lazy()</code> method on a <code>DataFrame</code> which would convert it to
+<code>LazyFrame</code> which has almost identical API as regular <code>DataFrame</code>. The difference is that operation will be performed
+    when <code>.collect()</code> method will be called. There are at least two advantages of using this approach. One is a room for
+    optimization. Usually we perform many operations on data frames. In (default) eager mode top-level operations are
+    executed sequentially. In lazy approach, just before <code>.collect()</code> we are aware of all operations and the engine can
+    perform optimization because at the time no operation is being executed yet. I've not precisely measure the difference in
+    performance but it feels to be significant. Let's consider the following example on a ~4GB data frame.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#D4D4D4">df2 = (</span></span>
+<span class="line"><span style="color:#D4D4D4">    df</span></span>
+<span class="line"><span style="color:#D4D4D4">    .select(</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.when(pl.col(</span><span style="color:#CE9178">"id"</span><span style="color:#D4D4D4">) % </span><span style="color:#B5CEA8">13</span><span style="color:#D4D4D4"> == </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">).then(-</span><span style="color:#B5CEA8">1</span><span style="color:#D4D4D4">).otherwise(pl.col(</span><span style="color:#CE9178">"id"</span><span style="color:#D4D4D4">)).alias(</span><span style="color:#CE9178">"special_id"</span><span style="color:#D4D4D4">),</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"animal"</span><span style="color:#D4D4D4">),</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"rand_num"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    )</span></span>
+<span class="line"><span style="color:#D4D4D4">    .filter(</span></span>
+<span class="line"><span style="color:#D4D4D4">        (pl.col(</span><span style="color:#CE9178">"rand_num"</span><span style="color:#D4D4D4">) >= </span><span style="color:#B5CEA8">50.0</span><span style="color:#D4D4D4">) &#x26; (pl.col(</span><span style="color:#CE9178">"rand_num"</span><span style="color:#D4D4D4">) &#x3C; </span><span style="color:#B5CEA8">250.0</span><span style="color:#D4D4D4">))</span></span>
+<span class="line"><span style="color:#D4D4D4">    .groupby(</span><span style="color:#CE9178">"animal"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    .agg(</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"rand_num"</span><span style="color:#D4D4D4">).mean().alias(</span><span style="color:#CE9178">"rand_num_avg"</span><span style="color:#D4D4D4">),</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"rand_num"</span><span style="color:#D4D4D4">).max().alias(</span><span style="color:#CE9178">"rand_num_max"</span><span style="color:#D4D4D4">),</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"rand_num"</span><span style="color:#D4D4D4">).filter(pl.col(</span><span style="color:#CE9178">"special_id"</span><span style="color:#D4D4D4">) == -</span><span style="color:#B5CEA8">1</span><span style="color:#D4D4D4">).mean().alias(</span><span style="color:#CE9178">"rand_num_special_avg"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    )</span></span>
+<span class="line"><span style="color:#D4D4D4">    .sort(</span><span style="color:#CE9178">"animal"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">)</span></span></code></pre> <p>
+It took on my MacBook Air M1 (8GB RAM) around 12 seconds to calculate. When we use lazy API which differers only in
+    adding <code>.lazy()</code> and <code>.collect()</code>:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#D4D4D4">df2 = (</span></span>
+<span class="line"><span style="color:#D4D4D4">    df</span></span>
+<span class="line"><span style="color:#D4D4D4">    .lazy()</span></span>
+<span class="line"><span style="color:#D4D4D4">    .select(</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.when(pl.col(</span><span style="color:#CE9178">"id"</span><span style="color:#D4D4D4">) % </span><span style="color:#B5CEA8">13</span><span style="color:#D4D4D4"> == </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">).then(-</span><span style="color:#B5CEA8">1</span><span style="color:#D4D4D4">).otherwise(pl.col(</span><span style="color:#CE9178">"id"</span><span style="color:#D4D4D4">)).alias(</span><span style="color:#CE9178">"special_id"</span><span style="color:#D4D4D4">),</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"animal"</span><span style="color:#D4D4D4">),</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"rand_num"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    )</span></span>
+<span class="line"><span style="color:#D4D4D4">    .filter(</span></span>
+<span class="line"><span style="color:#D4D4D4">        (pl.col(</span><span style="color:#CE9178">"rand_num"</span><span style="color:#D4D4D4">) >= </span><span style="color:#B5CEA8">50.0</span><span style="color:#D4D4D4">) &#x26; (pl.col(</span><span style="color:#CE9178">"rand_num"</span><span style="color:#D4D4D4">) &#x3C; </span><span style="color:#B5CEA8">250.0</span><span style="color:#D4D4D4">))</span></span>
+<span class="line"><span style="color:#D4D4D4">    .groupby(</span><span style="color:#CE9178">"animal"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    .agg(</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"rand_num"</span><span style="color:#D4D4D4">).mean().alias(</span><span style="color:#CE9178">"rand_num_avg"</span><span style="color:#D4D4D4">),</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"rand_num"</span><span style="color:#D4D4D4">).max().alias(</span><span style="color:#CE9178">"rand_num_max"</span><span style="color:#D4D4D4">),</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.col(</span><span style="color:#CE9178">"rand_num"</span><span style="color:#D4D4D4">).filter(pl.col(</span><span style="color:#CE9178">"special_id"</span><span style="color:#D4D4D4">) == -</span><span style="color:#B5CEA8">1</span><span style="color:#D4D4D4">).mean().alias(</span><span style="color:#CE9178">"rand_num_special_avg"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    )</span></span>
+<span class="line"><span style="color:#D4D4D4">    .sort(</span><span style="color:#CE9178">"animal"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    .collect()</span></span>
+<span class="line"><span style="color:#D4D4D4">)</span></span></code></pre> <p>
+it takes on average 8 seconds. This was very straightforward transformation and still we got over 30% faster using lazy
+    API. Moreover lazy API is very convenient to split transformation into multiply functions where each takes
+<code>polars.LazyFrame</code> as input argument and return <code>polars.LazyFrame</code>.
+</p> <p>
+The second important advantage of lazy evaluation is operating on bigger data then fits in memory but still using the
+    same API. We can use <a href="https://pola-rs.github.io/polars/py-polars/html/reference/api/polars.scan_csv.html">scan_csv</a> to
+    lazily read data from disk. Here's an example of data aggregation done on 27GB file on 8GB RAM MacBook:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A9955"># Analyzing 27GB data file on 8GB RAM</span></span>
+<span class="line"><span style="color:#D4D4D4">df_big = pl.scan_csv(</span><span style="color:#9CDCFE">source</span><span style="color:#D4D4D4">=</span><span style="color:#CE9178">'test.csv'</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">has_header</span><span style="color:#D4D4D4">=</span><span style="color:#569CD6">True</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">sep</span><span style="color:#D4D4D4">=</span><span style="color:#CE9178">";"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D4D4D4">(</span></span>
+<span class="line"><span style="color:#D4D4D4">    df_big</span></span>
+<span class="line"><span style="color:#D4D4D4">    .groupby(</span><span style="color:#CE9178">'animal'</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    .agg(</span></span>
+<span class="line"><span style="color:#D4D4D4">        [</span></span>
+<span class="line"><span style="color:#D4D4D4">            pl.count().alias(</span><span style="color:#CE9178">'cnt'</span><span style="color:#D4D4D4">),</span></span>
+<span class="line"><span style="color:#D4D4D4">            pl.sum(</span><span style="color:#CE9178">'rand_num'</span><span style="color:#D4D4D4">).alias(</span><span style="color:#CE9178">'rand_num_sum'</span><span style="color:#D4D4D4">),</span></span>
+<span class="line"><span style="color:#D4D4D4">            pl.avg(</span><span style="color:#CE9178">'rand_num'</span><span style="color:#D4D4D4">).alias(</span><span style="color:#CE9178">'rand_num_avg'</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">        ]</span></span>
+<span class="line"><span style="color:#D4D4D4">    )</span></span>
+<span class="line"><span style="color:#D4D4D4">    .collect()</span></span>
+<span class="line"><span style="color:#D4D4D4">)</span></span></code></pre> <p>
+It was executed on average in 38 seconds. For comparison I've run similar aggregation, but just for single sum to keep
+    it even simpler on AWK using the following command
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">awk</span><span style="color:#569CD6"> -F</span><span style="color:#CE9178"> ';'</span><span style="color:#CE9178"> '{ x[$2] += $3 } END { print x }'</span><span style="color:#CE9178"> test.csv</span></span></code></pre> <p>
+It took 16 minutes(!) on the same 27GB csv file.
+</p> <h3>Expressions</h3> <p>
+One of fundamental building blocks in Polars are Polars expressions. In general Polars expression is any function that
+    transforms Polars series into another Polars series. There are few advantageous aspects of Polars expressions. Firstly
+    expressions are optimized. Particularly if expression need to be executed on multiple columns, then it will be
+    parallelized. It's one of reasons behind Polars high performance. Another aspect is the fact the Polars implements an
+    extensive set of builtin expressions that user can compose (chain) into more complex expressions. Functional approach
+    of chaining expressions enable great developer experience in my opinion. We have already seen some examples of
+    expressions like
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#D4D4D4">pl.col(</span><span style="color:#CE9178">"A"</span><span style="color:#D4D4D4">).sum().alias(</span><span style="color:#CE9178">"A_sum"</span><span style="color:#D4D4D4">)</span></span></code></pre> <p>
+What I additionally really like about expression is the fact that it's a separate thing. Somewhat detached from
+<code>DataFrame</code> object itself. What I mean is that we can freely define custom transformation in isolation from the actual
+    data on which we would apply those transformation. In real world use cases of data frame libraries data transformations
+    get very complex in matter of seconds. Having a way to break down complexity in clean form and without impact on
+    performance is in my opinion one of the most important characteristics.
+</p> <p>
+Let's consider the following example
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#569CD6">def</span><span style="color:#DCDCAA"> sum_positive</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">expr</span><span style="color:#D4D4D4">: pl.Expr) -> pl.Expr:</span></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#D4D4D4"> expr.filter(expr > </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">).sum()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">def</span><span style="color:#DCDCAA"> merge_if</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">col_name_a</span><span style="color:#D4D4D4">: </span><span style="color:#4EC9B0">str</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">col_name_b</span><span style="color:#D4D4D4">: </span><span style="color:#4EC9B0">str</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">predicate</span><span style="color:#D4D4D4">: pl.Expr) -> pl.Expr:</span></span>
+<span class="line"><span style="color:#CE9178">    """Merges two columns into one by given predicate"""</span></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#D4D4D4"> (</span></span>
+<span class="line"><span style="color:#D4D4D4">        pl.when(predicate).</span></span>
+<span class="line"><span style="color:#D4D4D4">        then(pl.col(col_name_a)).</span></span>
+<span class="line"><span style="color:#D4D4D4">        otherwise(pl.col(col_name_b))</span></span>
+<span class="line"><span style="color:#D4D4D4">    )</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D4D4D4">df.with_columns(</span></span>
+<span class="line"><span style="color:#D4D4D4">    sum_positive(pl.col(</span><span style="color:#CE9178">"B"</span><span style="color:#D4D4D4">)).alias(</span><span style="color:#CE9178">"B_sum_pos"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">).with_columns(</span></span>
+<span class="line"><span style="color:#D4D4D4">    merge_if(</span><span style="color:#CE9178">"B"</span><span style="color:#D4D4D4">, </span><span style="color:#CE9178">"B_sum_pos"</span><span style="color:#D4D4D4">, pl.col(</span><span style="color:#CE9178">"fruits"</span><span style="color:#D4D4D4">) == </span><span style="color:#CE9178">"banana"</span><span style="color:#D4D4D4">).alias(</span><span style="color:#CE9178">"B_or_pos"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">)</span></span></code></pre> <div class="table-container" data-astro-cid-akey4rtz> <table class="table table-striped table-bordered table-hover" data-astro-cid-akey4rtz> <thead data-astro-cid-akey4rtz> <tr data-astro-cid-akey4rtz> <th data-astro-cid-akey4rtz>A</th><th data-astro-cid-akey4rtz>fruits</th><th data-astro-cid-akey4rtz>B</th><th data-astro-cid-akey4rtz>cars</th><th data-astro-cid-akey4rtz>B_sum_pos</th><th data-astro-cid-akey4rtz>B_or_pos</th> </tr> </thead> <tbody data-astro-cid-akey4rtz> <tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>1</td><td data-astro-cid-akey4rtz>banana</td><td data-astro-cid-akey4rtz>5</td><td data-astro-cid-akey4rtz>beetle</td><td data-astro-cid-akey4rtz>15</td><td data-astro-cid-akey4rtz>5</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>2</td><td data-astro-cid-akey4rtz>banana</td><td data-astro-cid-akey4rtz>4</td><td data-astro-cid-akey4rtz>audi</td><td data-astro-cid-akey4rtz>15</td><td data-astro-cid-akey4rtz>4</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>3</td><td data-astro-cid-akey4rtz>apple</td><td data-astro-cid-akey4rtz>3</td><td data-astro-cid-akey4rtz>beetle</td><td data-astro-cid-akey4rtz>15</td><td data-astro-cid-akey4rtz>15</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>4</td><td data-astro-cid-akey4rtz>apple</td><td data-astro-cid-akey4rtz>2</td><td data-astro-cid-akey4rtz>beetle</td><td data-astro-cid-akey4rtz>15</td><td data-astro-cid-akey4rtz>15</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>5</td><td data-astro-cid-akey4rtz>banana</td><td data-astro-cid-akey4rtz>1</td><td data-astro-cid-akey4rtz>beetle</td><td data-astro-cid-akey4rtz>15</td><td data-astro-cid-akey4rtz>1</td> </tr> </tbody> </table> <p class="table-caption" data-astro-cid-akey4rtz>Result of Polars expression example</p> </div>  <p>
+We defined functions that either takes a Polar expression or strings which are meant to be column names. Usually
+<code>pl.Expr</code> sounds more generic but in case when this expression is mostly use for <code>pl.col(_)</code> case, then probably
+    choosing string-based API would be more concise. Anyway the fact that we can compose and decompose expressions is
+    great.
+</p> <h3>Apache Arrow format</h3> <p>
+Polars uses <a href="https://arrow.apache.org">Apache Arrow</a> format for storing the data in data frame. It's very cool, because
+    Apache Arrow format is very cool. Apache aims to standardize data format for fast and efficient computation. The
+    standardization part here is the most important. If you need to exchange data between systems and all of them know how
+    to read/write the same (binary) format, then there is no need to serialization and deserialization which causes a lot
+    of waste. In my personal experience it was a huge win when we use Polars together with <a href="https://www.ray.io">Ray</a>. We
+    can store and then retrieve Polars data frames from ray without any serialization, which improved performance and made
+    interoperability seamless.
+</p> <h3>Python-Rust interoperability</h3> <p>
+Polars, as name suggests (Pola[rs]), is written primarily in Rust but is also exposed as Python library. What I really like
+    it is the fact that one can easily implement new custom transformation in Rust and intergate it with Polars in
+    Python. More details in the next paragraph.
+</p> <h2 id="rust" class="chapter" data-astro-cid-5d3zeytc> <a href="#rust" data-astro-cid-5d3zeytc>Rust</a> </h2>  <p>
+As I said I really like Polars implementation in Rust. Writing high performance transformation run in parallel or async
+    is much easier then doing the same in C. At least for some people. So if you have crucial piece of data transformation
+    that is run frequently and probably on big data sets and needs to be executed as fast as possible you can spend some
+    time and write custom optimized implementation in Rust and then use it from your Python project.
+</p> <p>
+I've tried to do so. It was my first time writing Python module in Rust. It turned out to be simpler then I thought.
+    Let me briefly sketch how minimal setup looks like.
+</p> <h3>Python module written in Rust</h3> <p>
+To write a Python module in rust one can use great library <a href="https://pyo3.rs/v0.18.2/">pyo3</a> which defines Python
+    bindings in Rust. Another tool which helped me with this task was <a href="https://pypi.org/project/maturin/">maturin</a> a Python
+    library for building and publishing Rust code as a Python module. It's not necessary but it's very convenient. If you
+    want to follow above examples you need to have Python (3.x) and Rust compiler installed.
+</p> <p>
+Let's start from creating a new project and virtual env:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">mkdir</span><span style="color:#CE9178"> rust_from_python</span></span>
+<span class="line"><span style="color:#DCDCAA">cd</span><span style="color:#CE9178"> rust_from_python</span></span>
+<span class="line"><span style="color:#DCDCAA">python3</span><span style="color:#569CD6"> -m</span><span style="color:#CE9178"> venv</span><span style="color:#CE9178"> .venv</span></span>
+<span class="line"><span style="color:#DCDCAA">source</span><span style="color:#CE9178"> .venv/bin/activate</span></span>
+<span class="line"><span style="color:#DCDCAA">pip</span><span style="color:#CE9178"> install</span><span style="color:#CE9178"> maturin</span></span></code></pre> <p>
+Now we can create a new Rust project within <code>rust_from_python</code> catalog using <code>maturin new</code> command.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">maturin</span><span style="color:#CE9178"> new</span><span style="color:#CE9178"> my_rust_module</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A9955"># You can choose option how it can be created (I use pyo3)</span></span>
+<span class="line"><span style="color:#6A9955"># The following catalog will be created:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DCDCAA">.</span></span>
+<span class="line"><span style="color:#DCDCAA">└──</span><span style="color:#CE9178"> my_rust_module</span></span>
+<span class="line"><span style="color:#DCDCAA">    ├──</span><span style="color:#CE9178"> Cargo.toml</span></span>
+<span class="line"><span style="color:#DCDCAA">    ├──</span><span style="color:#CE9178"> pyproject.toml</span></span>
+<span class="line"><span style="color:#DCDCAA">    └──</span><span style="color:#CE9178"> src</span></span>
+<span class="line"><span style="color:#DCDCAA">        └──</span><span style="color:#CE9178"> lib.rs</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#DCDCAA">3</span><span style="color:#CE9178"> directories,</span><span style="color:#B5CEA8"> 3</span><span style="color:#CE9178"> files</span></span></code></pre> <p>
+By default <code>./my_rust_module/src/lib.rs</code> contains a single function <code>sum_as_string</code> as an example:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="rust"><code><span class="line"><span style="color:#569CD6">use</span><span style="color:#4EC9B0"> pyo3</span><span style="color:#D4D4D4">::</span><span style="color:#4EC9B0">prelude</span><span style="color:#D4D4D4">::*;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A9955">/// Formats the sum of two numbers as string.</span></span>
+<span class="line"><span style="color:#D4D4D4">#[pyfunction]</span></span>
+<span class="line"><span style="color:#569CD6">fn</span><span style="color:#DCDCAA"> sum_as_string</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">a</span><span style="color:#D4D4D4">: </span><span style="color:#4EC9B0">usize</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">b</span><span style="color:#D4D4D4">: </span><span style="color:#4EC9B0">usize</span><span style="color:#D4D4D4">) -> </span><span style="color:#4EC9B0">PyResult</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#4EC9B0">String</span><span style="color:#D4D4D4">> {</span></span>
+<span class="line"><span style="color:#4EC9B0">    Ok</span><span style="color:#D4D4D4">((</span><span style="color:#9CDCFE">a</span><span style="color:#D4D4D4"> + </span><span style="color:#9CDCFE">b</span><span style="color:#D4D4D4">).</span><span style="color:#DCDCAA">to_string</span><span style="color:#D4D4D4">())</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A9955">/// A Python module implemented in Rust.</span></span>
+<span class="line"><span style="color:#D4D4D4">#[pymodule]</span></span>
+<span class="line"><span style="color:#569CD6">fn</span><span style="color:#DCDCAA"> my_rust_module</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">_py</span><span style="color:#D4D4D4">: </span><span style="color:#4EC9B0">Python</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">m</span><span style="color:#D4D4D4">: &#x26;</span><span style="color:#4EC9B0">PyModule</span><span style="color:#D4D4D4">) -> </span><span style="color:#4EC9B0">PyResult</span><span style="color:#D4D4D4">&#x3C;()> {</span></span>
+<span class="line"><span style="color:#9CDCFE">    m</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">add_function</span><span style="color:#D4D4D4">(</span><span style="color:#DCDCAA">wrap_pyfunction!</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">sum_as_string</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">m</span><span style="color:#D4D4D4">)?)?;</span></span>
+<span class="line"><span style="color:#4EC9B0">    Ok</span><span style="color:#D4D4D4">(())</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+To build the Rust project as a Python module using maturin we can simply execute <code>maturin develop</code> from
+<code>./my_rust_module</code> catalog. And it's done! Easy as that. Now we can use it in our Python project. For example let's
+    create a <code>main.py</code> script in the <code>rust_from_python</code> top catalog:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#C586C0">from</span><span style="color:#D4D4D4"> my_rust_module </span><span style="color:#C586C0">import</span><span style="color:#D4D4D4"> sum_as_string</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">def</span><span style="color:#DCDCAA"> main</span><span style="color:#D4D4D4">() -> </span><span style="color:#569CD6">None</span><span style="color:#D4D4D4">:</span></span>
+<span class="line"><span style="color:#DCDCAA">    print</span><span style="color:#D4D4D4">(sum_as_string(</span><span style="color:#B5CEA8">42</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">13</span><span style="color:#D4D4D4">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">if</span><span style="color:#9CDCFE"> __name__</span><span style="color:#D4D4D4"> == </span><span style="color:#CE9178">'__main__'</span><span style="color:#D4D4D4">:</span></span>
+<span class="line"><span style="color:#D4D4D4">    main()</span></span></code></pre> <p>
+Now we can just run it and we'll get <code>55</code> as a result.
+</p> <h3>Polars extension in Rust</h3> <p>
+Author or Polars, Ritchie Vink, wrote additionally a helper Rust crate (library)
+<a href="https://github.com/pola-rs/pyo3-polars">pyo3-polars</a> to make passing <code>DataFrame</code> and <code>Series</code> between Python and Rust
+    even simpler. This crate basically defines two new types in Rust <code>PyDataFrame</code> and <code>PySeries</code> which can be converted to
+    and from Python Polars <code>DataFrame</code> and <code>Series</code>.
+</p> <p>
+Now let's try to add new function written in Rust that will take a polars <code>DataFrame</code> from Python, then will calculate
+    a new column in Rust and return it back to Python. To do so we need to add <code>polars</code> and <code>pyo3-polars</code> dependencies in
+    our <code>my_rust_module</code> project.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="toml"><code><span class="line"><span style="color:#F44747">// Cargo.toml</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D4D4D4">[dependencies]</span></span>
+<span class="line"><span style="color:#9CDCFE">polars</span><span style="color:#D4D4D4"> = { </span><span style="color:#9CDCFE">version</span><span style="color:#D4D4D4"> = </span><span style="color:#CE9178">"0.27.2"</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">features</span><span style="color:#D4D4D4"> = [</span><span style="color:#CE9178">"fmt"</span><span style="color:#D4D4D4">] }</span></span>
+<span class="line"><span style="color:#9CDCFE">polars-core</span><span style="color:#D4D4D4"> = { </span><span style="color:#9CDCFE">version</span><span style="color:#D4D4D4"> = </span><span style="color:#CE9178">"0.27.2"</span><span style="color:#D4D4D4"> }</span></span>
+<span class="line"><span style="color:#9CDCFE">pyo3-polars</span><span style="color:#D4D4D4"> = </span><span style="color:#CE9178">"0.2.0"</span></span></code></pre> <p>
+Now we can add new function <code>calc_new_column_in_rust</code> which takes a Polars <code>DataFrame</code> from Python, calculates a new
+    column in Rust and finally return Python Polars <code>DataFrame</code> back to Python. Our <code>./my_rust_module/src/lib.rs</code> after
+    adding new function looks like this
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="rust"><code><span class="line"><span style="color:#569CD6">use</span><span style="color:#4EC9B0"> pyo3</span><span style="color:#D4D4D4">::</span><span style="color:#4EC9B0">prelude</span><span style="color:#D4D4D4">::*;</span></span>
+<span class="line"><span style="color:#569CD6">use</span><span style="color:#4EC9B0"> pyo3</span><span style="color:#D4D4D4">::</span><span style="color:#4EC9B0">exceptions</span><span style="color:#D4D4D4">::</span><span style="color:#4EC9B0">PyBaseException</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#569CD6">use</span><span style="color:#4EC9B0"> pyo3_polars</span><span style="color:#D4D4D4">::</span><span style="color:#4EC9B0">PyDataFrame</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#569CD6">use</span><span style="color:#4EC9B0"> polars</span><span style="color:#D4D4D4">::</span><span style="color:#4EC9B0">frame</span><span style="color:#D4D4D4">::</span><span style="color:#4EC9B0">DataFrame</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#569CD6">use</span><span style="color:#4EC9B0"> polars_core</span><span style="color:#D4D4D4">::</span><span style="color:#4EC9B0">prelude</span><span style="color:#D4D4D4">::*;</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A9955">/// Formats the sum of two numbers as string.</span></span>
+<span class="line"><span style="color:#D4D4D4">#[pyfunction]</span></span>
+<span class="line"><span style="color:#569CD6">fn</span><span style="color:#DCDCAA"> sum_as_string</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">a</span><span style="color:#D4D4D4">: </span><span style="color:#4EC9B0">usize</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">b</span><span style="color:#D4D4D4">: </span><span style="color:#4EC9B0">usize</span><span style="color:#D4D4D4">) -> </span><span style="color:#4EC9B0">PyResult</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#4EC9B0">String</span><span style="color:#D4D4D4">> {</span></span>
+<span class="line"><span style="color:#4EC9B0">    Ok</span><span style="color:#D4D4D4">((</span><span style="color:#9CDCFE">a</span><span style="color:#D4D4D4"> + </span><span style="color:#9CDCFE">b</span><span style="color:#D4D4D4">).</span><span style="color:#DCDCAA">to_string</span><span style="color:#D4D4D4">())</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A9955">/// A Python module implemented in Rust.</span></span>
+<span class="line"><span style="color:#D4D4D4">#[pymodule]</span></span>
+<span class="line"><span style="color:#569CD6">fn</span><span style="color:#DCDCAA"> my_rust_module</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">_py</span><span style="color:#D4D4D4">: </span><span style="color:#4EC9B0">Python</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">m</span><span style="color:#D4D4D4">: &#x26;</span><span style="color:#4EC9B0">PyModule</span><span style="color:#D4D4D4">) -> </span><span style="color:#4EC9B0">PyResult</span><span style="color:#D4D4D4">&#x3C;()> {</span></span>
+<span class="line"><span style="color:#9CDCFE">    m</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">add_function</span><span style="color:#D4D4D4">(</span><span style="color:#DCDCAA">wrap_pyfunction!</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">sum_as_string</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">m</span><span style="color:#D4D4D4">)?)?;</span></span>
+<span class="line"><span style="color:#9CDCFE">    m</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">add_function</span><span style="color:#D4D4D4">(</span><span style="color:#DCDCAA">wrap_pyfunction!</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">calc_new_column_in_rust</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">m</span><span style="color:#D4D4D4">)?)?;</span></span>
+<span class="line"><span style="color:#4EC9B0">    Ok</span><span style="color:#D4D4D4">(())</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D4D4D4">#[pyfunction]</span></span>
+<span class="line"><span style="color:#569CD6">fn</span><span style="color:#DCDCAA"> calc_new_column_in_rust</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">pydf</span><span style="color:#D4D4D4">: </span><span style="color:#4EC9B0">PyDataFrame</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">col_name</span><span style="color:#D4D4D4">: &#x26;</span><span style="color:#4EC9B0">str</span><span style="color:#D4D4D4">) -> </span><span style="color:#4EC9B0">PyResult</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#4EC9B0">PyDataFrame</span><span style="color:#D4D4D4">> {</span></span>
+<span class="line"><span style="color:#569CD6">    let</span><span style="color:#569CD6"> mut</span><span style="color:#9CDCFE"> df</span><span style="color:#D4D4D4">: </span><span style="color:#4EC9B0">DataFrame</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">pydf</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">into</span><span style="color:#D4D4D4">();</span></span>
+<span class="line"><span style="color:#569CD6">    let</span><span style="color:#9CDCFE"> rows</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">df</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">height</span><span style="color:#D4D4D4">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">    let</span><span style="color:#569CD6"> mut</span><span style="color:#9CDCFE"> xs</span><span style="color:#D4D4D4">: </span><span style="color:#4EC9B0">Vec</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#4EC9B0">i32</span><span style="color:#D4D4D4">> = </span><span style="color:#DCDCAA">vec!</span><span style="color:#D4D4D4">{};</span></span>
+<span class="line"><span style="color:#C586C0">    for</span><span style="color:#9CDCFE"> i</span><span style="color:#569CD6"> in</span><span style="color:#B5CEA8"> 0</span><span style="color:#D4D4D4">..</span><span style="color:#9CDCFE">rows</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#9CDCFE">        xs</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">push</span><span style="color:#D4D4D4">((</span><span style="color:#9CDCFE">i</span><span style="color:#569CD6"> as</span><span style="color:#4EC9B0"> i32</span><span style="color:#D4D4D4">) + </span><span style="color:#B5CEA8">143</span><span style="color:#D4D4D4"> / </span><span style="color:#B5CEA8">4</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">    let</span><span style="color:#9CDCFE"> s</span><span style="color:#D4D4D4"> = </span><span style="color:#4EC9B0">Series</span><span style="color:#D4D4D4">::</span><span style="color:#DCDCAA">new</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">col_name</span><span style="color:#D4D4D4">, &#x26;</span><span style="color:#9CDCFE">xs</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#569CD6">    let</span><span style="color:#9CDCFE"> df2</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">df</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">with_column</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">s</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">    match</span><span style="color:#9CDCFE"> df2</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#4EC9B0">        Ok</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">frame</span><span style="color:#D4D4D4">) => </span><span style="color:#4EC9B0">Ok</span><span style="color:#D4D4D4">(</span><span style="color:#DCDCAA">PyDataFrame</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">frame</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">clone</span><span style="color:#D4D4D4">())),</span></span>
+<span class="line"><span style="color:#9CDCFE">        _</span><span style="color:#D4D4D4"> => </span><span style="color:#4EC9B0">Err</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">PyBaseException</span><span style="color:#D4D4D4">::</span><span style="color:#DCDCAA">new_err</span><span style="color:#D4D4D4">(</span><span style="color:#CE9178">"Error from rust"</span><span style="color:#D4D4D4">))</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+Now we are ready to do <code>maturin develop</code> once again to build new version of Rust extension module. Once it's done we
+    can use our new Rust function <code>calc_new_column_in_rust</code> in our Python code:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#C586C0">import</span><span style="color:#D4D4D4"> polars </span><span style="color:#C586C0">as</span><span style="color:#D4D4D4"> pl</span></span>
+<span class="line"><span style="color:#C586C0">from</span><span style="color:#D4D4D4"> my_rust_module </span><span style="color:#C586C0">import</span><span style="color:#D4D4D4"> sum_as_string, calc_new_column_in_rust</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">def</span><span style="color:#DCDCAA"> main</span><span style="color:#D4D4D4">() -> </span><span style="color:#569CD6">None</span><span style="color:#D4D4D4">:</span></span>
+<span class="line"><span style="color:#DCDCAA">    print</span><span style="color:#D4D4D4">(sum_as_string(</span><span style="color:#B5CEA8">42</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">13</span><span style="color:#D4D4D4">))</span></span>
+<span class="line"><span style="color:#D4D4D4">    df = pl.DataFrame({</span><span style="color:#CE9178">"A"</span><span style="color:#D4D4D4">: [</span><span style="color:#B5CEA8">1</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">42</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">13</span><span style="color:#D4D4D4">, -</span><span style="color:#B5CEA8">10</span><span style="color:#D4D4D4">]})</span></span>
+<span class="line"><span style="color:#D4D4D4">    df2 = calc_new_column_in_rust(df, </span><span style="color:#CE9178">"rust_col"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#DCDCAA">    print</span><span style="color:#D4D4D4">(df2)</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">if</span><span style="color:#9CDCFE"> __name__</span><span style="color:#D4D4D4"> == </span><span style="color:#CE9178">'__main__'</span><span style="color:#D4D4D4">:</span></span>
+<span class="line"><span style="color:#D4D4D4">    main()</span></span></code></pre> <h2 id="summary" class="chapter" data-astro-cid-5d3zeytc> <a href="#summary" data-astro-cid-5d3zeytc>Summary</a> </h2>  <p>
+In summary I really enjoyed Polars after my initial encounter. I liked it performance, expressions and how easy it is
+    to write custom extensions in Rust. For sure I'll continue to learn more about Polars. Perhaps it would be a good idea
+    to write few examples in Rust using Polars next time and take a closer look into Polars implementation details.
+</p> <h2 id="references" class="chapter" data-astro-cid-5d3zeytc> <a href="#references" data-astro-cid-5d3zeytc>References</a> </h2>  <ol> <li><a href="https://www.pola.rs">Polars</a></li> <li><a href="https://pyo3.rs/v0.18.2/">pyo3</a></li> <li><a href="https://github.com/pola-rs/pyo3-polars">pyo3-polars</a></li> </ol>  </article> </main> </div> </div>  <!-- Global styles for .post-layout and .post-layout-sidebar -->  </body></html>
