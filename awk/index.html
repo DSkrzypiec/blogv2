@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-gvpn4u4b> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AWK - forgotten data engineering tool</title><style>*,*:before,*:after{box-sizing:border-box}html,body{max-width:100%;overflow-x:hidden}html{-webkit-text-size-adjust:100%}:root{--bg-color: #111010;--text-primary: #ffe9c6;--text-secondary: #2AA198;--accent-color: #f97d43;--font-body: "Roboto", sans-serif;--font-code: "JetBrains Mono", monospace}html{font-size:19px}@media (max-width: 480px){html{font-size:16px}}@media (max-width: 360px){html{font-size:15px}}body{font-size:1rem;line-height:1.66;background-color:var(--bg-color);color:var(--text-primary);font-family:var(--font-body);margin:0;padding:0;word-wrap:break-word;overflow-wrap:break-word}h1{font-size:2.25rem;line-height:1.2}h2{font-size:1.75rem;line-height:1.3}h3{font-size:1.35rem;line-height:1.35}@media (max-width: 768px){h1{font-size:2rem}h2{font-size:1.5rem}h3{font-size:1.2rem}}@media (max-width: 480px){h1{font-size:1.75rem}h2{font-size:1.35rem}h3{font-size:1.1rem}}@media (max-width: 360px){h1{font-size:1.6rem}h2{font-size:1.25rem}h3{font-size:1.05rem}}a{color:var(--text-secondary);text-decoration:none}a:hover{text-decoration:underline}pre{background-color:#1e1e1e;border-radius:8px;padding:1rem;overflow-x:auto;margin:1rem 0;font-size:15px;font-family:var(--font-code)}code{background-color:transparent}pre>code{display:block}.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:.5rem 0}.toc a{color:var(--text-secondary);text-decoration:none}.toc a:hover{text-decoration:underline}.toc a.active{font-weight:700;color:var(--accent-color)}nav[data-astro-cid-dmqpwcec]{padding:1rem 0;text-align:center}ul[data-astro-cid-dmqpwcec]{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}@media (max-width: 480px){ul[data-astro-cid-dmqpwcec]{gap:1rem}a[data-astro-cid-dmqpwcec]{font-size:1rem;padding:.4rem .8rem}}@media (max-width: 360px){ul[data-astro-cid-dmqpwcec]{gap:.5rem}a[data-astro-cid-dmqpwcec]{font-size:.9rem;padding:.3rem .6rem}}li[data-astro-cid-dmqpwcec]{display:inline}a[data-astro-cid-dmqpwcec]{color:var(--text-primary);font-size:1.2rem;padding:.5rem 1rem;border:1px solid transparent;transition:all .3s ease-in-out}a[data-astro-cid-dmqpwcec]:hover{border:1px solid var(--accent-color);border-radius:4px;color:var(--accent-color)}.active[data-astro-cid-dmqpwcec] a[data-astro-cid-dmqpwcec]{color:var(--accent-color);font-weight:700;border-bottom:2px solid var(--accent-color)}hr[data-astro-cid-dmqpwcec]{margin-top:1rem;border:none;height:2px;background:var(--text-secondary);width:90%;max-width:800px;margin-left:auto;margin-right:auto}
+.post-title[data-astro-cid-resui2ln]{margin-bottom:2rem}.post-title[data-astro-cid-resui2ln] h1[data-astro-cid-resui2ln]{font-size:1.75rem;color:var(--accent-color);margin:0}.post-date[data-astro-cid-resui2ln]{font-size:1rem;color:var(--text-secondary);margin-top:.5rem}.publish-label[data-astro-cid-resui2ln]{font-weight:700;color:var(--text-primary)}
+.chapter[data-astro-cid-5d3zeytc]{font-size:2rem;margin-top:2rem;color:var(--accent-color)}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]{color:var(--accent-color);text-decoration:none}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]:hover{text-decoration:underline}
+.post-layout{display:flex;flex-direction:row}@media (min-width: 1024px){.post-layout{flex-direction:row}.post-layout-sidebar{position:fixed;left:2rem;top:10rem;width:200px;font-size:.85rem;padding:1rem;z-index:10}.post-layout-content{flex:1;max-width:1000px;margin:0 auto;padding-left:240px;padding-right:2rem}}@media (min-width: 1400px){.post-layout-content{max-width:1200px}}.post-layout-sidebar{display:none}@media (min-width: 1024px){.post-layout-sidebar{display:block}}@media (max-width: 1023px){.post-layout{flex-direction:column}.post-layout-content{width:100%;max-width:100%}}:global(pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.astro-code){width:100%!important;max-width:100%!important;box-sizing:border-box}:global(.astro-code pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.post-layout-content pre){max-width:100%!important;overflow-x:auto;word-wrap:break-word;white-space:pre-wrap}main[data-astro-cid-gvpn4u4b]{padding:2rem 1rem;max-width:900px;margin:0 auto;width:100%;box-sizing:border-box}@media (min-width: 1024px){main[data-astro-cid-gvpn4u4b]{padding:2rem 0;max-width:none}}@media (max-width: 768px){main[data-astro-cid-gvpn4u4b]{padding:1.5rem .75rem}}@media (max-width: 480px){main[data-astro-cid-gvpn4u4b]{padding:1rem .5rem}}article[data-astro-cid-gvpn4u4b]{max-width:800px;width:100%;margin:0 auto;color:var(--text-primary);box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word}h1[data-astro-cid-gvpn4u4b],h2[data-astro-cid-gvpn4u4b],h3[data-astro-cid-gvpn4u4b]{color:var(--accent-color);margin-top:1.5rem;word-wrap:break-word;overflow-wrap:break-word}p[data-astro-cid-gvpn4u4b]{color:var(--text-secondary);word-wrap:break-word;overflow-wrap:break-word;hyphens:auto}img[data-astro-cid-gvpn4u4b]{max-width:100%;max-height:400px;width:auto;height:auto;border-radius:8px;margin:1rem 0;object-fit:contain}@media (max-width: 768px){img[data-astro-cid-gvpn4u4b]{max-height:300px}}@media (max-width: 480px){img[data-astro-cid-gvpn4u4b]{max-height:250px}}blockquote[data-astro-cid-gvpn4u4b]{border-left:4px solid var(--accent-color);padding-left:1rem;color:var(--text-primary);font-style:italic;margin:1rem 0}code[data-astro-cid-gvpn4u4b]{font-family:monospace;background:#ffffff1a;padding:.2rem .4rem;border-radius:4px;font-size:.95rem}
+</style></head> <body data-astro-cid-gvpn4u4b> <header data-astro-cid-gvpn4u4b> <nav data-astro-cid-dmqpwcec> <ul data-astro-cid-dmqpwcec> <li class data-astro-cid-dmqpwcec> <a href="/" data-astro-cid-dmqpwcec>Posts</a> </li><li class data-astro-cid-dmqpwcec> <a href="/about" data-astro-cid-dmqpwcec>About</a> </li><li class data-astro-cid-dmqpwcec> <a href="/resume.html" data-astro-cid-dmqpwcec>Resume</a> </li> </ul> </nav>  </header> <!-- 
+      1) Wrap sidebar + main in a single parent .post-layout
+         so flexbox can place them side by side on large screens 
+    --> <div class="post-layout" data-astro-cid-gvpn4u4b> <!-- SIDEBAR --> <aside class="post-layout-sidebar" data-astro-cid-gvpn4u4b> <!-- The nav container that will hold our generated TOC --><nav id="table-of-contents" class="toc"></nav> <script client:load>
+  window.addEventListener('DOMContentLoaded', () => {
+    buildTOC();
+    highlightActiveHeading();
+  });
+
+  // 1. Build the TOC once the page is loaded
+  function buildTOC() {
+    const chapterHeadings = Array.from(document.querySelectorAll('h2.chapter[id]'));
+    const tocContainer = document.getElementById('table-of-contents');
+    if (!tocContainer) return;
+
+    const ul = document.createElement('ul');
+
+    chapterHeadings.forEach((heading) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+
+      // The heading has an `id` like "intro" or "symptoms"
+      a.href = `#${heading.id}`;
+
+      a.textContent = heading.textContent.trim();
+
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    tocContainer.appendChild(ul);
+  }
+
+    function highlightActiveHeading() {
+      const links = Array.from(document.querySelectorAll('#table-of-contents a'));
+      const headingEls = links.map((link) => document.getElementById(link.hash.slice(1)));
+
+      // 3. Create the observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            console.log(
+              `Heading: ${entry.target.id}, isIntersecting: ${entry.isIntersecting}`
+            );
+            if (entry.isIntersecting) {
+              // Remove 'active' from all links
+              links.forEach((l) => l.classList.remove('active'));
+
+              // Highlight the link for the heading that just entered
+              const activeLink = links.find(
+                (l) => l.hash === `#${entry.target.id}`
+              );
+              if (activeLink) {
+                activeLink.classList.add('active');
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '-15% 0px -60% 0px',
+          threshold: 0,
+        }
+      );
+
+      // 4. Observe each heading
+      headingEls.forEach((el) => {
+        if (el) {
+          console.log(`Observing heading: ${el.id}`);
+          observer.observe(el);
+        }
+      });
+    }
+</script> </aside> <!-- MAIN CONTENT AREA --> <div class="post-layout-content" data-astro-cid-gvpn4u4b> <main data-astro-cid-gvpn4u4b> <article data-astro-cid-gvpn4u4b>  <div class="post-title" data-astro-cid-resui2ln> <h1 data-astro-cid-resui2ln>AWK - forgotten data engineering tool</h1> <p class="post-date" data-astro-cid-resui2ln> <span class="publish-label" data-astro-cid-resui2ln>Publish date:</span> 2022-03-20 </p> </div>  <h2 id="intro" class="chapter" data-astro-cid-5d3zeytc> <a href="#intro" data-astro-cid-5d3zeytc>Intro</a> </h2>  <p>
+This post is dedicated to <a href="https://en.wikipedia.org/wiki/AWK">AWK</a>. Despite the
+    title AWK is not totally forgotten but still many data scientists and engineers
+    have never heard of it. Since 1977 many things have changed in the data world,
+    especially the scale, but in my opinion it's still relevant and useful tool in
+    2022.
+</p> <h2 id="what-is-awk" class="chapter" data-astro-cid-5d3zeytc> <a href="#what-is-awk" data-astro-cid-5d3zeytc>What is AWK</a> </h2>  <p>
+AWK is a tiny, domain-specific language for text processing. It can be used via
+<code>awk</code> program which is usually available on UNIX-like systems out of the box. From
+    this point on I'll use AWK as the reference to the language and the program.
+</p> <p>
+AWK was designed and developed by three office mates in Bell Labs in 1970s -
+    Alfred <strong>A</strong>ho, Peter <strong>W</strong>einberger and Brian <strong>K</strong>ernighan. It was released
+    in 1977! 45 years ago! How many IT tools from over 40 years ago do you use?  I
+    guess not many. Why would anyone should use tool that old? Isn't there any
+    better alternatives nowadays? Basically no. I think mentioned authors solved
+    very generic problem using simple and beautiful design. There is very little to
+    improve in term of design and high level aspects.
+</p> <p>
+For someone who has never used AWK it's probably still not clear what AWK
+    does, so let's focus on this point.
+</p> <h2 id="how-awk-works" class="chapter" data-astro-cid-5d3zeytc> <a href="#how-awk-works" data-astro-cid-5d3zeytc>How AWK works</a> </h2>  <p>
+AWK basically scans input (from standard in or a file) line by line and perform
+    some action on fields (data separated by given separator). Actions might be
+    conditioned on patterns. There is already few characteristics of a general
+    problem that AWK is designed to solve:
+</p> <ol> <li>Structured data with known separator</li> <li>Processing data from input line by line</li> <li>Using pattern matching for actions</li> </ol> <p>
+AWK script is composed of the beginning, list of rules and the ending.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="awk"><code><span class="line"><span style="color:#6A9955"># AWK script in file simple.awk</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">BEGIN</span><span style="color:#D4D4D4"> { </span><span style="color:#569CD6">print</span><span style="color:#CE9178"> "Hello!"</span><span style="color:#D4D4D4"> }</span></span>
+<span class="line"><span style="color:#569CD6">$1</span><span style="color:#D4D4D4"> > </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4"> { </span><span style="color:#569CD6">print</span><span style="color:#CE9178"> "Positive"</span><span style="color:#D4D4D4"> }</span></span>
+<span class="line"><span style="color:#569CD6">$1</span><span style="color:#D4D4D4"> == </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4"> { </span><span style="color:#569CD6">print</span><span style="color:#CE9178"> "Zero"</span><span style="color:#D4D4D4"> }</span></span>
+<span class="line"><span style="color:#569CD6">$1</span><span style="color:#D4D4D4"> &#x3C; </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4"> { </span><span style="color:#569CD6">print</span><span style="color:#CE9178"> "Negative"</span><span style="color:#D4D4D4"> }</span></span>
+<span class="line"><span style="color:#569CD6">END</span><span style="color:#D4D4D4"> { </span><span style="color:#569CD6">print</span><span style="color:#CE9178"> "End!"</span><span style="color:#D4D4D4"> }</span></span></code></pre> <p>
+The above AWK script will goes line by line from the input and start to apply
+    rules for each line. In our scripts we have three rules - all based on value of
+    the first field <code>$1</code>. Based on the first field value appropriate code block
+    will be executed. Furthermore we have <code>BEGIN</code> and <code>END</code> clause. Their code
+    blocks will be executed <strong>once</strong> at the beginning and end of processing.
+    Clauses <code>BEGIN</code> and <code>END</code> are optional.
+</p> <p>
+For example (flag <code>-f</code> states that script would be applied)
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">echo</span><span style="color:#CE9178"> "42</span></span>
+<span class="line"><span style="color:#CE9178">-10</span></span>
+<span class="line"><span style="color:#CE9178">0"</span><span style="color:#D4D4D4"> | </span><span style="color:#DCDCAA">awk</span><span style="color:#569CD6"> -f</span><span style="color:#CE9178"> simple.awk</span></span></code></pre> <p>
+will produce the following output:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Hello!</span></span>
+<span class="line"><span>Positive</span></span>
+<span class="line"><span>Negative</span></span>
+<span class="line"><span>Zero</span></span>
+<span class="line"><span>End!</span></span></code></pre> <p>
+As we saw in previous example we can refer to field using <code>$&#123;number&#125;</code> notation.
+    Also <code>$0</code> means the whole line. In particular one of simplest AWK usages for
+    printing the file can be written as
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">awk</span><span style="color:#CE9178"> '{ print $0 }'</span><span style="color:#CE9178"> file.txt</span></span></code></pre> <p>
+We also have (for each line) variables like <code>NR</code> - number of current row and
+<code>NF</code> - number of fields in the current row. Immediate use of this can be
+    validation whenever the file contains 4 columns in every row:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">awk</span><span style="color:#569CD6"> -F</span><span style="color:#CE9178"> ';'</span><span style="color:#CE9178"> 'NF != 4 { print $0 }'</span><span style="color:#CE9178"> file.txt</span></span></code></pre> <p>
+Flag <code>-F</code> specify the separator. The above example will print every line in
+<code>file.txt</code> with number of columns different from 4.
+</p> <p>
+More examples will come in next chapters. For now we'll be focused only on the
+    main idea and mechanism of AWK.
+</p> <h2 id="when-awk-useful" class="chapter" data-astro-cid-5d3zeytc> <a href="#when-awk-useful" data-astro-cid-5d3zeytc>When AWK might be useful</a> </h2>  <ul> <li>You have to perform data manipulation or validation on file that doesn't fit
+      into RAM</li> <li>You want to perform some data manipulation within *NIX pipeline (where input
+      is output of another program)</li> <li>You want to perform data checks after export into flat file</li> <li>You've got raw database dump in form of a file and want to look into it
+      quickly</li> </ul> <p>
+I even read of some uses of AWK in production using scripts with over 1k lines
+    of codes. In my opinion it might a be a bit of exaggeration.
+</p> <h2 id="one-liners" class="chapter" data-astro-cid-5d3zeytc> <a href="#one-liners" data-astro-cid-5d3zeytc>One-liners</a> </h2>  <p>
+Here you can find few one-liners used by myself most often with AWK.
+</p> <h3>Number of columns (fields) validation</h3> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">awk</span><span style="color:#CE9178"> 'NF != 4 { print $0 }'</span><span style="color:#CE9178"> file.txt</span></span></code></pre> <p>
+For each line <code>number of fields is not equal to four</code> rule is checked. If this
+    case happen, than the program will print the whole row using <code>$0</code>. Otherwise
+    there is no action. So if all rows in the <code>file.txt</code> would have four columns,
+    than the above command should return nothing.
+</p> <h3>Sum of values from given column</h3> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">awk</span><span style="color:#CE9178"> '{ sum += $3 } END { print sum }'</span><span style="color:#CE9178"> file.txt</span></span></code></pre> <p>
+For each line variable <code>sum</code> will be incremented by value from third field.
+    After all rows are processed <code>sum</code> variable will be printed.
+</p> <h3>Count distinct values</h3> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">awk</span><span style="color:#CE9178"> '</span></span>
+<span class="line"><span style="color:#CE9178">    { cnt[$1]++ }</span></span>
+<span class="line"><span style="color:#CE9178">    END {</span></span>
+<span class="line"><span style="color:#CE9178">        for (x in cnt) printf "%s: %d</span></span>
+<span class="line"><span style="color:#CE9178">", x, cnt[x]</span></span>
+<span class="line"><span style="color:#CE9178">    }'</span><span style="color:#CE9178"> file.txt</span></span></code></pre> <p>
+In this case for each row map (dictionary) variable <code>cnt</code> will increment value
+    for key based on value from the first field. After all lines are processed we
+    will iterate over the <code>cnt</code> map and prints its keys and values.
+</p> <h2 id="summary" class="chapter" data-astro-cid-5d3zeytc> <a href="#summary" data-astro-cid-5d3zeytc>Summary</a> </h2>  <p>
+In my opinion AWK is just brilliant. Remarkable, timeless and simple design.
+    From my experience AWK has the highest return on investment from all IT tools
+    I've learned. One can easily learn AWK in 1-2 hours and its applications are
+    really wide, especially if you work with data at some level. Even if you don't
+    really work with data but you do use UNIX-like terminal than also you should
+    find AWK very useful.
+</p> <p> <strong>PS.</strong> There is a recording on YouTube of the talk between Lex Fridman and Brian
+    Kernighan. I highly recommend it - really interesting.
+<a href="https://youtu.be/O9upVbGSBFo?t=2121">Link</a>.
+</p> <h2 id="references" class="chapter" data-astro-cid-5d3zeytc> <a href="#references" data-astro-cid-5d3zeytc>References</a> </h2>  <ol> <li><a href="https://en.wikipedia.org/wiki/AWK">Wiki</a></li> <li><a href="https://www.gnu.org/software/gawk/manual/gawk.html">The GNU Awk User's Guide</a></li> </ol>  </article> </main> </div> </div>  <!-- Global styles for .post-layout and .post-layout-sidebar -->  </body></html>
