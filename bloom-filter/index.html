@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-gvpn4u4b> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bloom filter</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.26/dist/katex.min.css" crossorigin="anonymous"><style>*,*:before,*:after{box-sizing:border-box}html,body{max-width:100%;overflow-x:hidden}html{-webkit-text-size-adjust:100%}:root{--bg-color: #111010;--text-primary: #ffe9c6;--text-secondary: #2AA198;--accent-color: #f97d43;--font-body: "Roboto", sans-serif;--font-code: "JetBrains Mono", monospace}html{font-size:19px}@media (max-width: 480px){html{font-size:16px}}@media (max-width: 360px){html{font-size:15px}}body{font-size:1rem;line-height:1.66;background-color:var(--bg-color);color:var(--text-primary);font-family:var(--font-body);margin:0;padding:0;word-wrap:break-word;overflow-wrap:break-word}h1{font-size:2.25rem;line-height:1.2}h2{font-size:1.75rem;line-height:1.3}h3{font-size:1.35rem;line-height:1.35}@media (max-width: 768px){h1{font-size:2rem}h2{font-size:1.5rem}h3{font-size:1.2rem}}@media (max-width: 480px){h1{font-size:1.75rem}h2{font-size:1.35rem}h3{font-size:1.1rem}}@media (max-width: 360px){h1{font-size:1.6rem}h2{font-size:1.25rem}h3{font-size:1.05rem}}a{color:var(--text-secondary);text-decoration:none}a:hover{text-decoration:underline}pre{background-color:#1e1e1e;border-radius:8px;padding:1rem;overflow-x:auto;margin:1rem 0;font-size:15px;font-family:var(--font-code)}code{background-color:transparent}pre>code{display:block}.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:.5rem 0}.toc a{color:var(--text-secondary);text-decoration:none}.toc a:hover{text-decoration:underline}.toc a.active{font-weight:700;color:var(--accent-color)}nav[data-astro-cid-dmqpwcec]{padding:1rem 0;text-align:center}ul[data-astro-cid-dmqpwcec]{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}@media (max-width: 480px){ul[data-astro-cid-dmqpwcec]{gap:1rem}a[data-astro-cid-dmqpwcec]{font-size:1rem;padding:.4rem .8rem}}@media (max-width: 360px){ul[data-astro-cid-dmqpwcec]{gap:.5rem}a[data-astro-cid-dmqpwcec]{font-size:.9rem;padding:.3rem .6rem}}li[data-astro-cid-dmqpwcec]{display:inline}a[data-astro-cid-dmqpwcec]{color:var(--text-primary);font-size:1.2rem;padding:.5rem 1rem;border:1px solid transparent;transition:all .3s ease-in-out}a[data-astro-cid-dmqpwcec]:hover{border:1px solid var(--accent-color);border-radius:4px;color:var(--accent-color)}.active[data-astro-cid-dmqpwcec] a[data-astro-cid-dmqpwcec]{color:var(--accent-color);font-weight:700;border-bottom:2px solid var(--accent-color)}hr[data-astro-cid-dmqpwcec]{margin-top:1rem;border:none;height:2px;background:var(--text-secondary);width:90%;max-width:800px;margin-left:auto;margin-right:auto}
+.post-title[data-astro-cid-resui2ln]{margin-bottom:2rem}.post-title[data-astro-cid-resui2ln] h1[data-astro-cid-resui2ln]{font-size:1.75rem;color:var(--accent-color);margin:0}.post-date[data-astro-cid-resui2ln]{font-size:1rem;color:var(--text-secondary);margin-top:.5rem}.publish-label[data-astro-cid-resui2ln]{font-weight:700;color:var(--text-primary)}
+.chapter[data-astro-cid-5d3zeytc]{font-size:2rem;margin-top:2rem;color:var(--accent-color)}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]{color:var(--accent-color);text-decoration:none}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]:hover{text-decoration:underline}
+.post-layout{display:flex;flex-direction:row}@media (min-width: 1024px){.post-layout{flex-direction:row}.post-layout-sidebar{position:fixed;left:2rem;top:10rem;width:200px;font-size:.85rem;padding:1rem;z-index:10}.post-layout-content{flex:1;max-width:1000px;margin:0 auto;padding-left:240px;padding-right:2rem}}@media (min-width: 1400px){.post-layout-content{max-width:1200px}}.post-layout-sidebar{display:none}@media (min-width: 1024px){.post-layout-sidebar{display:block}}@media (max-width: 1023px){.post-layout{flex-direction:column}.post-layout-content{width:100%;max-width:100%}}:global(pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.astro-code){width:100%!important;max-width:100%!important;box-sizing:border-box}:global(.astro-code pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.post-layout-content pre){max-width:100%!important;overflow-x:auto;word-wrap:break-word;white-space:pre-wrap}main[data-astro-cid-gvpn4u4b]{padding:2rem 1rem;max-width:900px;margin:0 auto;width:100%;box-sizing:border-box}@media (min-width: 1024px){main[data-astro-cid-gvpn4u4b]{padding:2rem 0;max-width:none}}@media (max-width: 768px){main[data-astro-cid-gvpn4u4b]{padding:1.5rem .75rem}}@media (max-width: 480px){main[data-astro-cid-gvpn4u4b]{padding:1rem .5rem}}article[data-astro-cid-gvpn4u4b]{max-width:800px;width:100%;margin:0 auto;color:var(--text-primary);box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word}h1[data-astro-cid-gvpn4u4b],h2[data-astro-cid-gvpn4u4b],h3[data-astro-cid-gvpn4u4b]{color:var(--accent-color);margin-top:1.5rem;word-wrap:break-word;overflow-wrap:break-word}p[data-astro-cid-gvpn4u4b]{color:var(--text-secondary);word-wrap:break-word;overflow-wrap:break-word;hyphens:auto}img[data-astro-cid-gvpn4u4b]{max-width:100%;max-height:400px;width:auto;height:auto;border-radius:8px;margin:1rem 0;object-fit:contain}@media (max-width: 768px){img[data-astro-cid-gvpn4u4b]{max-height:300px}}@media (max-width: 480px){img[data-astro-cid-gvpn4u4b]{max-height:250px}}blockquote[data-astro-cid-gvpn4u4b]{border-left:4px solid var(--accent-color);padding-left:1rem;color:var(--text-primary);font-style:italic;margin:1rem 0}code[data-astro-cid-gvpn4u4b]{font-family:monospace;background:#ffffff1a;padding:.2rem .4rem;border-radius:4px;font-size:.95rem}
+.latex-container[data-astro-cid-yr57hmin]{overflow-x:auto}.latex-display[data-astro-cid-yr57hmin]{margin:1.5rem 0;text-align:center}.latex-inline[data-astro-cid-yr57hmin]{display:inline;margin:0;vertical-align:baseline}.latex-container[data-astro-cid-yr57hmin] .katex{font-size:1.1em;display:inline-block}.latex-container[data-astro-cid-yr57hmin] .katex-display{margin:1.5rem 0;display:block}.latex-container[data-astro-cid-yr57hmin] .katex-mathml{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+</style></head> <body data-astro-cid-gvpn4u4b> <header data-astro-cid-gvpn4u4b> <nav data-astro-cid-dmqpwcec> <ul data-astro-cid-dmqpwcec> <li class data-astro-cid-dmqpwcec> <a href="/" data-astro-cid-dmqpwcec>Posts</a> </li><li class data-astro-cid-dmqpwcec> <a href="/about" data-astro-cid-dmqpwcec>About</a> </li><li class data-astro-cid-dmqpwcec> <a href="/resume.html" data-astro-cid-dmqpwcec>Resume</a> </li> </ul> </nav>  </header> <!-- 
+      1) Wrap sidebar + main in a single parent .post-layout
+         so flexbox can place them side by side on large screens 
+    --> <div class="post-layout" data-astro-cid-gvpn4u4b> <!-- SIDEBAR --> <aside class="post-layout-sidebar" data-astro-cid-gvpn4u4b> <!-- The nav container that will hold our generated TOC --><nav id="table-of-contents" class="toc"></nav> <script client:load>
+  window.addEventListener('DOMContentLoaded', () => {
+    buildTOC();
+    highlightActiveHeading();
+  });
+
+  // 1. Build the TOC once the page is loaded
+  function buildTOC() {
+    const chapterHeadings = Array.from(document.querySelectorAll('h2.chapter[id]'));
+    const tocContainer = document.getElementById('table-of-contents');
+    if (!tocContainer) return;
+
+    const ul = document.createElement('ul');
+
+    chapterHeadings.forEach((heading) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+
+      // The heading has an `id` like "intro" or "symptoms"
+      a.href = `#${heading.id}`;
+
+      a.textContent = heading.textContent.trim();
+
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    tocContainer.appendChild(ul);
+  }
+
+    function highlightActiveHeading() {
+      const links = Array.from(document.querySelectorAll('#table-of-contents a'));
+      const headingEls = links.map((link) => document.getElementById(link.hash.slice(1)));
+
+      // 3. Create the observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            console.log(
+              `Heading: ${entry.target.id}, isIntersecting: ${entry.isIntersecting}`
+            );
+            if (entry.isIntersecting) {
+              // Remove 'active' from all links
+              links.forEach((l) => l.classList.remove('active'));
+
+              // Highlight the link for the heading that just entered
+              const activeLink = links.find(
+                (l) => l.hash === `#${entry.target.id}`
+              );
+              if (activeLink) {
+                activeLink.classList.add('active');
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '-15% 0px -60% 0px',
+          threshold: 0,
+        }
+      );
+
+      // 4. Observe each heading
+      headingEls.forEach((el) => {
+        if (el) {
+          console.log(`Observing heading: ${el.id}`);
+          observer.observe(el);
+        }
+      });
+    }
+</script> </aside> <!-- MAIN CONTENT AREA --> <div class="post-layout-content" data-astro-cid-gvpn4u4b> <main data-astro-cid-gvpn4u4b> <article data-astro-cid-gvpn4u4b>  <div class="post-title" data-astro-cid-resui2ln> <h1 data-astro-cid-resui2ln>Bloom filter</h1> <p class="post-date" data-astro-cid-resui2ln> <span class="publish-label" data-astro-cid-resui2ln>Publish date:</span> 2021-10-08 </p> </div>  <h2 id="intro" class="chapter" data-astro-cid-5d3zeytc> <a href="#intro" data-astro-cid-5d3zeytc>Intro</a> </h2>  <p>
+At one of mine job interviews I was asked how would I check if there is a
+    user name in continues stream of data without possibility of storing data on the
+    disc. I had a good intuition but I didn't expected that probabilistic answer
+    would be sufficient and I haven't ever heard about Bloom filters to that point.
+</p> <p>
+Bloom filter is a data structure. It exists to help answer the question "Does
+    this element (probably) exist in the set?" or "Does this element surely not
+    exist in the set?". Especially when the search set is very large, because it is
+    very space efficient. Also it is a probabilistic data structure - more about it
+    later.
+</p> <p>
+I found this data structure very interesting. The main idea is brilliant.
+    In this blog post I'm sharing description of the Bloom filter, an algorithms of
+    basic operations and finally some maths behind probabilistic nature of the
+    filter.
+</p> <p>
+Often code expresses more then hundred words, therefore I'll decorate
+    descriptions with C# code.
+</p> <h2 id="bloom-filter" class="chapter" data-astro-cid-5d3zeytc> <a href="#bloom-filter" data-astro-cid-5d3zeytc>Bloom filter</a> </h2>  <p>
+Basic Bloom filter implementation would be a data structure that satisfy the
+    following contract
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#569CD6">public</span><span style="color:#569CD6"> interface</span><span style="color:#4EC9B0"> IBloomFilter</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#4EC9B0">T</span><span style="color:#D4D4D4">></span></span>
+<span class="line"><span style="color:#D4D4D4">{</span></span>
+<span class="line"><span style="color:#569CD6">    void</span><span style="color:#DCDCAA"> Add</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">T</span><span style="color:#9CDCFE"> item</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#569CD6">    bool</span><span style="color:#DCDCAA"> ProbablyContains</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">T</span><span style="color:#9CDCFE"> item</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+Nothing fancy yet. One could easily write a wrapper for an array or hash set
+    that would meet this interface. What is different with Bloom filter is that it
+    can store much more data in the query set because it doesn't really store items
+    itself. Just to clarify - if <code>ProbablyContains</code> method return <code>false</code> we know
+<strong>for sure</strong> that given <code>item</code> does not exists in the set. The probabilistic
+    part lays in another case, then we can only say that it <strong>could</strong> be in the set
+    but not certainly.
+</p> <p>
+How is it done? Let's take a look into the algorithm.
+</p> <h3>Implementation</h3> <p>
+Implementation starts from a bit (I'll use bytes in C# codes) array and a bunch
+    of hash functions.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#569CD6">public</span><span style="color:#569CD6"> class</span><span style="color:#4EC9B0"> BloomFilter</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#4EC9B0">T</span><span style="color:#D4D4D4">> : </span><span style="color:#4EC9B0">IBloomFilter</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#4EC9B0">T</span><span style="color:#D4D4D4">></span></span>
+<span class="line"><span style="color:#D4D4D4">{</span></span>
+<span class="line"><span style="color:#569CD6">    private</span><span style="color:#569CD6"> byte</span><span style="color:#D4D4D4">[] </span><span style="color:#9CDCFE">_bitset</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#569CD6">    private</span><span style="color:#4EC9B0"> IList</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#4EC9B0">Func</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#569CD6">byte</span><span style="color:#D4D4D4">[], </span><span style="color:#569CD6">byte</span><span style="color:#D4D4D4">[]>> </span><span style="color:#9CDCFE">_hashFunctions</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#D4D4D4">    ...</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+That's all regarding the state of Bloom filter. The filter is initially
+    constructed with all elements of <code>_bitset</code> set to <code>0</code> but more about
+<code>BloomFilter&lt;T&gt;</code> constructor later, including size of <code>_bitset</code> and number of
+<code>_hashFunctions</code>.
+</p> <p>
+The essence of the algorithms lays in the implementation of <code>Add</code> and
+<code>ProbablyContains</code> methods.
+</p> <h4>Add method</h4> <p>
+For given <code>T item</code> method <code>Add</code> do the following:
+</p> <ol> <li>Calculate all hashes of <code>item</code> using hash functions from <code>_hashFunctions</code></li> <li>Transform calculated hashes into <code>_bitset</code> indices</li> <li>For obtained indices set values of <code>_bitset</code> to <code>1</code></li> </ol> <p>
+Basic C# version can be implemented as follows
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#569CD6">public</span><span style="color:#569CD6"> void</span><span style="color:#DCDCAA"> Add</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">T</span><span style="color:#9CDCFE"> item</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">{</span></span>
+<span class="line"><span style="color:#569CD6">    var</span><span style="color:#9CDCFE"> bytes</span><span style="color:#D4D4D4"> = </span><span style="color:#DCDCAA">ObjectToByteArray</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">item</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">    for</span><span style="color:#D4D4D4"> (</span><span style="color:#569CD6">var</span><span style="color:#9CDCFE"> i</span><span style="color:#D4D4D4"> = </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">; </span><span style="color:#9CDCFE">i</span><span style="color:#D4D4D4"> &#x3C; </span><span style="color:#9CDCFE">_hashFuncs</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">Count</span><span style="color:#D4D4D4">; </span><span style="color:#9CDCFE">i</span><span style="color:#D4D4D4">++) {</span></span>
+<span class="line"><span style="color:#569CD6">        var</span><span style="color:#9CDCFE"> idx</span><span style="color:#D4D4D4"> = </span><span style="color:#DCDCAA">GetIdFromHash</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">_hashFuncs</span><span style="color:#D4D4D4">[</span><span style="color:#9CDCFE">i</span><span style="color:#D4D4D4">](</span><span style="color:#9CDCFE">bytes</span><span style="color:#D4D4D4">));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">        if</span><span style="color:#D4D4D4"> (</span><span style="color:#9CDCFE">_bitset</span><span style="color:#D4D4D4">[</span><span style="color:#9CDCFE">idx</span><span style="color:#D4D4D4">] == </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">) {</span></span>
+<span class="line"><span style="color:#9CDCFE">            _bitset</span><span style="color:#D4D4D4">[</span><span style="color:#9CDCFE">idx</span><span style="color:#D4D4D4">] = </span><span style="color:#B5CEA8">1</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#D4D4D4">        }</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+OK, so we start from zeroed array and within another <code>Add</code>s more bits will be
+    set to one. Ones are cumulated and couldn't be set to zero. At least in the
+    original Bloom Filter version. In another words - we cannot delete items from
+    the set.
+</p> <p>
+Adding elements seems to be rather trivial but on the other hand displays
+    the main idea behind Bloom Filter. Instead of storing objects itself in the
+    data structure we'll just flip few bits in constant-size-array based on
+    the results of independent hash functions called on the object.
+</p> <h4>ProbablyContains method</h4> <p>
+For given <code>T item</code> method <code>ProbablyContains</code> do the following:
+</p> <ol> <li>Calculate all hashes of <code>item</code> using hash functions from <code>_hashFunctions</code></li> <li>Transform calculated hashes into <code>_bitset</code> indices</li> <li>If at least one value based on calculated indices is zero then <code>false</code> is
+      returned and <code>true</code> otherwise</li> </ol> <p>
+C# version can looks like this
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#569CD6">public</span><span style="color:#569CD6"> bool</span><span style="color:#DCDCAA"> ProbablyContains</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">T</span><span style="color:#9CDCFE"> item</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">{</span></span>
+<span class="line"><span style="color:#569CD6">    var</span><span style="color:#9CDCFE"> bytes</span><span style="color:#D4D4D4"> = </span><span style="color:#DCDCAA">ObjectToByteArray</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">item</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">    for</span><span style="color:#D4D4D4"> (</span><span style="color:#569CD6">var</span><span style="color:#9CDCFE"> i</span><span style="color:#D4D4D4"> = </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">; </span><span style="color:#9CDCFE">i</span><span style="color:#D4D4D4"> &#x3C; </span><span style="color:#9CDCFE">_hashFuncs</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">Count</span><span style="color:#D4D4D4">; </span><span style="color:#9CDCFE">i</span><span style="color:#D4D4D4">++) {</span></span>
+<span class="line"><span style="color:#569CD6">        var</span><span style="color:#9CDCFE"> idx</span><span style="color:#D4D4D4"> = </span><span style="color:#DCDCAA">GetIdFromHash</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">_hashFuncs</span><span style="color:#D4D4D4">[</span><span style="color:#9CDCFE">i</span><span style="color:#D4D4D4">](</span><span style="color:#9CDCFE">bytes</span><span style="color:#D4D4D4">));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">        if</span><span style="color:#D4D4D4"> (</span><span style="color:#9CDCFE">_bitset</span><span style="color:#D4D4D4">[</span><span style="color:#9CDCFE">idx</span><span style="color:#D4D4D4">] == </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">) {</span></span>
+<span class="line"><span style="color:#C586C0">            return</span><span style="color:#569CD6"> false</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#D4D4D4">        }</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#569CD6"> true</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+Once again an algorithm is straightforward but why does it work and why is it
+    probabilistic?
+</p> <p>
+Let's focus on negative case. We've calculated all of the hashes for given item
+    and transformed those into indices. We found out that for one of indices value
+    in <code>_bitset</code> is zero. This means that all elements that were added to Bloom
+    Filter and all of their hashed-deduced indices never hit this spot. So this
+    must be a new element. Therefore we have got proof by contradiction.
+</p> <p>
+On the other hand when all values of <code>_bitset</code> for hash-deduced indices are set
+    to one we still cannot say for sure that given element exists in the Bloom
+    Filter. Why is that? The most probable case for false-positive is when parts of
+    hit bits were set based on <code>item_n</code> and the rest of the bits were set based on
+<code>item_m</code>. Still all required bits are ones but we cannot say that those bits
+    were activated by single object.
+</p> <h2 id="maths" class="chapter" data-astro-cid-5d3zeytc> <a href="#maths" data-astro-cid-5d3zeytc>Maths</a> </h2>  <p>
+At this point we know why the answer is probabilistic but it's not merely
+    enough. I'd like to know what is the probability of false positive and how it
+    is related with <code>_bitset</code> size. Let's find out.
+</p> <p>
+False positive in this context means that <code>ProbablyContains(x) == true</code> and <code>x</code>
+is not contained in the search set which is equivalent to the fact that at
+    least one bit checked for <code>x</code> wasn't set to one by <code>x</code>.
+    Using assumption about uniform distribution of hash functions and independence
+    of hash function we can determine probability of described event
+</p> <div class="latex-container latex-display" data-astro-cid-yr57hmin><span data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>A</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mrow><mo fence="true">(</mo><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><mi>m</mi></mfrac><mo fence="true">)</mo></mrow><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">P(A) = \left( 1 - \frac{1}{m} \right)^{k}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.639em;vertical-align:-0.95em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">m</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.689em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></span></span></span></div> <p>
+Where <code>A</code> is an event of that particular bit is not set to one by any of <code>k</code>
+hash functions and <code>m</code> is size of <code>_bitset</code>. Once again, by independence, event
+<code>B</code> which is the same as <code>A</code> but after <code>n</code> inserts can be expressed as
+</p> <div class="latex-container latex-display" data-astro-cid-yr57hmin><span data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>B</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mrow><mo fence="true">(</mo><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><mi>m</mi></mfrac><mo fence="true">)</mo></mrow><mrow><mi>k</mi><mo>⋅</mo><mi>n</mi></mrow></msup></mrow><annotation encoding="application/x-tex">P(B) = \left( 1 - \frac{1}{m} \right)^{k \cdot n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.639em;vertical-align:-0.95em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">m</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.689em;"><span style="top:-3.9029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">⋅</span><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span></span></span></span></div> <p>
+Finally we can write approximation for a probability of false positives
+</p> <div class="latex-container latex-display" data-astro-cid-yr57hmin><span data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>F</mi><mi>P</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mrow><mo fence="true">(</mo><mn>1</mn><mo>−</mo><msup><mrow><mo fence="true">(</mo><mn>1</mn><mo>−</mo><mfrac><mn>1</mn><mi>m</mi></mfrac><mo fence="true">)</mo></mrow><mrow><mi>m</mi><mo>⋅</mo><mfrac><mrow><mi>k</mi><mo>⋅</mo><mi>n</mi></mrow><mi>m</mi></mfrac></mrow></msup><mo fence="true">)</mo></mrow><mi>k</mi></msup><mo>≈</mo><msup><mrow><mo fence="true">(</mo><mn>1</mn><mo>−</mo><msup><mi>e</mi><mrow><mo>−</mo><mfrac><mrow><mi>k</mi><mo>⋅</mo><mi>n</mi></mrow><mi>m</mi></mfrac></mrow></msup><mo fence="true">)</mo></mrow><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">P(FP) = \left( 1 - \left( 1 - \frac{1}{m} \right)^{m \cdot \frac{k \cdot n}{m}} \right)^{k} \approx \left( 1 - e^{-\frac{k \cdot n}{m}} \right)^{k}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.13889em;">FP</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.308em;vertical-align:-1.25em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">(</span></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">m</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.8189em;"><span style="top:-4.2029em;margin-right:0.05em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mbin mtight">⋅</span><span class="mord mtight"><span class="mopen nulldelimiter sizing reset-size3 size6"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.88em;"><span style="top:-2.656em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span style="top:-3.2255em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line mtight" style="border-bottom-width:0.049em;"></span></span><span style="top:-3.384em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">⋅</span><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.344em;"><span></span></span></span></span></span><span class="mclose nulldelimiter sizing reset-size3 size6"></span></span></span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size4">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:2.0579em;"><span style="top:-4.2718em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.039em;vertical-align:-0.65em;"></span><span class="minner"><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size2">(</span></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.029em;"><span style="top:-3.413em;margin-right:0.05em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight"><span class="mopen nulldelimiter sizing reset-size3 size6"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.88em;"><span style="top:-2.656em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span style="top:-3.2255em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line mtight" style="border-bottom-width:0.049em;"></span></span><span style="top:-3.384em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span><span class="mbin mtight">⋅</span><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.344em;"><span></span></span></span></span></span><span class="mclose nulldelimiter sizing reset-size3 size6"></span></span></span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size2">)</span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.389em;"><span style="top:-3.6029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></span></span></span></div> <p>
+The above approximation says that the probability of false positives
+</p> <ol> <li>decreases with growth of <code>_bitset</code> size</li> <li>increases with number of insertions</li> <li>decreases with number of hash functions, but requires more computations</li> </ol> <p>
+The probability function for false positives can be perceived as functions of
+<strong>k</strong> (number of hash functions) assuming that <strong>m</strong> and <strong>n</strong> are given
+    constants. In this case we can easily calculate optimal number of hash
+    functions by minimizing false positives function. It's a
+    differentiable function so we can use standard methods from calculus.
+    The number of hash functions that minimizes false positives is
+</p> <div class="latex-container latex-display" data-astro-cid-yr57hmin><span data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>k</mi><mrow><mi>o</mi><mi>p</mi><mi>t</mi></mrow></msub><mo>=</mo><mfrac><mi>m</mi><mi>n</mi></mfrac><mi>ln</mi><mo>⁡</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">k_{opt} = \frac{m}{n} \ln 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9805em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.0315em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">pt</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.7936em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1076em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">n</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mop">ln</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span></span></span></span></span></span></div> <p>
+That's cool! We can a priori choose number of hash functions by estimating
+<code>_bitset</code> size and number of insertions.
+</p> <h2 id="summary" class="chapter" data-astro-cid-5d3zeytc> <a href="#summary" data-astro-cid-5d3zeytc>Summary</a> </h2>  <p>
+There are <a href="https://www.dca.fee.unicamp.br/~chesteve/pubs/bloom-filter-ieee-survey-preprint.pdf">many variations</a>
+of Bloom filters including ones with deletion capibilities but the most
+    fascinating to me was the original idea. Very clever usage of properties of
+    hash functions to significantly reducees memory usage and disk reads.
+</p> <h2 id="references" class="chapter" data-astro-cid-5d3zeytc> <a href="#references" data-astro-cid-5d3zeytc>References</a> </h2>  <ol> <li><a href="https://www.cs.princeton.edu/courses/archive/spr05/cos598E/bib/p422-bloom.pdf">Original paper</a></li> <li><a href="https://en.wikipedia.org/wiki/Bloom_filter">Wiki</a></li> <li><a href="https://github.com/dskrzypiec/bloom-filter">Basic implementation</a></li> <li><a href="https://www.dca.fee.unicamp.br/~chesteve/pubs/bloom-filter-ieee-survey-preprint.pdf">Variations of Bloom filters</a></li> </ol>  </article> </main> </div> </div>  <!-- Global styles for .post-layout and .post-layout-sidebar -->  </body></html>

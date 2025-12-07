@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-gvpn4u4b> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Go database/sql vs jmoiron/sqlx reading benchmark</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.26/dist/katex.min.css" crossorigin="anonymous"><style>*,*:before,*:after{box-sizing:border-box}html,body{max-width:100%;overflow-x:hidden}html{-webkit-text-size-adjust:100%}:root{--bg-color: #111010;--text-primary: #ffe9c6;--text-secondary: #2AA198;--accent-color: #f97d43;--font-body: "Roboto", sans-serif;--font-code: "JetBrains Mono", monospace}html{font-size:19px}@media (max-width: 480px){html{font-size:16px}}@media (max-width: 360px){html{font-size:15px}}body{font-size:1rem;line-height:1.66;background-color:var(--bg-color);color:var(--text-primary);font-family:var(--font-body);margin:0;padding:0;word-wrap:break-word;overflow-wrap:break-word}h1{font-size:2.25rem;line-height:1.2}h2{font-size:1.75rem;line-height:1.3}h3{font-size:1.35rem;line-height:1.35}@media (max-width: 768px){h1{font-size:2rem}h2{font-size:1.5rem}h3{font-size:1.2rem}}@media (max-width: 480px){h1{font-size:1.75rem}h2{font-size:1.35rem}h3{font-size:1.1rem}}@media (max-width: 360px){h1{font-size:1.6rem}h2{font-size:1.25rem}h3{font-size:1.05rem}}a{color:var(--text-secondary);text-decoration:none}a:hover{text-decoration:underline}pre{background-color:#1e1e1e;border-radius:8px;padding:1rem;overflow-x:auto;margin:1rem 0;font-size:15px;font-family:var(--font-code)}code{background-color:transparent}pre>code{display:block}.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:.5rem 0}.toc a{color:var(--text-secondary);text-decoration:none}.toc a:hover{text-decoration:underline}.toc a.active{font-weight:700;color:var(--accent-color)}nav[data-astro-cid-dmqpwcec]{padding:1rem 0;text-align:center}ul[data-astro-cid-dmqpwcec]{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}@media (max-width: 480px){ul[data-astro-cid-dmqpwcec]{gap:1rem}a[data-astro-cid-dmqpwcec]{font-size:1rem;padding:.4rem .8rem}}@media (max-width: 360px){ul[data-astro-cid-dmqpwcec]{gap:.5rem}a[data-astro-cid-dmqpwcec]{font-size:.9rem;padding:.3rem .6rem}}li[data-astro-cid-dmqpwcec]{display:inline}a[data-astro-cid-dmqpwcec]{color:var(--text-primary);font-size:1.2rem;padding:.5rem 1rem;border:1px solid transparent;transition:all .3s ease-in-out}a[data-astro-cid-dmqpwcec]:hover{border:1px solid var(--accent-color);border-radius:4px;color:var(--accent-color)}.active[data-astro-cid-dmqpwcec] a[data-astro-cid-dmqpwcec]{color:var(--accent-color);font-weight:700;border-bottom:2px solid var(--accent-color)}hr[data-astro-cid-dmqpwcec]{margin-top:1rem;border:none;height:2px;background:var(--text-secondary);width:90%;max-width:800px;margin-left:auto;margin-right:auto}
+.post-title[data-astro-cid-resui2ln]{margin-bottom:2rem}.post-title[data-astro-cid-resui2ln] h1[data-astro-cid-resui2ln]{font-size:1.75rem;color:var(--accent-color);margin:0}.post-date[data-astro-cid-resui2ln]{font-size:1rem;color:var(--text-secondary);margin-top:.5rem}.publish-label[data-astro-cid-resui2ln]{font-weight:700;color:var(--text-primary)}
+.chapter[data-astro-cid-5d3zeytc]{font-size:2rem;margin-top:2rem;color:var(--accent-color)}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]{color:var(--accent-color);text-decoration:none}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]:hover{text-decoration:underline}
+.post-layout{display:flex;flex-direction:row}@media (min-width: 1024px){.post-layout{flex-direction:row}.post-layout-sidebar{position:fixed;left:2rem;top:10rem;width:200px;font-size:.85rem;padding:1rem;z-index:10}.post-layout-content{flex:1;max-width:1000px;margin:0 auto;padding-left:240px;padding-right:2rem}}@media (min-width: 1400px){.post-layout-content{max-width:1200px}}.post-layout-sidebar{display:none}@media (min-width: 1024px){.post-layout-sidebar{display:block}}@media (max-width: 1023px){.post-layout{flex-direction:column}.post-layout-content{width:100%;max-width:100%}}:global(pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.astro-code){width:100%!important;max-width:100%!important;box-sizing:border-box}:global(.astro-code pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.post-layout-content pre){max-width:100%!important;overflow-x:auto;word-wrap:break-word;white-space:pre-wrap}main[data-astro-cid-gvpn4u4b]{padding:2rem 1rem;max-width:900px;margin:0 auto;width:100%;box-sizing:border-box}@media (min-width: 1024px){main[data-astro-cid-gvpn4u4b]{padding:2rem 0;max-width:none}}@media (max-width: 768px){main[data-astro-cid-gvpn4u4b]{padding:1.5rem .75rem}}@media (max-width: 480px){main[data-astro-cid-gvpn4u4b]{padding:1rem .5rem}}article[data-astro-cid-gvpn4u4b]{max-width:800px;width:100%;margin:0 auto;color:var(--text-primary);box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word}h1[data-astro-cid-gvpn4u4b],h2[data-astro-cid-gvpn4u4b],h3[data-astro-cid-gvpn4u4b]{color:var(--accent-color);margin-top:1.5rem;word-wrap:break-word;overflow-wrap:break-word}p[data-astro-cid-gvpn4u4b]{color:var(--text-secondary);word-wrap:break-word;overflow-wrap:break-word;hyphens:auto}img[data-astro-cid-gvpn4u4b]{max-width:100%;max-height:400px;width:auto;height:auto;border-radius:8px;margin:1rem 0;object-fit:contain}@media (max-width: 768px){img[data-astro-cid-gvpn4u4b]{max-height:300px}}@media (max-width: 480px){img[data-astro-cid-gvpn4u4b]{max-height:250px}}blockquote[data-astro-cid-gvpn4u4b]{border-left:4px solid var(--accent-color);padding-left:1rem;color:var(--text-primary);font-style:italic;margin:1rem 0}code[data-astro-cid-gvpn4u4b]{font-family:monospace;background:#ffffff1a;padding:.2rem .4rem;border-radius:4px;font-size:.95rem}
+.image-container[data-astro-cid-6kov3kig]{display:flex;flex-direction:column;align-items:center;margin:1.5rem 0}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{width:auto;height:auto;border-radius:8px;object-fit:contain;box-shadow:0 4px 8px #0000001a}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig].inverted{filter:invert(1)}.image-caption[data-astro-cid-6kov3kig]{margin-top:.5rem;font-size:.9rem;color:var(--text-secondary, #666);font-style:italic;text-align:center;max-width:600px}@media (max-width: 768px){.image-container[data-astro-cid-6kov3kig]{margin:1rem 0}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{max-height:300px!important}}@media (max-width: 480px){.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{max-height:250px!important}.image-caption[data-astro-cid-6kov3kig]{font-size:.8rem;padding:0 1rem}}
+.table-container[data-astro-cid-akey4rtz]{display:flex;flex-direction:column;align-items:center;margin:1.5rem 0;overflow-x:auto}.table[data-astro-cid-akey4rtz]{width:100%;border-collapse:collapse;font-size:.9rem;background-color:var(--bg-secondary, #1a1a1a);border-radius:8px;overflow:hidden;box-shadow:0 2px 8px #0000001a}.table-caption[data-astro-cid-akey4rtz]{margin-top:.5rem;font-size:.9rem;color:var(--text-secondary, #666);font-style:italic;text-align:center;max-width:600px}.table[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz],.table[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{padding:.75rem;text-align:left;border-bottom:1px solid var(--border-color, #333)}.table[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz]{background-color:var(--bg-primary, #2a2a2a);color:var(--text-primary, #ffffff);font-weight:600;font-size:.9rem}.table[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{color:var(--text-secondary, #cccccc)}.table-bordered[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz],.table-bordered[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{border:1px solid var(--border-color, #333)}.table-bordered[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz]{border-bottom:2px solid var(--border-color, #333)}.table-striped[data-astro-cid-akey4rtz] tbody[data-astro-cid-akey4rtz] tr[data-astro-cid-akey4rtz]:nth-child(odd){background-color:var(--bg-tertiary, #222)}.table-hover[data-astro-cid-akey4rtz] tbody[data-astro-cid-akey4rtz] tr[data-astro-cid-akey4rtz]:hover{background-color:var(--bg-hover, #333);transition:background-color .2s ease}@media (max-width: 768px){.table[data-astro-cid-akey4rtz]{font-size:.8rem}.table[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz],.table[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{padding:.5rem}.table-caption[data-astro-cid-akey4rtz]{font-size:.8rem;padding:0 1rem}}
+.latex-container[data-astro-cid-yr57hmin]{overflow-x:auto}.latex-display[data-astro-cid-yr57hmin]{margin:1.5rem 0;text-align:center}.latex-inline[data-astro-cid-yr57hmin]{display:inline;margin:0;vertical-align:baseline}.latex-container[data-astro-cid-yr57hmin] .katex{font-size:1.1em;display:inline-block}.latex-container[data-astro-cid-yr57hmin] .katex-display{margin:1.5rem 0;display:block}.latex-container[data-astro-cid-yr57hmin] .katex-mathml{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+</style></head> <body data-astro-cid-gvpn4u4b> <header data-astro-cid-gvpn4u4b> <nav data-astro-cid-dmqpwcec> <ul data-astro-cid-dmqpwcec> <li class data-astro-cid-dmqpwcec> <a href="/" data-astro-cid-dmqpwcec>Posts</a> </li><li class data-astro-cid-dmqpwcec> <a href="/about" data-astro-cid-dmqpwcec>About</a> </li><li class data-astro-cid-dmqpwcec> <a href="/resume.html" data-astro-cid-dmqpwcec>Resume</a> </li> </ul> </nav>  </header> <!-- 
+      1) Wrap sidebar + main in a single parent .post-layout
+         so flexbox can place them side by side on large screens 
+    --> <div class="post-layout" data-astro-cid-gvpn4u4b> <!-- SIDEBAR --> <aside class="post-layout-sidebar" data-astro-cid-gvpn4u4b> <!-- The nav container that will hold our generated TOC --><nav id="table-of-contents" class="toc"></nav> <script client:load>
+  window.addEventListener('DOMContentLoaded', () => {
+    buildTOC();
+    highlightActiveHeading();
+  });
+
+  // 1. Build the TOC once the page is loaded
+  function buildTOC() {
+    const chapterHeadings = Array.from(document.querySelectorAll('h2.chapter[id]'));
+    const tocContainer = document.getElementById('table-of-contents');
+    if (!tocContainer) return;
+
+    const ul = document.createElement('ul');
+
+    chapterHeadings.forEach((heading) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+
+      // The heading has an `id` like "intro" or "symptoms"
+      a.href = `#${heading.id}`;
+
+      a.textContent = heading.textContent.trim();
+
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    tocContainer.appendChild(ul);
+  }
+
+    function highlightActiveHeading() {
+      const links = Array.from(document.querySelectorAll('#table-of-contents a'));
+      const headingEls = links.map((link) => document.getElementById(link.hash.slice(1)));
+
+      // 3. Create the observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            console.log(
+              `Heading: ${entry.target.id}, isIntersecting: ${entry.isIntersecting}`
+            );
+            if (entry.isIntersecting) {
+              // Remove 'active' from all links
+              links.forEach((l) => l.classList.remove('active'));
+
+              // Highlight the link for the heading that just entered
+              const activeLink = links.find(
+                (l) => l.hash === `#${entry.target.id}`
+              );
+              if (activeLink) {
+                activeLink.classList.add('active');
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '-15% 0px -60% 0px',
+          threshold: 0,
+        }
+      );
+
+      // 4. Observe each heading
+      headingEls.forEach((el) => {
+        if (el) {
+          console.log(`Observing heading: ${el.id}`);
+          observer.observe(el);
+        }
+      });
+    }
+</script> </aside> <!-- MAIN CONTENT AREA --> <div class="post-layout-content" data-astro-cid-gvpn4u4b> <main data-astro-cid-gvpn4u4b> <article data-astro-cid-gvpn4u4b>  <div class="post-title" data-astro-cid-resui2ln> <h1 data-astro-cid-resui2ln>Go database/sql vs jmoiron/sqlx reading benchmark</h1> <p class="post-date" data-astro-cid-resui2ln> <span class="publish-label" data-astro-cid-resui2ln>Publish date:</span> 2019-09-05 </p> </div>  <h2 id="intro" class="chapter" data-astro-cid-5d3zeytc> <a href="#intro" data-astro-cid-5d3zeytc>Intro</a> </h2>  <p>
+While building most of projects or apps it is very common to read from a
+    database. In go standard way to do that is by using
+<a href="https://golang.org/pkg/database/sql/">database/sql</a> standard library. 
+    To illustrate how it can be done let's load from database a bunch of
+<code>Points</code> which are slice of <code>Point</code>s defined as follows
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#569CD6">type</span><span style="color:#4EC9B0"> Point</span><span style="color:#569CD6"> struct</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#9CDCFE">    X</span><span style="color:#4EC9B0"> int</span></span>
+<span class="line"><span style="color:#9CDCFE">    Y</span><span style="color:#4EC9B0"> float64</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">type</span><span style="color:#4EC9B0"> Points</span><span style="color:#D4D4D4"> []</span><span style="color:#4EC9B0">Point</span></span></code></pre> <p>
+Next listening contains definition of function <code>ReadPoints</code> which for existing
+<a href="https://golang.org/pkg/database/sql/#DB"><code>*sql.DB</code></a> database connection reads
+<code>Points</code>. It tries to execute SQL query passed as string from function (not 
+    listed) <code>PointsQuery</code>. Then slice for results is created and in <code>for</code> loop 
+    there is reading row-per-row and writing points into <code>points</code> slice.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#569CD6">func</span><span style="color:#DCDCAA"> ReadPoints</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">dbConn</span><span style="color:#D4D4D4"> *</span><span style="color:#4EC9B0">sql</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">DB</span><span style="color:#D4D4D4">) </span><span style="color:#4EC9B0">Points</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#9CDCFE">    rows</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">qErr</span><span style="color:#D4D4D4"> := </span><span style="color:#9CDCFE">dbConn</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Query</span><span style="color:#D4D4D4">(</span><span style="color:#DCDCAA">PointsQuery</span><span style="color:#D4D4D4">())</span></span>
+<span class="line"><span style="color:#C586C0">    if</span><span style="color:#9CDCFE"> qErr</span><span style="color:#D4D4D4"> != </span><span style="color:#569CD6">nil</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#9CDCFE">        fmt</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Println</span><span style="color:#D4D4D4">(</span><span style="color:#CE9178">"Couldn't execute the query"</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"><span style="color:#C586C0">    defer</span><span style="color:#9CDCFE"> rows</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Close</span><span style="color:#D4D4D4">()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#9CDCFE">    points</span><span style="color:#D4D4D4"> := </span><span style="color:#DCDCAA">make</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">Points</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">10000</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#569CD6">    var</span><span style="color:#D4D4D4"> (</span></span>
+<span class="line"><span style="color:#9CDCFE">        x</span><span style="color:#4EC9B0"> int</span></span>
+<span class="line"><span style="color:#9CDCFE">        y</span><span style="color:#4EC9B0"> float64</span></span>
+<span class="line"><span style="color:#D4D4D4">    )</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">    for</span><span style="color:#9CDCFE"> rows</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Next</span><span style="color:#D4D4D4">() {</span></span>
+<span class="line"><span style="color:#9CDCFE">        rows</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Scan</span><span style="color:#D4D4D4">(&#x26;</span><span style="color:#9CDCFE">x</span><span style="color:#D4D4D4">, &#x26;</span><span style="color:#9CDCFE">y</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#9CDCFE">        points</span><span style="color:#D4D4D4"> = </span><span style="color:#DCDCAA">append</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">points</span><span style="color:#D4D4D4">, </span><span style="color:#4EC9B0">Point</span><span style="color:#D4D4D4">{</span><span style="color:#9CDCFE">x</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">y</span><span style="color:#D4D4D4">})</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#9CDCFE"> points</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+This implementation of reading <code>Points</code> is independent of specific database. It
+    is based only on <code>database/sql</code> package and doesn't depends on specific database 
+    driver.
+</p> <p>
+There is nothing wrong with this approach but it could be a bit tedious in case when
+    you have to read dozens or even hundreds of queries from the database. In this
+    case one usually creates one file per reading containing definition of the type for
+    query result, definition for query and reading function. Is there any more compact
+    solution? It would be great if something similar to
+<a href="https://golang.org/pkg/encoding/json/#Unmarshal"><code>json.Unmarshal</code></a>, which can
+    use struct's tags to read and writes JSONs, exists. Fortunately there is
+<a href="https://github.com/jmoiron/sqlx"><code>jmoiron/sqlx</code> package</a>.
+</p> <h2 id="sqlx-package" class="chapter" data-astro-cid-5d3zeytc> <a href="#sqlx-package" data-astro-cid-5d3zeytc>jmoiron/sqlx package</a> </h2>  <p>
+Package <code>sqlx</code> is open-source and MIT-licensed go package created to extend
+    functionalities from standard <code>database/sql</code> package.
+</p> <blockquote> <p>
+sqlx is a library which provides a set of extensions on go's standard
+<code>database/sql</code> library. The sqlx versions of <code>sql.DB</code>, <code>sql.TX</code>, <code>sql.Stmt</code>, et al. all 
+      leave the underlying interfaces untouched, so that their interfaces are a 
+      superset on the standard ones. This makes it relatively painless to integrate 
+      existing codebases using <code>database/sql</code> with sqlx.
+</p> <footer>— sqlx README</footer> </blockquote> <p>
+Regarding reading from database we are especially interested in
+<a href="https://godoc.org/github.com/jmoiron/sqlx#DB.Select"><code>sqlx.Select</code></a>
+function. To perform reading <code>Points</code> using this function we have to add
+<a href="https://stackoverflow.com/questions/10858787/what-are-the-uses-for-tags-in-go">tags</a>
+in <code>Point</code> (assuming query contains column names "pointX" and "pointY") structure 
+    as follows
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#569CD6">type</span><span style="color:#4EC9B0"> Point</span><span style="color:#569CD6"> struct</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#9CDCFE">	X</span><span style="color:#4EC9B0"> int</span><span style="color:#CE9178">     `db:"pointX"`</span></span>
+<span class="line"><span style="color:#9CDCFE">	Y</span><span style="color:#4EC9B0"> float64</span><span style="color:#CE9178"> `db:"pointY"`</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+Now we can implement alternative (compact) version of function <code>ReadPoints</code>
+using package <code>sqlx</code>. This version creates new slice of points, passes it into
+<code>sqlx.Select</code> function together with the query to read points from database.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#569CD6">func</span><span style="color:#DCDCAA"> ReadPointsSQLX</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">dbConn</span><span style="color:#D4D4D4"> *</span><span style="color:#4EC9B0">sqlx</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">DB</span><span style="color:#D4D4D4">) </span><span style="color:#4EC9B0">Points</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#9CDCFE">    points</span><span style="color:#D4D4D4"> := </span><span style="color:#DCDCAA">make</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">Points</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">, </span><span style="color:#B5CEA8">10000</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#9CDCFE">    err</span><span style="color:#D4D4D4"> := </span><span style="color:#9CDCFE">sqlx</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Select</span><span style="color:#D4D4D4">(&#x26;</span><span style="color:#9CDCFE">points</span><span style="color:#D4D4D4">, </span><span style="color:#DCDCAA">PointsQuery</span><span style="color:#D4D4D4">())</span></span>
+<span class="line"><span style="color:#C586C0">    if</span><span style="color:#9CDCFE"> err</span><span style="color:#D4D4D4"> != </span><span style="color:#569CD6">nil</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#9CDCFE">        fmt</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Println</span><span style="color:#D4D4D4">(</span><span style="color:#CE9178">"Error while reading Points."</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#9CDCFE"> points</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+Obviously <code>sqlx.Select</code> uses <a href="https://golang.org/pkg/reflect/">reflection</a>
+to deal with its input data (passes as <code>interface</code>). Therefore my question is
+<strong>How much do we pay for runtime overhead</strong> using package <code>sqlx</code> instead of
+    standard approach? I want to answer this question by performing series of
+    benchmarks.
+</p> <h2 id="benchmark-methodology" class="chapter" data-astro-cid-5d3zeytc> <a href="#benchmark-methodology" data-astro-cid-5d3zeytc>Benchmark methodology</a> </h2>  <p>
+My first attempt to perform this benchmark was by using standard <code>go test -bench</code>
+benchmark. It was somehow ok but it gave me only average time of reading. There 
+    was also difference if I would benchmark standard approach first then <code>sqlx</code> or
+    vice versa.
+</p> <p>
+We have to keep in mind that our benchmark depends on database and its current
+    state. To perform faithful benchmark I've proposed the following algorithm:
+</p> <ol> <li>Choose first method (standard vs <code>sqlx</code>) of reading at random (with equal
+      distribution)</li> <li>Perform first method reading</li> <li>Perform second method reading</li> <li>Save statistics</li> <li>Wait for few seconds</li> <li>Repeat from 1.</li> </ol> <p>
+So this algorithm performs reading using both methods (sometimes in different 
+    order) in a chunk, then waits. In my opinion this approach assures that both
+    single reading are performed on database with its similar state. In results I've
+    also skipped first five measurements treating it as a warm-up.
+</p> <p>
+This algorithm was applied for query which returns <code>1k, 10k, 100k, 1mil and
+    10mil</code> <code>Points</code>, 95 times for each case. For further comparison this procedure
+    was also applied to extended <code>Point</code>s with ten fields (4 x <code>int</code>, 3 x <code>string</code>,
+    3 x <code>float64</code>) instead of two.
+</p> <p>
+In <a href="#appendix">Appendix</a> there is description of environment I've used to
+    perform the following results.
+</p> <h2 id="benchmark-results" class="chapter" data-astro-cid-5d3zeytc> <a href="#benchmark-results" data-astro-cid-5d3zeytc>Benchmark results</a> </h2>  <p>
+Raw benchmark results are composed of two files
+<a href="https://github.com/DSkrzypiec/blogSourceCodes/blob/master/20190823_GoSqlSqlx/Results/BenchResults.txt">BenchResults.txt</a>
+and
+<a href="https://github.com/DSkrzypiec/blogSourceCodes/blob/master/20190823_GoSqlSqlx/Results/BenchResults_TenCols.txt">BenchResults_TenCols.txt</a>
+for two column case and ten column case respectively. Time in those files is
+    presented in nanoseconds. To reasonably compare overhead of <code>sqlx</code> reading 
+    over standard one we should focus on percentage difference (<code>Diff perc</code>) 
+    defined as
+</p> <div class="latex-container latex-display" data-astro-cid-yr57hmin><span data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mrow><mi>t</mi><mi>i</mi><mi>m</mi><mi>e</mi><mo stretchy="false">(</mo><mi>s</mi><mi>q</mi><mi>l</mi><mi>x</mi><mo stretchy="false">)</mo><mo>−</mo><mi>t</mi><mi>i</mi><mi>m</mi><mi>e</mi><mo stretchy="false">(</mo><mi>s</mi><mi>t</mi><mi>d</mi><mo stretchy="false">)</mo></mrow><mrow><mi>t</mi><mi>i</mi><mi>m</mi><mi>e</mi><mo stretchy="false">(</mo><mi>s</mi><mi>q</mi><mi>l</mi><mi>x</mi><mo stretchy="false">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{time(sqlx) - time(std)}{time(sqlx)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.363em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="mord mathnormal">im</span><span class="mord mathnormal">e</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mord mathnormal" style="margin-right:0.01968em;">ql</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="mord mathnormal">im</span><span class="mord mathnormal">e</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mord mathnormal" style="margin-right:0.01968em;">ql</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal">im</span><span class="mord mathnormal">e</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">d</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></span></div> <p>
+The following two tables presents average (from 95 measurements) reading time
+    for <code>database/sql</code> and <code>sqlx</code> package expressed in seconds and theirs percentage
+    difference.
+</p> <p><strong>Results for 2 columns</strong></p> <div class="table-container" data-astro-cid-akey4rtz> <table class="table table-striped table-bordered table-hover" data-astro-cid-akey4rtz> <thead data-astro-cid-akey4rtz> <tr data-astro-cid-akey4rtz> <th data-astro-cid-akey4rtz>#Rows</th><th data-astro-cid-akey4rtz>Avg sql time [s]</th><th data-astro-cid-akey4rtz>Avg sqlx time [s]</th><th data-astro-cid-akey4rtz>Diff perc</th> </tr> </thead> <tbody data-astro-cid-akey4rtz> <tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>1 000</td><td data-astro-cid-akey4rtz>0.0046</td><td data-astro-cid-akey4rtz>0.0049</td><td data-astro-cid-akey4rtz>6.80%</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>10 000</td><td data-astro-cid-akey4rtz>0.0228</td><td data-astro-cid-akey4rtz>0.0237</td><td data-astro-cid-akey4rtz>3.89%</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>100 000</td><td data-astro-cid-akey4rtz>0.1992</td><td data-astro-cid-akey4rtz>0.2021</td><td data-astro-cid-akey4rtz>1.42%</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>1 000 000</td><td data-astro-cid-akey4rtz>1.5478</td><td data-astro-cid-akey4rtz>1.5529</td><td data-astro-cid-akey4rtz>0.33%</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>10 000 000</td><td data-astro-cid-akey4rtz>25.7208</td><td data-astro-cid-akey4rtz>27.1226</td><td data-astro-cid-akey4rtz>5.17%</td> </tr> </tbody> </table> <p class="table-caption" data-astro-cid-akey4rtz>Benchmark results for 2 columns</p> </div>  <p><strong>Results for 10 columns</strong></p> <div class="table-container" data-astro-cid-akey4rtz> <table class="table table-striped table-bordered table-hover" data-astro-cid-akey4rtz> <thead data-astro-cid-akey4rtz> <tr data-astro-cid-akey4rtz> <th data-astro-cid-akey4rtz>#Rows</th><th data-astro-cid-akey4rtz>Avg sql time [s]</th><th data-astro-cid-akey4rtz>Avg sqlx time [s]</th><th data-astro-cid-akey4rtz>Diff perc</th> </tr> </thead> <tbody data-astro-cid-akey4rtz> <tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>1 000</td><td data-astro-cid-akey4rtz>0.0096</td><td data-astro-cid-akey4rtz>0.0100</td><td data-astro-cid-akey4rtz>3.52%</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>10 000</td><td data-astro-cid-akey4rtz>0.0557</td><td data-astro-cid-akey4rtz>0.0587</td><td data-astro-cid-akey4rtz>5.15%</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>100 000</td><td data-astro-cid-akey4rtz>0.4968</td><td data-astro-cid-akey4rtz>0.5099</td><td data-astro-cid-akey4rtz>2.56%</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>1 000 000</td><td data-astro-cid-akey4rtz>6.2670</td><td data-astro-cid-akey4rtz>6.4906</td><td data-astro-cid-akey4rtz>3.44%</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>10 000 000</td><td data-astro-cid-akey4rtz>75.9548</td><td data-astro-cid-akey4rtz>79.2614</td><td data-astro-cid-akey4rtz>4.17%</td> </tr> </tbody> </table> <p class="table-caption" data-astro-cid-akey4rtz>Benchmark results for 10 columns</p> </div>  <p>
+Figures <em>Figure 1</em> and <em>Figure 2</em> displays distribution of percentage 
+    difference for each number of rows with distinction whenever standard
+<code>database/sql</code> reading was first or second in benchmark algorithm. As you can
+    see there is significant difference between case when standard reading was first
+    and the case where it was executed second. When standard reading was executed
+    first then usually <code>sqlx</code> reading was faster! It is caused probably by database
+    caching rather then unusual behavior of go code. Because of this in mentioned
+    benchmark algorithm order of execution was sampled with equal distribution to
+    got averaged unbiased results.
+</p> <p>
+Another interesting thing is that with number of rows percentage difference goes
+    closer to 0 and variance decreases.
+</p> <div class="image-container" data-astro-cid-6kov3kig> <img src="/gosqlstdsqlx/BenchmarkResults2columns.jpg" alt="Boxplot of percentage difference in reading time by number of rows - case for two columns Points." style="max-width: 100%; max-height: 400px;" class data-astro-cid-6kov3kig> <p class="image-caption" data-astro-cid-6kov3kig>Figure 1: Boxplot of percentage difference in reading time by number of rows - case for two columns Points.</p> </div>  <div class="image-container" data-astro-cid-6kov3kig> <img src="/gosqlstdsqlx/BenchmarkResults10columns.jpg" alt="Boxplot of percentage difference in reading time by number of rows - case for ten columns Points." style="max-width: 100%; max-height: 400px;" class data-astro-cid-6kov3kig> <p class="image-caption" data-astro-cid-6kov3kig>Figure 2: Boxplot of percentage difference in reading time by number of rows - case for ten columns Points.</p> </div>  <p>
+Using standard <code>go test -bench</code> benchmark we can see that <code>sqlx.Select</code> also
+    does more number of allocations. For reading <code>10 000</code> of rows benchmark
+    statistics are displayed below:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">go</span><span style="color:#CE9178"> test</span><span style="color:#569CD6"> -bench=.</span><span style="color:#569CD6"> -benchtime=30s</span><span style="color:#569CD6"> -benchmem</span></span></code></pre> <div class="image-container" data-astro-cid-6kov3kig> <img src="/gosqlstdsqlx/goTestBench.jpg" alt="Result of go test bench command for 10k rows reading." style="max-width: 100%; max-height: 400px;" class data-astro-cid-6kov3kig> <p class="image-caption" data-astro-cid-6kov3kig>Result of go test bench command for 10k rows reading.</p> </div>  <h2 id="summary" class="chapter" data-astro-cid-5d3zeytc> <a href="#summary" data-astro-cid-5d3zeytc>Summary</a> </h2>  <p>
+Based on benchmark results we can answer question about overhead - it's <strong>roughly 
+    5%</strong> overhead of database reading using <code>sqlx</code> over standard <code>database/sql</code> package. 
+    Performing the same benchmark in another environment might give slightly different 
+    result but I think it shouldn't differ significantly and stays around 5%.
+</p> <h2 id="appendix" class="chapter" data-astro-cid-5d3zeytc> <a href="#appendix" data-astro-cid-5d3zeytc>Appendix</a> </h2>  <ul> <li><a href="https://github.com/DSkrzypiec/blogSourceCodes/tree/master/20190823_GoSqlSqlx">Link to benchmark source codes</a></li> <li>OS - <code>Microsoft Windows 10 Home 10.0 Build 18362</code></li> <li>Processor - <code>Intel Core i5-7200U, 2.50Ghz 2.71Ghz</code></li> <li>Hard disk - <code>LITE-ON CB1-SD256 (SDD)</code></li> <li>Database - <code>PostreSQL 10.10, compiled by Visual C++ build 1800, 64-bit</code></li> <li>go version - <code>go1.13beta1 windows/amd64</code></li> <li>go database driver package - <code>github.com/lib/pq</code></li> </ul>  </article> </main> </div> </div>  <!-- Global styles for .post-layout and .post-layout-sidebar -->  </body></html>

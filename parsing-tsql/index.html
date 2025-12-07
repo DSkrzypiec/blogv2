@@ -1,0 +1,243 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-gvpn4u4b> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Parsing T-SQL</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.26/dist/katex.min.css" crossorigin="anonymous"><style>*,*:before,*:after{box-sizing:border-box}html,body{max-width:100%;overflow-x:hidden}html{-webkit-text-size-adjust:100%}:root{--bg-color: #111010;--text-primary: #ffe9c6;--text-secondary: #2AA198;--accent-color: #f97d43;--font-body: "Roboto", sans-serif;--font-code: "JetBrains Mono", monospace}html{font-size:19px}@media (max-width: 480px){html{font-size:16px}}@media (max-width: 360px){html{font-size:15px}}body{font-size:1rem;line-height:1.66;background-color:var(--bg-color);color:var(--text-primary);font-family:var(--font-body);margin:0;padding:0;word-wrap:break-word;overflow-wrap:break-word}h1{font-size:2.25rem;line-height:1.2}h2{font-size:1.75rem;line-height:1.3}h3{font-size:1.35rem;line-height:1.35}@media (max-width: 768px){h1{font-size:2rem}h2{font-size:1.5rem}h3{font-size:1.2rem}}@media (max-width: 480px){h1{font-size:1.75rem}h2{font-size:1.35rem}h3{font-size:1.1rem}}@media (max-width: 360px){h1{font-size:1.6rem}h2{font-size:1.25rem}h3{font-size:1.05rem}}a{color:var(--text-secondary);text-decoration:none}a:hover{text-decoration:underline}pre{background-color:#1e1e1e;border-radius:8px;padding:1rem;overflow-x:auto;margin:1rem 0;font-size:15px;font-family:var(--font-code)}code{background-color:transparent}pre>code{display:block}.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:.5rem 0}.toc a{color:var(--text-secondary);text-decoration:none}.toc a:hover{text-decoration:underline}.toc a.active{font-weight:700;color:var(--accent-color)}nav[data-astro-cid-dmqpwcec]{padding:1rem 0;text-align:center}ul[data-astro-cid-dmqpwcec]{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}@media (max-width: 480px){ul[data-astro-cid-dmqpwcec]{gap:1rem}a[data-astro-cid-dmqpwcec]{font-size:1rem;padding:.4rem .8rem}}@media (max-width: 360px){ul[data-astro-cid-dmqpwcec]{gap:.5rem}a[data-astro-cid-dmqpwcec]{font-size:.9rem;padding:.3rem .6rem}}li[data-astro-cid-dmqpwcec]{display:inline}a[data-astro-cid-dmqpwcec]{color:var(--text-primary);font-size:1.2rem;padding:.5rem 1rem;border:1px solid transparent;transition:all .3s ease-in-out}a[data-astro-cid-dmqpwcec]:hover{border:1px solid var(--accent-color);border-radius:4px;color:var(--accent-color)}.active[data-astro-cid-dmqpwcec] a[data-astro-cid-dmqpwcec]{color:var(--accent-color);font-weight:700;border-bottom:2px solid var(--accent-color)}hr[data-astro-cid-dmqpwcec]{margin-top:1rem;border:none;height:2px;background:var(--text-secondary);width:90%;max-width:800px;margin-left:auto;margin-right:auto}
+.post-title[data-astro-cid-resui2ln]{margin-bottom:2rem}.post-title[data-astro-cid-resui2ln] h1[data-astro-cid-resui2ln]{font-size:1.75rem;color:var(--accent-color);margin:0}.post-date[data-astro-cid-resui2ln]{font-size:1rem;color:var(--text-secondary);margin-top:.5rem}.publish-label[data-astro-cid-resui2ln]{font-weight:700;color:var(--text-primary)}
+.chapter[data-astro-cid-5d3zeytc]{font-size:2rem;margin-top:2rem;color:var(--accent-color)}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]{color:var(--accent-color);text-decoration:none}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]:hover{text-decoration:underline}
+.post-layout{display:flex;flex-direction:row}@media (min-width: 1024px){.post-layout{flex-direction:row}.post-layout-sidebar{position:fixed;left:2rem;top:10rem;width:200px;font-size:.85rem;padding:1rem;z-index:10}.post-layout-content{flex:1;max-width:1000px;margin:0 auto;padding-left:240px;padding-right:2rem}}@media (min-width: 1400px){.post-layout-content{max-width:1200px}}.post-layout-sidebar{display:none}@media (min-width: 1024px){.post-layout-sidebar{display:block}}@media (max-width: 1023px){.post-layout{flex-direction:column}.post-layout-content{width:100%;max-width:100%}}:global(pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.astro-code){width:100%!important;max-width:100%!important;box-sizing:border-box}:global(.astro-code pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.post-layout-content pre){max-width:100%!important;overflow-x:auto;word-wrap:break-word;white-space:pre-wrap}main[data-astro-cid-gvpn4u4b]{padding:2rem 1rem;max-width:900px;margin:0 auto;width:100%;box-sizing:border-box}@media (min-width: 1024px){main[data-astro-cid-gvpn4u4b]{padding:2rem 0;max-width:none}}@media (max-width: 768px){main[data-astro-cid-gvpn4u4b]{padding:1.5rem .75rem}}@media (max-width: 480px){main[data-astro-cid-gvpn4u4b]{padding:1rem .5rem}}article[data-astro-cid-gvpn4u4b]{max-width:800px;width:100%;margin:0 auto;color:var(--text-primary);box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word}h1[data-astro-cid-gvpn4u4b],h2[data-astro-cid-gvpn4u4b],h3[data-astro-cid-gvpn4u4b]{color:var(--accent-color);margin-top:1.5rem;word-wrap:break-word;overflow-wrap:break-word}p[data-astro-cid-gvpn4u4b]{color:var(--text-secondary);word-wrap:break-word;overflow-wrap:break-word;hyphens:auto}img[data-astro-cid-gvpn4u4b]{max-width:100%;max-height:400px;width:auto;height:auto;border-radius:8px;margin:1rem 0;object-fit:contain}@media (max-width: 768px){img[data-astro-cid-gvpn4u4b]{max-height:300px}}@media (max-width: 480px){img[data-astro-cid-gvpn4u4b]{max-height:250px}}blockquote[data-astro-cid-gvpn4u4b]{border-left:4px solid var(--accent-color);padding-left:1rem;color:var(--text-primary);font-style:italic;margin:1rem 0}code[data-astro-cid-gvpn4u4b]{font-family:monospace;background:#ffffff1a;padding:.2rem .4rem;border-radius:4px;font-size:.95rem}
+.image-container[data-astro-cid-6kov3kig]{display:flex;flex-direction:column;align-items:center;margin:1.5rem 0}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{width:auto;height:auto;border-radius:8px;object-fit:contain;box-shadow:0 4px 8px #0000001a}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig].inverted{filter:invert(1)}.image-caption[data-astro-cid-6kov3kig]{margin-top:.5rem;font-size:.9rem;color:var(--text-secondary, #666);font-style:italic;text-align:center;max-width:600px}@media (max-width: 768px){.image-container[data-astro-cid-6kov3kig]{margin:1rem 0}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{max-height:300px!important}}@media (max-width: 480px){.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{max-height:250px!important}.image-caption[data-astro-cid-6kov3kig]{font-size:.8rem;padding:0 1rem}}
+</style></head> <body data-astro-cid-gvpn4u4b> <header data-astro-cid-gvpn4u4b> <nav data-astro-cid-dmqpwcec> <ul data-astro-cid-dmqpwcec> <li class data-astro-cid-dmqpwcec> <a href="/" data-astro-cid-dmqpwcec>Posts</a> </li><li class data-astro-cid-dmqpwcec> <a href="/about" data-astro-cid-dmqpwcec>About</a> </li><li class data-astro-cid-dmqpwcec> <a href="/resume.html" data-astro-cid-dmqpwcec>Resume</a> </li> </ul> </nav>  </header> <!-- 
+      1) Wrap sidebar + main in a single parent .post-layout
+         so flexbox can place them side by side on large screens 
+    --> <div class="post-layout" data-astro-cid-gvpn4u4b> <!-- SIDEBAR --> <aside class="post-layout-sidebar" data-astro-cid-gvpn4u4b> <!-- The nav container that will hold our generated TOC --><nav id="table-of-contents" class="toc"></nav> <script client:load>
+  window.addEventListener('DOMContentLoaded', () => {
+    buildTOC();
+    highlightActiveHeading();
+  });
+
+  // 1. Build the TOC once the page is loaded
+  function buildTOC() {
+    const chapterHeadings = Array.from(document.querySelectorAll('h2.chapter[id]'));
+    const tocContainer = document.getElementById('table-of-contents');
+    if (!tocContainer) return;
+
+    const ul = document.createElement('ul');
+
+    chapterHeadings.forEach((heading) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+
+      // The heading has an `id` like "intro" or "symptoms"
+      a.href = `#${heading.id}`;
+
+      a.textContent = heading.textContent.trim();
+
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    tocContainer.appendChild(ul);
+  }
+
+    function highlightActiveHeading() {
+      const links = Array.from(document.querySelectorAll('#table-of-contents a'));
+      const headingEls = links.map((link) => document.getElementById(link.hash.slice(1)));
+
+      // 3. Create the observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            console.log(
+              `Heading: ${entry.target.id}, isIntersecting: ${entry.isIntersecting}`
+            );
+            if (entry.isIntersecting) {
+              // Remove 'active' from all links
+              links.forEach((l) => l.classList.remove('active'));
+
+              // Highlight the link for the heading that just entered
+              const activeLink = links.find(
+                (l) => l.hash === `#${entry.target.id}`
+              );
+              if (activeLink) {
+                activeLink.classList.add('active');
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '-15% 0px -60% 0px',
+          threshold: 0,
+        }
+      );
+
+      // 4. Observe each heading
+      headingEls.forEach((el) => {
+        if (el) {
+          console.log(`Observing heading: ${el.id}`);
+          observer.observe(el);
+        }
+      });
+    }
+</script> </aside> <!-- MAIN CONTENT AREA --> <div class="post-layout-content" data-astro-cid-gvpn4u4b> <main data-astro-cid-gvpn4u4b> <article data-astro-cid-gvpn4u4b>  <div class="post-title" data-astro-cid-resui2ln> <h1 data-astro-cid-resui2ln>Parsing T-SQL</h1> <p class="post-date" data-astro-cid-resui2ln> <span class="publish-label" data-astro-cid-resui2ln>Publish date:</span> 2021-11-14 </p> </div>  <div class="image-container" data-astro-cid-6kov3kig> <img src="/parsing-tsql/introPic.png" alt="T-SQL parsing introduction" style="max-width: 100%; max-height: 400px;" class data-astro-cid-6kov3kig> <p class="image-caption" data-astro-cid-6kov3kig>T-SQL parsing introduction</p> </div>  <h2 id="intro" class="chapter" data-astro-cid-5d3zeytc> <a href="#intro" data-astro-cid-5d3zeytc>Intro</a> </h2>  <p>
+Once I've tried to implement auto formatter for T-SQL. To make this there seems to
+    be two ways. The first and easier one is to implement sets of rules to
+    transform text file without any context. The other one is to base on
+<a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">AST</a> of T-SQL and use its
+    context to apply formatting. The first case seems to be easier at the beginning
+    and can be gradually extended but it's really hard and dirty to include all of
+    the cases without the knowledge of the context. So I thought the right way is
+    to use abstract syntax tree.
+</p> <h2 id="implementing-parser" class="chapter" data-astro-cid-5d3zeytc> <a href="#implementing-parser" data-astro-cid-5d3zeytc>Implementing a parser</a> </h2>  <p>
+Roughly about two years ago I couldn't find a library containing lexer and
+    parser for T-SQL so I've chosen to write my own parser of T-SQL. By the way, I
+    haven't really write a parser ever before so I treated it as a nice opportunity
+    to learn.
+</p> <p>
+The whole idea of creating code auto formatter came from Go language with such
+    a tool. Obviously I looked into implementation of <a href="https://github.com/golang/go/blob/master/src/go/parser/parser.go">Go's
+    parser</a>.
+    I very liked this implementation, clean and simple. In similar way I've
+    implemented a lexer (scanner) and started to implement a parser.
+</p> <p>
+I've wrapped around implementation of core mechanism but I didn't have enough
+    motivation and time to implement fully-fledge parser for T-SQL. It has stalled and
+    I have leaved the project behind.
+</p> <h2 id="there-is-library" class="chapter" data-astro-cid-5d3zeytc> <a href="#there-is-library" data-astro-cid-5d3zeytc>Oh, there is a library</a> </h2>  <p>
+Very recently I've discovered
+<a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.sqlserver.transactsql.scriptdom?view=sql-dacfx-150">Microsoft.SqlServer.TransactSql.ScriptDom</a>
+library. Unfortunately it is no <strong>yet</strong> open source (on the publishing date)
+    according to <a href="https://github.com/microsoft/sqltoolsservice/issues/973">this
+    discussion</a>. You can
+    find a NuGet package
+<a href="https://www.nuget.org/packages/Microsoft.SqlServer.TransactSql.ScriptDom">here</a>.
+</p> <p>
+The library contains functionality for parsing, transforming and generating AST
+    of T-SQL. That sounds great. How come I haven't found it back 2 years ago? In
+    my opinion it is not easy to find. It might be a bit easier after 2020 when
+<a href="https://devblogs.microsoft.com/azure-sql/programmatically-parsing-transact-sql-t-sql-with-the-scriptdom-parser">this blog post</a>
+was written.
+</p> <p>
+The API of the library is pretty convenient. The basic example of use to get an
+    AST based on given SQL script path goes as follows
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#C586C0">using</span><span style="color:#D4D4D4"> (</span><span style="color:#4EC9B0">TextReader</span><span style="color:#9CDCFE"> str</span><span style="color:#D4D4D4"> = </span><span style="color:#569CD6">new</span><span style="color:#4EC9B0"> StreamReader</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">sqlFilePath</span><span style="color:#D4D4D4">)) {</span></span>
+<span class="line"><span style="color:#569CD6">    var</span><span style="color:#9CDCFE"> parser</span><span style="color:#D4D4D4"> = </span><span style="color:#569CD6">new</span><span style="color:#4EC9B0"> TSql150Parser</span><span style="color:#D4D4D4">(</span><span style="color:#569CD6">true</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">SqlEngineType</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">All</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#569CD6">    var</span><span style="color:#9CDCFE"> tree</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">parser</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Parse</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">str</span><span style="color:#D4D4D4">, </span><span style="color:#569CD6">out</span><span style="color:#569CD6"> var</span><span style="color:#9CDCFE"> errors</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#D4D4D4">    ...</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+An AST is in form of <code>TSqlFragment</code>. In order to traverse the parsed AST
+<a href="https://en.wikipedia.org/wiki/Visitor_pattern">visitor pattern</a> can be used
+    via <code>TSqlFragment.Accept</code> method. In order to do that one have to implement a
+    class which inherits from <code>TSqlFragmentVisitor</code>. It has many overloads (2005 in
+    total) for <code>ExplicitVisit</code> and <code>Visit</code> methods for different nodes of AST.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#569CD6">public</span><span style="color:#569CD6"> abstract</span><span style="color:#569CD6"> class</span><span style="color:#4EC9B0"> TSqlFragmentVisitor</span></span>
+<span class="line"><span style="color:#D4D4D4">{</span></span>
+<span class="line"><span style="color:#569CD6">    protected</span><span style="color:#DCDCAA"> TSqlFragmentVisitor</span><span style="color:#D4D4D4">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#569CD6"> virtual</span><span style="color:#569CD6"> void</span><span style="color:#DCDCAA"> ExplicitVisit</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">FederationScheme</span><span style="color:#9CDCFE"> node</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#569CD6"> virtual</span><span style="color:#569CD6"> void</span><span style="color:#DCDCAA"> ExplicitVisit</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">CreateTableStatement</span><span style="color:#9CDCFE"> node</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#569CD6"> virtual</span><span style="color:#569CD6"> void</span><span style="color:#DCDCAA"> ExplicitVisit</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">ConstraintDefinition</span><span style="color:#9CDCFE"> node</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#569CD6"> virtual</span><span style="color:#569CD6"> void</span><span style="color:#DCDCAA"> ExplicitVisit</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">ColumnStorageOptions</span><span style="color:#9CDCFE"> node</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#D4D4D4">    ... </span><span style="color:#6A9955">// 2005 overloads for two different methods of different type of nodes</span></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#569CD6"> virtual</span><span style="color:#569CD6"> void</span><span style="color:#DCDCAA"> Visit</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">ExecuteInsertSource</span><span style="color:#9CDCFE"> node</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#569CD6"> virtual</span><span style="color:#569CD6"> void</span><span style="color:#DCDCAA"> Visit</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">AlterDatabaseAddFileGroupStatement</span><span style="color:#9CDCFE"> node</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+As example let's take a look for visitor which finds all <code>DROP TABLE</code>
+statements and prints a warning. In this case <code>MyVisitor</code> would looks like the
+    following
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#569CD6">public</span><span style="color:#569CD6"> class</span><span style="color:#4EC9B0"> MyVisitor</span><span style="color:#D4D4D4"> : </span><span style="color:#4EC9B0">TSqlFragmentVisitor</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#569CD6"> override</span><span style="color:#569CD6"> void</span><span style="color:#DCDCAA"> ExplicitVisit</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">DropTableStatement</span><span style="color:#9CDCFE"> stm</span><span style="color:#D4D4D4">) {</span></span>
+<span class="line"><span style="color:#569CD6">        var</span><span style="color:#9CDCFE"> objects</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">stm</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">Objects</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#C586C0">        if</span><span style="color:#D4D4D4"> (</span><span style="color:#9CDCFE">objects</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">Count</span><span style="color:#D4D4D4"> > </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">) {</span></span>
+<span class="line"><span style="color:#C586C0">            foreach</span><span style="color:#D4D4D4"> (</span><span style="color:#569CD6">var</span><span style="color:#9CDCFE"> obj</span><span style="color:#C586C0"> in</span><span style="color:#9CDCFE"> objects</span><span style="color:#D4D4D4">) {</span></span>
+<span class="line"><span style="color:#569CD6">                var</span><span style="color:#9CDCFE"> msg</span><span style="color:#D4D4D4"> = </span><span style="color:#CE9178">$"You try to DROP {</span><span style="color:#9CDCFE">obj</span><span style="color:#CE9178">.</span><span style="color:#9CDCFE">BaseIdentifier</span><span style="color:#CE9178">.</span><span style="color:#9CDCFE">Value</span><span style="color:#CE9178">} "</span><span style="color:#D4D4D4"> +</span></span>
+<span class="line"><span style="color:#CE9178">                    $"in line: {</span><span style="color:#9CDCFE">obj</span><span style="color:#CE9178">.</span><span style="color:#9CDCFE">StartLine</span><span style="color:#CE9178">} col: {</span><span style="color:#9CDCFE">obj</span><span style="color:#CE9178">.</span><span style="color:#9CDCFE">StartColumn</span><span style="color:#CE9178">}"</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#9CDCFE">                Console</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">WriteLine</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">msg</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#D4D4D4">            }</span></span>
+<span class="line"><span style="color:#D4D4D4">        }</span></span>
+<span class="line"><span style="color:#569CD6">        base</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">ExplicitVisit</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">stm</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+Finally it can be applied via <code>Accept</code> method.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#C586C0">using</span><span style="color:#D4D4D4"> (</span><span style="color:#4EC9B0">TextReader</span><span style="color:#9CDCFE"> str</span><span style="color:#D4D4D4"> = </span><span style="color:#569CD6">new</span><span style="color:#4EC9B0"> StreamReader</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">sqlFilePath</span><span style="color:#D4D4D4">)) {</span></span>
+<span class="line"><span style="color:#569CD6">    var</span><span style="color:#9CDCFE"> parser</span><span style="color:#D4D4D4"> = </span><span style="color:#569CD6">new</span><span style="color:#4EC9B0"> TSql150Parser</span><span style="color:#D4D4D4">(</span><span style="color:#569CD6">true</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">SqlEngineType</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">All</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#569CD6">    var</span><span style="color:#9CDCFE"> tree</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">parser</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Parse</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">str</span><span style="color:#D4D4D4">, </span><span style="color:#569CD6">out</span><span style="color:#569CD6"> var</span><span style="color:#9CDCFE"> errors</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#9CDCFE">    tree</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Accept</span><span style="color:#D4D4D4">(</span><span style="color:#569CD6">new</span><span style="color:#4EC9B0"> MyVisitor</span><span style="color:#D4D4D4">());</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+Full running example can be found
+<a href="https://github.com/DSkrzypiec/blogSourceCodes/tree/master/202111_ParsingTSQL/sqlParser">here</a>.
+    Another simple and really easy example of using T-SQL parser is
+<a href="https://michaeljswart.com/2014/04/removing-comments-from-sql">this example</a>
+for removing all comments from T-SQL script.
+</p> <h2 id="antlr" class="chapter" data-astro-cid-5d3zeytc> <a href="#antlr" data-astro-cid-5d3zeytc>ANTLR</a> </h2>  <p> <a href="https://www.antlr.org">ANTLR</a> is a tool for generating parsers. As it turned
+    out there is already open source, community-built, grammar for T-SQL. Definition
+    can be found <a href="https://github.com/antlr/grammars-v4/tree/master/sql/tsql">here</a>.
+    Based on this grammar definition ANTLR would generate a lexer, parser and
+    listeners in a target language. Supported target languages for ANTLR4 are Java
+    (ANTLR is written in Java), C#, Python, JavaScript, Go, C++, Swift, PHP and
+    Dart.
+</p> <p>
+I wanted to try it mostly because it's open source and I browse through the
+    grammar and make some changes (improvements). Another reason is that if this
+    would went smooth I could write up a grammar for
+<a href="https://docs.snowflake.com/en/">Snowflake SQL</a> which I use at work recently.
+</p> <p>
+I've copied <code>TSqlLexer.g4</code> and <code>TSqlParser.g4</code> files and use ANTLR4 to generate
+    set of C# classes using the following command (assuming you have ANTLR4
+    installed)
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#DCDCAA">antlr4</span><span style="color:#569CD6"> -Dlanguage=CSharp</span><span style="color:#CE9178"> TSqlLexer.g4</span><span style="color:#CE9178"> TSqlParser.g4</span><span style="color:#569CD6"> -o</span><span style="color:#CE9178"> tmp</span></span></code></pre> <p>
+It has generated the following files in the <code>tmp</code> catalog
+</p> <ul> <li><code>TSqlLexer.cs</code> - a file with <code>TSqlLexer</code> class definition in 9775 lines of code</li> <li><code>TSqlParser.cs</code> - a file with <code>TSqlParser</code> class definition in 130774 lines of code</li> <li><code>TSqlParserListener.cs</code> - a file with <code>TSqlParserListener</code> class definition in 5787 lines of code</li> <li><code>TSqlParserBaseListener.cs</code> - a file with <code>TSqlParserBaseListener</code> class definition in 6943 lines of code.</li> </ul> <p> <code>TSqlParserBaseListener</code> fill empty implementations of <code>TSqlParserListener</code> abstract methods.
+</p> <p>
+In order to actually use those generated C# classes in your project you need
+    one more thing -
+<a href="https://www.nuget.org/packages/Antlr4.Runtime.Standard">Antlr.Runtime</a> library.
+</p> <p>
+The basic example of using this ANTLR4-generated parser can looks like this
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#C586C0">using</span><span style="color:#D4D4D4"> (</span><span style="color:#4EC9B0">TextReader</span><span style="color:#9CDCFE"> str</span><span style="color:#D4D4D4"> = </span><span style="color:#569CD6">new</span><span style="color:#4EC9B0"> StreamReader</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">sqlFilePath</span><span style="color:#D4D4D4">)) {</span></span>
+<span class="line"><span style="color:#569CD6">    var</span><span style="color:#9CDCFE"> lexer</span><span style="color:#D4D4D4"> = </span><span style="color:#569CD6">new</span><span style="color:#4EC9B0"> TSqlLexer</span><span style="color:#D4D4D4">(</span><span style="color:#569CD6">new</span><span style="color:#4EC9B0"> AntlrInputStream</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">str</span><span style="color:#D4D4D4">));</span></span>
+<span class="line"><span style="color:#569CD6">    var</span><span style="color:#9CDCFE"> tokenStream</span><span style="color:#D4D4D4"> = </span><span style="color:#569CD6">new</span><span style="color:#4EC9B0"> CommonTokenStream</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">lexer</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#569CD6">    var</span><span style="color:#9CDCFE"> parser</span><span style="color:#D4D4D4"> = </span><span style="color:#569CD6">new</span><span style="color:#4EC9B0"> TSqlParser</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">tokenStream</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#569CD6">    var</span><span style="color:#9CDCFE"> tree</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">parser</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">tsql_file</span><span style="color:#D4D4D4">();</span></span>
+<span class="line"><span style="color:#D4D4D4">    ...</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+In order to write up a listener for an AST you have to implement a class which
+    inherits by <code>TSqlParserBaseListener</code> like this
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#569CD6">public</span><span style="color:#569CD6"> class</span><span style="color:#4EC9B0"> MyParserListener</span><span style="color:#D4D4D4"> : </span><span style="color:#4EC9B0">TSqlParserBaseListener</span><span style="color:#D4D4D4"> {</span></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#569CD6"> override</span><span style="color:#569CD6"> void</span><span style="color:#DCDCAA"> ExitDrop_table</span><span style="color:#D4D4D4">(</span><span style="color:#4EC9B0">TSqlParser</span><span style="color:#D4D4D4">.</span><span style="color:#4EC9B0">Drop_tableContext</span><span style="color:#9CDCFE"> context</span><span style="color:#D4D4D4">) {</span></span>
+<span class="line"><span style="color:#569CD6">        var</span><span style="color:#9CDCFE"> idNames</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">context</span></span>
+<span class="line"><span style="color:#D4D4D4">                        .</span><span style="color:#DCDCAA">table_name</span><span style="color:#D4D4D4">()</span></span>
+<span class="line"><span style="color:#D4D4D4">                        .</span><span style="color:#DCDCAA">id_</span><span style="color:#D4D4D4">()</span></span>
+<span class="line"><span style="color:#D4D4D4">                        .</span><span style="color:#DCDCAA">Select</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">e</span><span style="color:#D4D4D4"> => </span><span style="color:#9CDCFE">e</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">GetText</span><span style="color:#D4D4D4">());</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">        var</span><span style="color:#9CDCFE"> msg</span><span style="color:#D4D4D4"> = </span><span style="color:#CE9178">$"You're trying to delete {</span><span style="color:#569CD6">string</span><span style="color:#CE9178">.</span><span style="color:#DCDCAA">Join</span><span style="color:#CE9178">(".", </span><span style="color:#9CDCFE">idNames</span><span style="color:#CE9178">)}"</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#9CDCFE">        Console</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">WriteLine</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">msg</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+Once you've got it you can apply it using <code>ParserTreeWalker</code> </p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#D4D4D4">...</span></span>
+<span class="line"><span style="color:#569CD6">var</span><span style="color:#9CDCFE"> ml</span><span style="color:#D4D4D4"> = </span><span style="color:#569CD6">new</span><span style="color:#4EC9B0"> MyParserListener</span><span style="color:#D4D4D4">();</span></span>
+<span class="line"><span style="color:#9CDCFE">ParseTreeWalker</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">Default</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Walk</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">ml</span><span style="color:#D4D4D4">, </span><span style="color:#9CDCFE">tree</span><span style="color:#D4D4D4">);</span></span></code></pre> <p>
+The full running example can be found
+<a href="https://github.com/DSkrzypiec/blogSourceCodes/tree/master/202111_ParsingTSQL/antlrTsqlParser">here</a>.
+    I should add that there is no guarantee for the correctness of this unofficial
+    T-SQL grammar. Even in case of <code>DROP TABLE</code> statement which I've presented here
+    there is a difference with actual SQL Server specs.
+</p> <p>
+It suppose to be
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#569CD6">DROP</span><span style="color:#569CD6"> TABLE</span><span style="color:#D4D4D4"> [ IF EXISTS ] { full_name | schema.table | </span><span style="color:#569CD6">table</span><span style="color:#D4D4D4"> } [ ,...n ]</span></span>
+<span class="line"><span style="color:#D4D4D4">[ ; ]</span></span></code></pre> <p>
+which means that there might be many tables listed after <code>DROP TABLE</code> keywords
+    seperated by comma but in the open source version there is only single table
+    allowed:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>drop_table</span></span>
+<span class="line"><span>    : DROP TABLE (IF EXISTS)? table_name ';'?</span></span>
+<span class="line"><span>    ;</span></span></code></pre> <h2 id="summary" class="chapter" data-astro-cid-5d3zeytc> <a href="#summary" data-astro-cid-5d3zeytc>Summary</a> </h2>  <p>
+In my opinion having a parser for query (and other) languages might be an
+    extremly useful tool, especially if you're a data engineer. Based on AST you
+    can implement static analyzers, verifiers, validators, fixers and others.
+</p> <p>
+In term of T-SQL I'd go with official Microsoft library. On the other hand if
+    there is no official parser it would be much easier to define a grammer and
+    generate parser with ANTLR than writing a parser from scratch.
+</p> <p>
+I'll defenetly play around with ANTLR, probably with Snowflake SQL for which I
+    didn't find defined grammer. It also might be a very good excercise to go
+    through the whole documentation.
+</p> <h2 id="references" class="chapter" data-astro-cid-5d3zeytc> <a href="#references" data-astro-cid-5d3zeytc>References</a> </h2>  <ol> <li><a href="https://github.com/DSkrzypiec/mssfmt">github.com/DSkrzypiec/mssfmt</a></li> <li><a href="https://www.dbdelta.com/microsoft-sql-server-script-dom/">Microsoft SQL Server Script DOM</a></li> <li><a href="https://devblogs.microsoft.com/azure-sql/programmatically-parsing-transact-sql-t-sql-with-the-scriptdom-parser/">Another Microsoft blog post</a></li> <li><a href="https://tomassetti.me/getting-started-with-antlr-in-csharp">Getting started with ANTLR in C#</a></li> </ol>  </article> </main> </div> </div>  <!-- Global styles for .post-layout and .post-layout-sidebar -->  </body></html>

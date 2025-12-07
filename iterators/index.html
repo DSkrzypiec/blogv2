@@ -1,0 +1,402 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-gvpn4u4b> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Iterators in C#</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.26/dist/katex.min.css" crossorigin="anonymous"><style>*,*:before,*:after{box-sizing:border-box}html,body{max-width:100%;overflow-x:hidden}html{-webkit-text-size-adjust:100%}:root{--bg-color: #111010;--text-primary: #ffe9c6;--text-secondary: #2AA198;--accent-color: #f97d43;--font-body: "Roboto", sans-serif;--font-code: "JetBrains Mono", monospace}html{font-size:19px}@media (max-width: 480px){html{font-size:16px}}@media (max-width: 360px){html{font-size:15px}}body{font-size:1rem;line-height:1.66;background-color:var(--bg-color);color:var(--text-primary);font-family:var(--font-body);margin:0;padding:0;word-wrap:break-word;overflow-wrap:break-word}h1{font-size:2.25rem;line-height:1.2}h2{font-size:1.75rem;line-height:1.3}h3{font-size:1.35rem;line-height:1.35}@media (max-width: 768px){h1{font-size:2rem}h2{font-size:1.5rem}h3{font-size:1.2rem}}@media (max-width: 480px){h1{font-size:1.75rem}h2{font-size:1.35rem}h3{font-size:1.1rem}}@media (max-width: 360px){h1{font-size:1.6rem}h2{font-size:1.25rem}h3{font-size:1.05rem}}a{color:var(--text-secondary);text-decoration:none}a:hover{text-decoration:underline}pre{background-color:#1e1e1e;border-radius:8px;padding:1rem;overflow-x:auto;margin:1rem 0;font-size:15px;font-family:var(--font-code)}code{background-color:transparent}pre>code{display:block}.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:.5rem 0}.toc a{color:var(--text-secondary);text-decoration:none}.toc a:hover{text-decoration:underline}.toc a.active{font-weight:700;color:var(--accent-color)}nav[data-astro-cid-dmqpwcec]{padding:1rem 0;text-align:center}ul[data-astro-cid-dmqpwcec]{list-style:none;padding:0;margin:0;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}@media (max-width: 480px){ul[data-astro-cid-dmqpwcec]{gap:1rem}a[data-astro-cid-dmqpwcec]{font-size:1rem;padding:.4rem .8rem}}@media (max-width: 360px){ul[data-astro-cid-dmqpwcec]{gap:.5rem}a[data-astro-cid-dmqpwcec]{font-size:.9rem;padding:.3rem .6rem}}li[data-astro-cid-dmqpwcec]{display:inline}a[data-astro-cid-dmqpwcec]{color:var(--text-primary);font-size:1.2rem;padding:.5rem 1rem;border:1px solid transparent;transition:all .3s ease-in-out}a[data-astro-cid-dmqpwcec]:hover{border:1px solid var(--accent-color);border-radius:4px;color:var(--accent-color)}.active[data-astro-cid-dmqpwcec] a[data-astro-cid-dmqpwcec]{color:var(--accent-color);font-weight:700;border-bottom:2px solid var(--accent-color)}hr[data-astro-cid-dmqpwcec]{margin-top:1rem;border:none;height:2px;background:var(--text-secondary);width:90%;max-width:800px;margin-left:auto;margin-right:auto}
+.post-title[data-astro-cid-resui2ln]{margin-bottom:2rem}.post-title[data-astro-cid-resui2ln] h1[data-astro-cid-resui2ln]{font-size:1.75rem;color:var(--accent-color);margin:0}.post-date[data-astro-cid-resui2ln]{font-size:1rem;color:var(--text-secondary);margin-top:.5rem}.publish-label[data-astro-cid-resui2ln]{font-weight:700;color:var(--text-primary)}
+.chapter[data-astro-cid-5d3zeytc]{font-size:2rem;margin-top:2rem;color:var(--accent-color)}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]{color:var(--accent-color);text-decoration:none}.chapter[data-astro-cid-5d3zeytc] a[data-astro-cid-5d3zeytc]:hover{text-decoration:underline}
+.post-layout{display:flex;flex-direction:row}@media (min-width: 1024px){.post-layout{flex-direction:row}.post-layout-sidebar{position:fixed;left:2rem;top:10rem;width:200px;font-size:.85rem;padding:1rem;z-index:10}.post-layout-content{flex:1;max-width:1000px;margin:0 auto;padding-left:240px;padding-right:2rem}}@media (min-width: 1400px){.post-layout-content{max-width:1200px}}.post-layout-sidebar{display:none}@media (min-width: 1024px){.post-layout-sidebar{display:block}}@media (max-width: 1023px){.post-layout{flex-direction:column}.post-layout-content{width:100%;max-width:100%}}:global(pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.astro-code){width:100%!important;max-width:100%!important;box-sizing:border-box}:global(.astro-code pre){width:100%!important;max-width:100%!important;overflow-x:auto;box-sizing:border-box}:global(.post-layout-content pre){max-width:100%!important;overflow-x:auto;word-wrap:break-word;white-space:pre-wrap}main[data-astro-cid-gvpn4u4b]{padding:2rem 1rem;max-width:900px;margin:0 auto;width:100%;box-sizing:border-box}@media (min-width: 1024px){main[data-astro-cid-gvpn4u4b]{padding:2rem 0;max-width:none}}@media (max-width: 768px){main[data-astro-cid-gvpn4u4b]{padding:1.5rem .75rem}}@media (max-width: 480px){main[data-astro-cid-gvpn4u4b]{padding:1rem .5rem}}article[data-astro-cid-gvpn4u4b]{max-width:800px;width:100%;margin:0 auto;color:var(--text-primary);box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word}h1[data-astro-cid-gvpn4u4b],h2[data-astro-cid-gvpn4u4b],h3[data-astro-cid-gvpn4u4b]{color:var(--accent-color);margin-top:1.5rem;word-wrap:break-word;overflow-wrap:break-word}p[data-astro-cid-gvpn4u4b]{color:var(--text-secondary);word-wrap:break-word;overflow-wrap:break-word;hyphens:auto}img[data-astro-cid-gvpn4u4b]{max-width:100%;max-height:400px;width:auto;height:auto;border-radius:8px;margin:1rem 0;object-fit:contain}@media (max-width: 768px){img[data-astro-cid-gvpn4u4b]{max-height:300px}}@media (max-width: 480px){img[data-astro-cid-gvpn4u4b]{max-height:250px}}blockquote[data-astro-cid-gvpn4u4b]{border-left:4px solid var(--accent-color);padding-left:1rem;color:var(--text-primary);font-style:italic;margin:1rem 0}code[data-astro-cid-gvpn4u4b]{font-family:monospace;background:#ffffff1a;padding:.2rem .4rem;border-radius:4px;font-size:.95rem}
+.image-container[data-astro-cid-6kov3kig]{display:flex;flex-direction:column;align-items:center;margin:1.5rem 0}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{width:auto;height:auto;border-radius:8px;object-fit:contain;box-shadow:0 4px 8px #0000001a}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig].inverted{filter:invert(1)}.image-caption[data-astro-cid-6kov3kig]{margin-top:.5rem;font-size:.9rem;color:var(--text-secondary, #666);font-style:italic;text-align:center;max-width:600px}@media (max-width: 768px){.image-container[data-astro-cid-6kov3kig]{margin:1rem 0}.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{max-height:300px!important}}@media (max-width: 480px){.image-container[data-astro-cid-6kov3kig] img[data-astro-cid-6kov3kig]{max-height:250px!important}.image-caption[data-astro-cid-6kov3kig]{font-size:.8rem;padding:0 1rem}}
+.table-container[data-astro-cid-akey4rtz]{display:flex;flex-direction:column;align-items:center;margin:1.5rem 0;overflow-x:auto}.table[data-astro-cid-akey4rtz]{width:100%;border-collapse:collapse;font-size:.9rem;background-color:var(--bg-secondary, #1a1a1a);border-radius:8px;overflow:hidden;box-shadow:0 2px 8px #0000001a}.table-caption[data-astro-cid-akey4rtz]{margin-top:.5rem;font-size:.9rem;color:var(--text-secondary, #666);font-style:italic;text-align:center;max-width:600px}.table[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz],.table[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{padding:.75rem;text-align:left;border-bottom:1px solid var(--border-color, #333)}.table[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz]{background-color:var(--bg-primary, #2a2a2a);color:var(--text-primary, #ffffff);font-weight:600;font-size:.9rem}.table[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{color:var(--text-secondary, #cccccc)}.table-bordered[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz],.table-bordered[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{border:1px solid var(--border-color, #333)}.table-bordered[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz]{border-bottom:2px solid var(--border-color, #333)}.table-striped[data-astro-cid-akey4rtz] tbody[data-astro-cid-akey4rtz] tr[data-astro-cid-akey4rtz]:nth-child(odd){background-color:var(--bg-tertiary, #222)}.table-hover[data-astro-cid-akey4rtz] tbody[data-astro-cid-akey4rtz] tr[data-astro-cid-akey4rtz]:hover{background-color:var(--bg-hover, #333);transition:background-color .2s ease}@media (max-width: 768px){.table[data-astro-cid-akey4rtz]{font-size:.8rem}.table[data-astro-cid-akey4rtz] th[data-astro-cid-akey4rtz],.table[data-astro-cid-akey4rtz] td[data-astro-cid-akey4rtz]{padding:.5rem}.table-caption[data-astro-cid-akey4rtz]{font-size:.8rem;padding:0 1rem}}
+</style></head> <body data-astro-cid-gvpn4u4b> <header data-astro-cid-gvpn4u4b> <nav data-astro-cid-dmqpwcec> <ul data-astro-cid-dmqpwcec> <li class data-astro-cid-dmqpwcec> <a href="/" data-astro-cid-dmqpwcec>Posts</a> </li><li class data-astro-cid-dmqpwcec> <a href="/about" data-astro-cid-dmqpwcec>About</a> </li><li class data-astro-cid-dmqpwcec> <a href="/resume.html" data-astro-cid-dmqpwcec>Resume</a> </li> </ul> </nav>  </header> <!-- 
+      1) Wrap sidebar + main in a single parent .post-layout
+         so flexbox can place them side by side on large screens 
+    --> <div class="post-layout" data-astro-cid-gvpn4u4b> <!-- SIDEBAR --> <aside class="post-layout-sidebar" data-astro-cid-gvpn4u4b> <!-- The nav container that will hold our generated TOC --><nav id="table-of-contents" class="toc"></nav> <script client:load>
+  window.addEventListener('DOMContentLoaded', () => {
+    buildTOC();
+    highlightActiveHeading();
+  });
+
+  // 1. Build the TOC once the page is loaded
+  function buildTOC() {
+    const chapterHeadings = Array.from(document.querySelectorAll('h2.chapter[id]'));
+    const tocContainer = document.getElementById('table-of-contents');
+    if (!tocContainer) return;
+
+    const ul = document.createElement('ul');
+
+    chapterHeadings.forEach((heading) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+
+      // The heading has an `id` like "intro" or "symptoms"
+      a.href = `#${heading.id}`;
+
+      a.textContent = heading.textContent.trim();
+
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    tocContainer.appendChild(ul);
+  }
+
+    function highlightActiveHeading() {
+      const links = Array.from(document.querySelectorAll('#table-of-contents a'));
+      const headingEls = links.map((link) => document.getElementById(link.hash.slice(1)));
+
+      // 3. Create the observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            console.log(
+              `Heading: ${entry.target.id}, isIntersecting: ${entry.isIntersecting}`
+            );
+            if (entry.isIntersecting) {
+              // Remove 'active' from all links
+              links.forEach((l) => l.classList.remove('active'));
+
+              // Highlight the link for the heading that just entered
+              const activeLink = links.find(
+                (l) => l.hash === `#${entry.target.id}`
+              );
+              if (activeLink) {
+                activeLink.classList.add('active');
+              }
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '-15% 0px -60% 0px',
+          threshold: 0,
+        }
+      );
+
+      // 4. Observe each heading
+      headingEls.forEach((el) => {
+        if (el) {
+          console.log(`Observing heading: ${el.id}`);
+          observer.observe(el);
+        }
+      });
+    }
+</script> </aside> <!-- MAIN CONTENT AREA --> <div class="post-layout-content" data-astro-cid-gvpn4u4b> <main data-astro-cid-gvpn4u4b> <article data-astro-cid-gvpn4u4b>  <div class="post-title" data-astro-cid-resui2ln> <h1 data-astro-cid-resui2ln>Iterators in C#</h1> <p class="post-date" data-astro-cid-resui2ln> <span class="publish-label" data-astro-cid-resui2ln>Publish date:</span> 2021-04-22 </p> </div>  <div class="image-container" data-astro-cid-6kov3kig> <img src="/iterators/iterator_il_pic.png" alt="Iterator IL code" style="max-width: 100%; max-height: 400px;" class data-astro-cid-6kov3kig> <p class="image-caption" data-astro-cid-6kov3kig>Iterator IL code</p> </div>  <h2 id="intro" class="chapter" data-astro-cid-5d3zeytc> <a href="#intro" data-astro-cid-5d3zeytc>Intro</a> </h2>  <p>
+Main goal of this post is to present how iterators actually works in C#. In
+    particular we will take a look on
+<a href="https://en.wikipedia.org/wiki/Common_Intermediate_Language">IL</a> (Intermediate
+    Language) generated by the compiler to check out what is really going on.
+</p> <p>
+But first let's start from loosely stated definition of iterators in C#.
+    An <em>iterator</em> is a method or property which returns <code>IEnumerable&lt;T&gt;</code> or
+<code>IEnumerator&lt;T&gt;</code> and uses <code>yield return</code> or <code>yield break</code> contextual keywords.
+    One could ask what is then a difference between an iterator and a method that
+    returns <code>IList&lt;T&gt;</code> which also satisfies <code>IEnumerable&lt;T&gt;</code> interface? The main
+    difference is the way of consumption of those sequences. In case of <code>IList&lt;T&gt;</code>
+actual memory is allocated for all elements. In case of iterators we are
+    dealing with so-called lazy evaluation. Object from the sequence is taken only
+    when it's needed.
+</p> <p>
+To express this difference let's consider the following silly example:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#569CD6">public</span><span style="color:#569CD6"> static</span><span style="color:#4EC9B0"> IEnumerable</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#569CD6">int</span><span style="color:#D4D4D4">> </span><span style="color:#DCDCAA">PrepareNumbers</span><span style="color:#D4D4D4">(</span><span style="color:#569CD6">int</span><span style="color:#9CDCFE"> n</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">{</span></span>
+<span class="line"><span style="color:#569CD6">    var</span><span style="color:#9CDCFE"> numbers</span><span style="color:#D4D4D4"> = </span><span style="color:#569CD6">new</span><span style="color:#4EC9B0"> List</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#569CD6">int</span><span style="color:#D4D4D4">>(</span><span style="color:#9CDCFE">n</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">    for</span><span style="color:#D4D4D4"> (</span><span style="color:#569CD6">var</span><span style="color:#9CDCFE"> i</span><span style="color:#D4D4D4"> = </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">; </span><span style="color:#9CDCFE">i</span><span style="color:#D4D4D4"> &#x3C; </span><span style="color:#9CDCFE">n</span><span style="color:#D4D4D4">; </span><span style="color:#9CDCFE">i</span><span style="color:#D4D4D4">++) {</span></span>
+<span class="line"><span style="color:#9CDCFE">        numbers</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">Add</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">i</span><span style="color:#D4D4D4"> + </span><span style="color:#B5CEA8">13</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#9CDCFE"> numbers</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">public</span><span style="color:#569CD6"> static</span><span style="color:#4EC9B0"> IEnumerable</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#569CD6">int</span><span style="color:#D4D4D4">> </span><span style="color:#DCDCAA">GenerateNumbers</span><span style="color:#D4D4D4">(</span><span style="color:#569CD6">int</span><span style="color:#9CDCFE"> n</span><span style="color:#D4D4D4">)</span></span>
+<span class="line"><span style="color:#D4D4D4">{</span></span>
+<span class="line"><span style="color:#C586C0">    for</span><span style="color:#D4D4D4"> (</span><span style="color:#569CD6">var</span><span style="color:#9CDCFE"> i</span><span style="color:#D4D4D4"> = </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">; </span><span style="color:#9CDCFE">i</span><span style="color:#D4D4D4"> &#x3C; </span><span style="color:#9CDCFE">n</span><span style="color:#D4D4D4">; </span><span style="color:#9CDCFE">i</span><span style="color:#D4D4D4">++) {</span></span>
+<span class="line"><span style="color:#C586C0">        yield</span><span style="color:#C586C0"> return</span><span style="color:#9CDCFE"> i</span><span style="color:#D4D4D4"> + </span><span style="color:#B5CEA8">13</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#569CD6">const</span><span style="color:#569CD6"> int</span><span style="color:#9CDCFE"> size</span><span style="color:#D4D4D4"> = </span><span style="color:#569CD6">int</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">MaxValue</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">var</span><span style="color:#9CDCFE"> numbers1</span><span style="color:#D4D4D4"> = </span><span style="color:#DCDCAA">PrepareNumbers</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">size</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#569CD6">var</span><span style="color:#9CDCFE"> numbers2</span><span style="color:#D4D4D4"> = </span><span style="color:#DCDCAA">GenerateNumbers</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">size</span><span style="color:#D4D4D4">);</span></span></code></pre> <p>
+Method <code>PrepareNumbers</code> allocates in this case over two billions <code>int</code>s so it
+    should throw <code>System.OutOfMemoryException</code> on systems with <code>8GB</code> of RAM or
+    smaller. But that is not a case for <code>GenerateNumbers</code> because iterator doesn't
+    perform any allocation for their elements. How C# compiler is doing that? There
+    can be (almost) any C# code within the iterator method. So how in fact C#
+    compiler know how to prepare the sequence without preallocation? Let's found
+    out.
+</p> <h2 id="consumption" class="chapter" data-astro-cid-5d3zeytc> <a href="#consumption" data-astro-cid-5d3zeytc>Consumption of IEnumerable&lt;T&gt;</a> </h2>  <p>
+Before we jump into details of iterator blocks I wanted to make sure we are all
+    familiar with the fact how actually <code>foreach</code> is consuming sequence of
+<code>IEnumerable&lt;T&gt;</code>.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#C586C0">foreach</span><span style="color:#D4D4D4"> (</span><span style="color:#569CD6">var</span><span style="color:#9CDCFE"> item</span><span style="color:#C586C0"> in</span><span style="color:#9CDCFE"> sequence</span><span style="color:#D4D4D4">) {</span></span>
+<span class="line"><span style="color:#9CDCFE">    Console</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">WriteLine</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">item</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+The above loop over all elements in the <code>sequence</code> is just syntactic sugar for
+    the following:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#C586C0">using</span><span style="color:#D4D4D4"> (</span><span style="color:#4EC9B0">IEnumerator</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#4EC9B0">T</span><span style="color:#D4D4D4">> </span><span style="color:#9CDCFE">enumerator</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">sequence</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">GetEnumerator</span><span style="color:#D4D4D4">()) {</span></span>
+<span class="line"><span style="color:#C586C0">    while</span><span style="color:#D4D4D4"> (</span><span style="color:#9CDCFE">enumerator</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">MoveNext</span><span style="color:#D4D4D4">()) {</span></span>
+<span class="line"><span style="color:#569CD6">        var</span><span style="color:#9CDCFE"> item</span><span style="color:#D4D4D4"> = </span><span style="color:#9CDCFE">enumerator</span><span style="color:#D4D4D4">.</span><span style="color:#9CDCFE">Current</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#9CDCFE">        Console</span><span style="color:#D4D4D4">.</span><span style="color:#DCDCAA">WriteLine</span><span style="color:#D4D4D4">(</span><span style="color:#9CDCFE">item</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#D4D4D4">    }</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+In each loop iteration the <code>MoveNext()</code> method of enumerator is called and
+    current element is taken using <code>Current</code> property. Based on this we can suspect
+    that all of iterator "magic" is behind <code>MoveNext()</code> method.
+</p> <h2 id="internals" class="chapter" data-astro-cid-5d3zeytc> <a href="#internals" data-astro-cid-5d3zeytc>Internals of iterators</a> </h2>  <p>
+To study internals of iterators let's focus on single static method with
+    iterator block.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#569CD6">public</span><span style="color:#569CD6"> static</span><span style="color:#4EC9B0"> IEnumerable</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#569CD6">int</span><span style="color:#D4D4D4">> </span><span style="color:#DCDCAA">GenerateNumbers</span><span style="color:#D4D4D4">() {</span></span>
+<span class="line"><span style="color:#569CD6">    var</span><span style="color:#9CDCFE"> secretLocalNumber</span><span style="color:#D4D4D4"> = </span><span style="color:#B5CEA8">42</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#C586C0">    yield</span><span style="color:#C586C0"> return</span><span style="color:#9CDCFE"> secretLocalNumber</span><span style="color:#D4D4D4"> + </span><span style="color:#B5CEA8">13</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">    for</span><span style="color:#D4D4D4"> (</span><span style="color:#569CD6">var</span><span style="color:#9CDCFE"> tmpId</span><span style="color:#D4D4D4"> = </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">; </span><span style="color:#9CDCFE">tmpId</span><span style="color:#D4D4D4"> &#x3C; </span><span style="color:#B5CEA8">3</span><span style="color:#D4D4D4">; </span><span style="color:#9CDCFE">tmpId</span><span style="color:#D4D4D4">++)</span></span>
+<span class="line"><span style="color:#C586C0">        yield</span><span style="color:#C586C0"> return</span><span style="color:#9CDCFE"> tmpId</span><span style="color:#D4D4D4"> + </span><span style="color:#B5CEA8">10</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">    yield</span><span style="color:#C586C0"> return</span><span style="color:#DCDCAA"> SomeStaticMethod</span><span style="color:#D4D4D4">(-</span><span style="color:#B5CEA8">99</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+Iterating over <code>GenerateNumbers()</code> result would produce the following sequence
+<code>-100</code> (assuming that <code>SomeStaticMethod</code> decrease its argument
+    by one).
+</p> <p>
+In order to look into the iterator block we will take a look on IL generated by
+    C# compiler. IL can be generated based on .NET binaries using <em>ildasm.exe</em> tool
+    on Windows or <em>monodis</em> on Linux and macOS. For small examples very convenient
+    way to look at IL based on C# code is online service <a href="http://sharplab.io">sharplab.io</a>.
+    If you're not familiar with IL <a href="https://en.wikipedia.org/wiki/List_of_CIL_instructions">here</a> you can find table of instructions with short description.
+    Disclaimer: in the following IL listings I simplified names of objects to make
+    those more readable. However it's not identical with generated IL.
+</p> <p>
+Let's start from the very top and find out what is under the hood of
+<code>GenerateNumbers</code> method.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>IL_0000: ldc.i4.s -2</span></span>
+<span class="line"><span>IL_0002: newobj instance void _GenerateNumbers::.ctor(int32)</span></span>
+<span class="line"><span>IL_0007: ret</span></span></code></pre> <p>
+Those three instructions creates new object of class <code>_GenerateNumbers</code> using
+    constructor with value <code>-2</code>. Interesting! As it turned out C# compiler generates separate
+    (nested, private, sealed) <strong>class</strong> for <code>GenerateNumbers()</code> method. This class is
+    of the following form
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#569CD6">private</span><span style="color:#569CD6"> sealed</span><span style="color:#569CD6"> class</span><span style="color:#4EC9B0"> _GenerateNumbers</span></span>
+<span class="line"><span style="color:#D4D4D4">    : </span><span style="color:#4EC9B0">IEnumerable</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#569CD6">int</span><span style="color:#D4D4D4">>, </span><span style="color:#4EC9B0">IEnumerator</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#569CD6">int</span><span style="color:#D4D4D4">>, </span><span style="color:#4EC9B0">IDisposable</span></span>
+<span class="line"><span style="color:#D4D4D4">{</span></span>
+<span class="line"><span style="color:#569CD6">    private</span><span style="color:#569CD6"> int</span><span style="color:#9CDCFE"> _state</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#569CD6">    private</span><span style="color:#569CD6"> int</span><span style="color:#9CDCFE"> _initialThreadId</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#569CD6">    private</span><span style="color:#569CD6"> int</span><span style="color:#9CDCFE"> _secretLocalNumber</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#569CD6">    private</span><span style="color:#569CD6"> int</span><span style="color:#9CDCFE"> _tmpId</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#569CD6"> int</span><span style="color:#9CDCFE"> Current</span><span style="color:#D4D4D4"> { </span><span style="color:#569CD6">get</span><span style="color:#D4D4D4">; }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#DCDCAA"> _GenerateNumbers</span><span style="color:#D4D4D4">(</span><span style="color:#569CD6">int</span><span style="color:#9CDCFE"> state</span><span style="color:#D4D4D4">) { }</span></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#569CD6"> void</span><span style="color:#DCDCAA"> Dispose</span><span style="color:#D4D4D4">() { }</span></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#569CD6"> bool</span><span style="color:#DCDCAA"> MoveNext</span><span style="color:#D4D4D4">() { }</span></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#569CD6"> void</span><span style="color:#DCDCAA"> Reset</span><span style="color:#D4D4D4">() { }</span></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#4EC9B0"> IEnumerator</span><span style="color:#D4D4D4">&#x3C;</span><span style="color:#569CD6">int</span><span style="color:#D4D4D4">> </span><span style="color:#DCDCAA">GetEnumerator</span><span style="color:#D4D4D4">() { }</span></span>
+<span class="line"><span style="color:#569CD6">    public</span><span style="color:#4EC9B0"> IEnumerator</span><span style="color:#DCDCAA"> GetEnumerator</span><span style="color:#D4D4D4">() { }</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span></code></pre> <p>
+Set of interfaces which generated class satisfies isn't surprising. What was
+    interesting to me is the fact that this generated class captures all local
+    variables from original method <code>GenerateNumbers()</code>.
+</p> <p>
+As we saw earlier two methods are especially important <code>GetEnumerator()</code> and
+<code>MoveNext()</code>. The first one is executed once per consumption to get
+<code>IEnumerator&lt;T&gt;</code> however <code>MoveNext()</code> is heavily used - in each iteration.
+    Next we'll take a look on <code>GetEnumerator()</code> but we'll mostly focus on
+    internals of <code>MoveNext()</code> method.
+</p> <h3>GetEnumerator() method</h3> <p>
+This methods returns an instance of <code>_GenerateNumbers</code> class with set <code>_state</code>
+pseudo code is as follows
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#C586C0">if</span><span style="color:#D4D4D4"> (</span><span style="color:#9CDCFE">_state</span><span style="color:#D4D4D4"> == -</span><span style="color:#B5CEA8">2</span><span style="color:#D4D4D4">) {</span></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#569CD6"> new</span><span style="color:#4EC9B0"> _GenerateNumbers</span><span style="color:#D4D4D4">(</span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C586C0">if</span><span style="color:#D4D4D4"> (</span><span style="color:#9CDCFE">_initialThreadId</span><span style="color:#D4D4D4"> != </span><span style="color:#DCDCAA">get_CurrentManagedThreadId</span><span style="color:#D4D4D4">()) {</span></span>
+<span class="line"><span style="color:#C586C0">    return</span><span style="color:#569CD6"> new</span><span style="color:#4EC9B0"> _GenerateNumbers</span><span style="color:#D4D4D4">(</span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">);</span></span>
+<span class="line"><span style="color:#D4D4D4">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#9CDCFE">_state</span><span style="color:#D4D4D4"> = </span><span style="color:#B5CEA8">0</span><span style="color:#D4D4D4">;</span></span>
+<span class="line"><span style="color:#C586C0">return</span><span style="color:#569CD6"> this</span><span style="color:#D4D4D4">;</span></span></code></pre> <p>
+So eventually we end up with an instance of <code>_GenerateNumbers</code> with set
+<code>_state = 0</code>. The only difference is whenever we can use existing instance or
+    produce the new one. Finally after the line
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="csharp"><code><span class="line"><span style="color:#C586C0">using</span><span style="color:#D4D4D4"> (</span><span style="color:#569CD6">var</span><span style="color:#9CDCFE"> enumerator</span><span style="color:#D4D4D4"> = </span><span style="color:#DCDCAA">GenerateNumbers</span><span style="color:#D4D4D4">().</span><span style="color:#DCDCAA">GetEnumerator</span><span style="color:#D4D4D4">())</span></span></code></pre> <p>
+object <code>enumerator</code> is the instance of <code>_GenerateNumbers</code> (the generated class)
+    with <code>_state</code> set to zero. Now we can proceed to using our <code>enumerator</code> to
+    iterate over the sequence using <code>MoveNext()</code> method. Let's dive deep into this
+    crucial part.
+</p> <h3>MoveNext() method</h3> <p>
+As I stated before this is the method where the actual work is done. Generated
+    IL code is a bit longer then in earlier examples, therefore we'll try to break
+    it into parts.
+</p> <p>
+Let's start from the observation that this method has three local variables
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>.maxstack 3</span></span>
+<span class="line"><span>.locals init (</span></span>
+<span class="line"><span>    [0] int32,</span></span>
+<span class="line"><span>    [1] int32,</span></span>
+<span class="line"><span>    [2] bool</span></span>
+<span class="line"><span>)</span></span></code></pre> <p>
+The method starts from branching based on field <code>_state</code>:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>IL_0000: ldarg.0</span></span>
+<span class="line"><span>IL_0001: ldfld int32 _GenerateNumbers::_state</span></span>
+<span class="line"><span>IL_0006: stloc.0</span></span>
+<span class="line"><span>IL_0007: ldloc.0</span></span>
+<span class="line"><span>IL_0008: switch (IL_001f, IL_0021, IL_0023, IL_0025)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>IL_001d: br.s IL_002a</span></span>
+<span class="line"><span>IL_001f: br.s IL_002c</span></span>
+<span class="line"><span>IL_0021: br.s IL_0054</span></span>
+<span class="line"><span>IL_0023: br.s IL_007c</span></span>
+<span class="line"><span>IL_0025: br IL_00b6</span></span></code></pre> <p>
+This listing can be translated into
+</p> <ul> <li>load local variable <code>[0]</code> onto the stack</li> <li>load field <code>_state</code> onto the stack</li> <li>store <code>_state</code> in local variable <code>[0]</code></li> <li>load local variable <code>[0]</code></li> <li>go to location based on local variable <code>[0]</code></li> </ul> <p>
+Instruction <code>br.s &lt;target&gt;</code> branches to <code>&lt;target&gt;</code> location. At the beginning
+    (after the initialization) value of <code>_state</code> field is equal to zero. Let's than
+    examine code starting from location <code>IL_002c</code>.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>IL_002c: ldarg.0</span></span>
+<span class="line"><span>IL_002d: ldc.i4.m1</span></span>
+<span class="line"><span>IL_002e: stfld int32 _GenerateNumbers::_state</span></span>
+<span class="line"><span>IL_0033: nop</span></span>
+<span class="line"><span>IL_0034: ldarg.0</span></span>
+<span class="line"><span>IL_0035: ldc.i4.s 42</span></span>
+<span class="line"><span>IL_0037: stfld int32 _GenerateNumbers::_secretLocalNumber</span></span>
+<span class="line"><span>IL_003c: ldarg.0</span></span>
+<span class="line"><span>IL_003d: ldarg.0</span></span>
+<span class="line"><span>IL_003e: ldfld int32 _GenerateNumbers::_secretLocalNumber</span></span>
+<span class="line"><span>IL_0043: ldc.i4.s 13</span></span>
+<span class="line"><span>IL_0045: add</span></span>
+<span class="line"><span>IL_0046: stfld int32 _GenerateNumbers::_current</span></span>
+<span class="line"><span>IL_004b: ldarg.0</span></span>
+<span class="line"><span>IL_004c: ldc.i4.1</span></span>
+<span class="line"><span>IL_004d: stfld int32 _GenerateNumbers::_state</span></span>
+<span class="line"><span>IL_0052: ldc.i4.1</span></span>
+<span class="line"><span>IL_0053: ret</span></span></code></pre> <p>
+Let translate this block to English
+</p> <ul> <li>set <code>_state = -1</code></li> <li>set <code>_secretLocalNumber = 42</code></li> <li>set <code>_current = _secretLocalNumber + 13</code> (<strong>our first yield return</strong>)</li> <li>set <code>_state = 1</code></li> <li>return <code>1 (true)</code></li> </ul> <p>
+OK, so at this point <code>MoveNext()</code> has returned <code>true</code> and set <code>_current =
+    _secretLocalNumber + 13</code>. Therefore when the value from enumerator will be
+    consumed in the first iteration of the loop enumerator will pass current value
+    of <code>_current</code> field which is <code>55</code>. That's exactly what we wanted.
+</p> <p>
+In <code>GenerateNumbers()</code> method the step would be to <code>yield return</code> from the
+<code>for</code> loop. Let's take a look how next call of <code>MoveNext()</code> will handle that.
+    Now <code>_state = 1</code> so based on initial branching now we have to start from
+<code>IL_0054</code> location.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>IL_0054: ldarg.0</span></span>
+<span class="line"><span>IL_0055: ldc.i4.m1</span></span>
+<span class="line"><span>IL_0056: stfld int32 _GenerateNumbers::_state</span></span>
+<span class="line"><span>IL_005b: ldarg.0</span></span>
+<span class="line"><span>IL_005c: ldc.i4.0</span></span>
+<span class="line"><span>IL_005d: stfld int32 _GenerateNumbers::_tmpId</span></span>
+<span class="line"><span>IL_0062: br.s IL_0093</span></span></code></pre> <p>
+This block starts from setting <code>_state = -1</code> and <code>_tmpId = 0</code>. At the end there
+    is branch to <code>IL_0093</code>. Block starting from <code>IL_0093</code> check bound condition on
+<code>_tmpId</code>. If <code>_tmpId &lt; 3</code> then branches to <code>IL_0064</code>. Otherwise it continues.
+    At the moment <code>_tmpId = 0 &lt; 3</code> so we should continue from <code>IL_0064</code>.
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>IL_0064: ldarg.0</span></span>
+<span class="line"><span>IL_0065: ldarg.0</span></span>
+<span class="line"><span>IL_0066: ldfld int32 _GenerateNumbers::_tmpId</span></span>
+<span class="line"><span>IL_006b: ldc.i4.s 10</span></span>
+<span class="line"><span>IL_006d: add</span></span>
+<span class="line"><span>IL_006e: stfld int32 _GenerateNumbers::_current</span></span>
+<span class="line"><span>IL_0073: ldarg.0</span></span>
+<span class="line"><span>IL_0074: ldc.i4.2</span></span>
+<span class="line"><span>IL_0075: stfld int32 _GenerateNumbers::_state</span></span>
+<span class="line"><span>IL_007a: ldc.i4.1</span></span>
+<span class="line"><span>IL_007b: ret</span></span></code></pre> <p>
+In the above block the following happens
+</p> <ul> <li>load <code>_tmpId</code> onto the stack</li> <li>load short integer <code>10</code> onto the stack</li> <li>add <code>_tmpId</code> and <code>10</code> and store in <code>_current</code> (<strong>our second yield return</strong>)</li> <li>set <code>_state = 2</code></li> <li>return <code>1 (true)</code></li> </ul> <p>
+In this iteration <code>MoveNext()</code> returns <code>true</code> with <code>_current = 10</code>, <code>_state =
+    2</code> and <code>_tmpId = 0</code>.
+</p> <p>
+On the next <code>MoveNext()</code> call we will start with <code>_state = 2</code> which means
+    location <code>IL_007c</code> based on initial branching. Generated IL code is almost
+    identical as in the previous listings so I'll summarize this in the following
+    steps
+</p> <ul> <li>Field <code>_tmpId</code> is incremented by one</li> <li>Bound check is performed</li> <li>Whenever <code>_tmpId &lt; 3</code> we will jump to <code>IL_0064</code> and the previous listing will
+      happen</li> <li>While we are inside <code>for</code> loop the state of <code>_state</code> field will remain
+      constant with set value <code>2</code></li> </ul> <p>
+Based on this we now know exactly how lazy evaluation is done in case of loops.
+    Our generated class keep the information which iteration was performed last
+    time <code>MoveNext()</code> was called within <code>_tmpId</code> variable.
+</p> <p>
+At the end let's take a look what happens when <code>_tmpId = 3</code> and for loop is
+    done:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>IL_00a0: ldarg.0</span></span>
+<span class="line"><span>IL_00a1: ldc.i4.s -99</span></span>
+<span class="line"><span>IL_00a3: call int32 SomeStaticMethod(int32)</span></span>
+<span class="line"><span>IL_00a8: stfld int32 _GenerateNumbers::_current</span></span>
+<span class="line"><span>IL_00ad: ldarg.0</span></span>
+<span class="line"><span>IL_00ae: ldc.i4.3</span></span>
+<span class="line"><span>IL_00af: stfld int32 _GenerateNumbers::_state</span></span>
+<span class="line"><span>IL_00b4: ldc.i4.1</span></span>
+<span class="line"><span>IL_00b5: ret</span></span></code></pre> <p>
+Basically nothing new. Static method <code>SomeStaticMethod</code> is being called with
+    parameter <code>-99</code> and the result is stored inside <code>_current</code> field. Field
+<code>_state</code> is set to <code>3</code> and method returns <code>true</code>.
+</p> <p>
+Finally when the <code>MoveNext()</code> will be called again the method will start with
+<code>_state = 3</code>. So we will start from <code>IL_00b6</code> location:
+</p> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>IL_00b6: ldarg.0</span></span>
+<span class="line"><span>IL_00b7: ldc.i4.m1</span></span>
+<span class="line"><span>IL_00b8: stfld int32 _GenerateNumbers::_state</span></span>
+<span class="line"><span>IL_00bd: ldc.i4.0</span></span>
+<span class="line"><span>IL_00be: ret</span></span></code></pre> <p>
+Internal <code>_state</code> is set to <code>-1</code> and the method returns <code>0 (false)</code> therefore
+    next iteration would not happen.
+</p> <h2 id="performance" class="chapter" data-astro-cid-5d3zeytc> <a href="#performance" data-astro-cid-5d3zeytc>Performance</a> </h2>  <p>
+After our rather detailed analysis of <code>MoveNext()</code> method I thought about
+    performance of using iterators. Looping over a collection would call
+<code>MoveNext()</code> frequently and as we saw earlier that would cause many jumps just
+    to get single element in lazy fashion. I'm worried that this behaviour might
+    causes many CPU cache misses and decrease performance.
+</p> <p>
+This is not post about performance but I've decided to make a simple benchmark
+    to check what would be the cost of iterating over simple integer collection
+    just to sum its values.
+</p> <p>
+I've benchmarked three methods:
+</p> <ol> <li>Sum numbers by iteration using <code>for</code> loop over <code>List&lt;int&gt;</code> using indexes</li> <li>Sum numbers by using <code>foreach</code> loop over <code>List&lt;int&gt;</code></li> <li>Sum numbers by using <code>foreach</code> loop over <code>IEnumerable&lt;int&gt;</code> created by
+      iterator block</li> </ol> <p>
+Source code of this benchmark can be found
+<a href="https://github.com/DSkrzypiec/blogSourceCodes/tree/master/202104_Iterators/IEnumerableBench">here</a>.
+</p> <p>
+I have run this benchmark on Mac M1 with ARM CPU architecture and on
+<a href="https://dskrzypiec.dev/minipc/">my desktop</a> with Linux.
+</p> <h3>Results on Mac M1 (ARM)</h3> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>BenchmarkDotNet=v0.12.1, OS=macOS 11.2.3 (20D91) [Darwin 20.3.0]</span></span>
+<span class="line"><span>Apple M1 2.40GHz, 1 CPU, 8 logical and 8 physical cores</span></span>
+<span class="line"><span>.NET Core SDK=5.0.202</span></span>
+<span class="line"><span>  [Host]     : .NET Core 5.0.5 (CoreCLR 5.0.521.16609, CoreFX 5.0.521.16609), X64 RyuJIT</span></span>
+<span class="line"><span>  DefaultJob : .NET Core 5.0.5 (CoreCLR 5.0.521.16609, CoreFX 5.0.521.16609), X64 RyuJIT</span></span></code></pre> <div class="table-container" data-astro-cid-akey4rtz> <table class="table table-striped table-bordered table-hover" data-astro-cid-akey4rtz> <thead data-astro-cid-akey4rtz> <tr data-astro-cid-akey4rtz> <th data-astro-cid-akey4rtz>Method</th><th data-astro-cid-akey4rtz>Size</th><th data-astro-cid-akey4rtz>Mean</th><th data-astro-cid-akey4rtz>Allocated</th> </tr> </thead> <tbody data-astro-cid-akey4rtz> <tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>SumByIndexes</td><td data-astro-cid-akey4rtz>1000</td><td data-astro-cid-akey4rtz>2.507 ns</td><td data-astro-cid-akey4rtz>-</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>Sum</td><td data-astro-cid-akey4rtz>1000</td><td data-astro-cid-akey4rtz>30.659 ns</td><td data-astro-cid-akey4rtz>40 B</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>SumEnumerable</td><td data-astro-cid-akey4rtz>1000</td><td data-astro-cid-akey4rtz>1,559.437 ns</td><td data-astro-cid-akey4rtz>328 B</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>SumByIndexes</td><td data-astro-cid-akey4rtz>1000000</td><td data-astro-cid-akey4rtz>4.965 ns</td><td data-astro-cid-akey4rtz>-</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>Sum</td><td data-astro-cid-akey4rtz>1000000</td><td data-astro-cid-akey4rtz>25.535 ns</td><td data-astro-cid-akey4rtz>40 B</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>SumEnumerable</td><td data-astro-cid-akey4rtz>1000000</td><td data-astro-cid-akey4rtz>1,550.568 ns</td><td data-astro-cid-akey4rtz>328 B</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>SumByIndexes</td><td data-astro-cid-akey4rtz>10000000</td><td data-astro-cid-akey4rtz>3.064 ns</td><td data-astro-cid-akey4rtz>-</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>Sum</td><td data-astro-cid-akey4rtz>10000000</td><td data-astro-cid-akey4rtz>23.035 ns</td><td data-astro-cid-akey4rtz>40 B</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>SumEnumerable</td><td data-astro-cid-akey4rtz>10000000</td><td data-astro-cid-akey4rtz>1,557.213 ns</td><td data-astro-cid-akey4rtz>328 B</td> </tr> </tbody> </table> <p class="table-caption" data-astro-cid-akey4rtz>Benchmark results on Mac M1 (ARM)</p> </div>  <h3>Results on Linux (x86)</h3> <pre class="astro-code dark-plus" style="background-color:#1E1E1E;color:#D4D4D4; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>BenchmarkDotNet=v0.12.1, OS=ubuntu 20.04</span></span>
+<span class="line"><span>AMD Ryzen 7 3700X, 1 CPU, 16 logical and 8 physical cores</span></span>
+<span class="line"><span>.NET Core SDK=5.0.200</span></span>
+<span class="line"><span>  [Host]     : .NET Core 5.0.3 (CoreCLR 5.0.321.7203, CoreFX 5.0.321.7203), X64 RyuJIT</span></span>
+<span class="line"><span>  DefaultJob : .NET Core 5.0.3 (CoreCLR 5.0.321.7203, CoreFX 5.0.321.7203), X64 RyuJIT</span></span></code></pre> <div class="table-container" data-astro-cid-akey4rtz> <table class="table table-striped table-bordered table-hover" data-astro-cid-akey4rtz> <thead data-astro-cid-akey4rtz> <tr data-astro-cid-akey4rtz> <th data-astro-cid-akey4rtz>Method</th><th data-astro-cid-akey4rtz>Size</th><th data-astro-cid-akey4rtz>Mean</th><th data-astro-cid-akey4rtz>Allocated</th> </tr> </thead> <tbody data-astro-cid-akey4rtz> <tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>SumByIndexes</td><td data-astro-cid-akey4rtz>1000</td><td data-astro-cid-akey4rtz>1.851 ns</td><td data-astro-cid-akey4rtz>-</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>Sum</td><td data-astro-cid-akey4rtz>1000</td><td data-astro-cid-akey4rtz>20.135 ns</td><td data-astro-cid-akey4rtz>40 B</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>SumEnumerable</td><td data-astro-cid-akey4rtz>1000</td><td data-astro-cid-akey4rtz>1,457.868 ns</td><td data-astro-cid-akey4rtz>328 B</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>SumByIndexes</td><td data-astro-cid-akey4rtz>1000000</td><td data-astro-cid-akey4rtz>1.836 ns</td><td data-astro-cid-akey4rtz>-</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>Sum</td><td data-astro-cid-akey4rtz>1000000</td><td data-astro-cid-akey4rtz>20.610 ns</td><td data-astro-cid-akey4rtz>40 B</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>SumEnumerable</td><td data-astro-cid-akey4rtz>1000000</td><td data-astro-cid-akey4rtz>1,461.925 ns</td><td data-astro-cid-akey4rtz>328 B</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>SumByIndexes</td><td data-astro-cid-akey4rtz>10000000</td><td data-astro-cid-akey4rtz>1.877 ns</td><td data-astro-cid-akey4rtz>-</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>Sum</td><td data-astro-cid-akey4rtz>10000000</td><td data-astro-cid-akey4rtz>19.509 ns</td><td data-astro-cid-akey4rtz>40 B</td> </tr><tr data-astro-cid-akey4rtz> <td data-astro-cid-akey4rtz>SumEnumerable</td><td data-astro-cid-akey4rtz>10000000</td><td data-astro-cid-akey4rtz>1,479.415 ns</td><td data-astro-cid-akey4rtz>328 B</td> </tr> </tbody> </table> <p class="table-caption" data-astro-cid-akey4rtz>Benchmark results on Linux (x86)</p> </div>  <h3>Benchmark Summary</h3> <p>
+Iterating over the list (actually allocated contiguous block of memory) using
+<code>foreach</code> loop is over <strong>fifty</strong> (50x) times faster then using iteration over actual
+    iterator (lazy evaluated). My best guess is, based on our IL code analysis,
+    it's because of CPU cache misses in case of the iterator.
+</p> <p>
+What's also interesting is the cost of using <code>foreach</code> over <code>for</code> loop.
+    But it shouldn't be surprising by now. As we saw earlier <code>foreach</code> once call
+<code>GetEnumerator</code> method and on each iteration call <code>MoveNext()</code> method. An
+    actual method. Whereas <code>for</code> loop just increment index and take data from
+    underlying array directly.
+</p> <p>
+Another interesting point is difference between CPUs (M1 vs faster Ryzen).
+    Method <code>Sum</code> took about <code>30ns</code> on Mac M1 and about <code>20ns</code> on Ryzen which is
+    around 33% improvement. In case of iterating using iterator the difference is
+    much smaller around <code>1550ns</code> versus <code>1470ns</code> which is around 5%. This is
+    another point which suggest importance of CPU caches. It is probably not used
+    (at least not used efficiently) in case of iterator and is definitely used in
+    case of <code>List&lt;T&gt;</code>.
+</p> <h2 id="summary" class="chapter" data-astro-cid-5d3zeytc> <a href="#summary" data-astro-cid-5d3zeytc>Summary</a> </h2>  <p>
+In summary iterators produces lazy evaluated sequences by generating a class in
+    compile time which captures state of iterator block in order to produce next
+    element within <code>MoveNext()</code> method. I hope this post helped you to better
+    understand how it really work.
+</p> <p>
+Also let's not forget about the fundamental trade off - memory space versus
+    performance. Using Linq extension methods makes <code>IEnumerable&lt;T&gt;</code> very easy and
+    fun to operate on but after this post I'll be always conscious about the cost.
+</p> <p>
+I think next step after this post might be to look closely at the Linq extension
+    methods implementation. Now this should be much easier, once you know how iterators
+    works. Implementation of all methods are placed in single file
+<a href="https://referencesource.microsoft.com/#System.Core/System/Linq/Enumerable.cs">System/Linq/Enumerable.cs</a>.
+</p> <h2 id="references" class="chapter" data-astro-cid-5d3zeytc> <a href="#references" data-astro-cid-5d3zeytc>References</a> </h2>  <ol> <li><a href="https://www.manning.com/books/c-sharp-in-depth-fourth-edition">"C# In Depth" - Jon Skeet</a></li> <li><a href="https://github.com/DSkrzypiec/blogSourceCodes/tree/master/202104_Iterators">Source code for this post</a></li> <li><a href="https://en.wikipedia.org/wiki/List_of_CIL_instructions">Table of IL instructions</a></li> </ol>  </article> </main> </div> </div>  <!-- Global styles for .post-layout and .post-layout-sidebar -->  </body></html>
